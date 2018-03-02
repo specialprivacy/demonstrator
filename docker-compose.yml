@@ -17,11 +17,14 @@ services:
     links:
       - dispatcher:backend
   dispatcher:
-    image: semtech/mu-dispatcher:1.0.1
-    links:
-      - resource:resource
-    volumes:
-      - ./config/dispatcher:/config
+    build: ./dispatcher-caddy
+    # image: semtech/mu-dispatcher:1.0.1
+    # links:
+    #   - resource:resource
+    # volumes:
+    #   - ./config/dispatcher:/config
+    ports:
+      - "444:80"
   database:
     image: tenforce/virtuoso:1.1.1-virtuoso7.2.4
     environment:
@@ -50,3 +53,7 @@ services:
     environment:
       BOOT: mu-cl-resources
 
+  push-tester:
+    build: ./push-tester
+    ports:
+      - "555:80"
