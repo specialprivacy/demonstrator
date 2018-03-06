@@ -14,3 +14,15 @@ proxy /push-tester {$PUSH_TESTER} {
   header_upstream x-request-id {request_id}
   header_upstream connection ""
 }
+
+rewrite {
+  if_op or
+  if {path} starts_with /reports
+  to /resources{uri}
+}
+
+proxy /resources {$RESOURCES} {
+  without /resources
+  transparent
+  header_upstream x-request-id {request_id}
+}

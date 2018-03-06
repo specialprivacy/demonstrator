@@ -1,5 +1,17 @@
 (in-package :mu-cl-resources)
 
+
+(define-resource report ()
+  :class (s-prefix "special:Report")
+  :properties `(
+    (:log :string ,(s-prefix "special:log"))
+    (:status :string ,(s-prefix "special:status"))
+    (:timestamp :string ,(s-prefix "special:timestamp"))
+    (:policy :string ,(s-prefix "special:policy"))
+    )
+  :resource-base (s-url "http://temporary-namespace-special/resources/reports/")
+  :on-path "reports")
+
 (define-resource user ()
   :class (s-prefix "foaf:Person")
   :properties `((:name :string ,(s-prefix "foaf:name")))
@@ -129,4 +141,3 @@
 	)
 	:resource-base (s-url "http://temporary-namespace-special/resources/consent/")
 	:on-path "consents")
-

@@ -16,6 +16,7 @@ FROM alpine:latest
 EXPOSE 80
 EXPOSE 443
 ENV PUSH_TESTER=http://push-tester
+ENV RESOURCES=http://resource
 COPY --from=build /go/src/github.com/mholt/caddy/caddy/caddy /
 COPY Caddyfile /Caddyfile
 

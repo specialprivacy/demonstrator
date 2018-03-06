@@ -1,13 +1,13 @@
 version: '2'
 services:
-  consent-management-frontend:
-    build: ./consent-management-frontend
-    volumes:
-      - ./config/nginx:/etc/nginx/conf.d
-    ports:
-      - "80:80"
-    links:
-      - dispatcher:backend
+  # consent-management-frontend:
+  #   build: ./consent-management-frontend
+  #   volumes:
+  #     - ./config/nginx:/etc/nginx/conf.d
+  #   ports:
+  #     - "80:80"
+  #   links:
+  #     - dispatcher:backend
   policy-checking-frontend:
     build: ./policy-checking-frontend
     volumes:
