@@ -22,9 +22,9 @@ class RandomStream extends Readable {
           data: {
               data: [{
                 attributes : {
-                  status: "error",
+                  status: "status",
                   log: "event b complied",
-                  policy: "",
+                  policy: "Policy number 1",
                   timestamp: Date.now().toString(),
                 },
                 id: uuid.v4(),

@@ -6,7 +6,7 @@
   :properties `(
     (:log :string ,(s-prefix "special:log"))
     (:status :string ,(s-prefix "special:status"))
-    (:timestamp :string ,(s-prefix "special:timestamp"))
+    (:timestamp :date ,(s-prefix "special:timestamp"))
     (:policy :string ,(s-prefix "special:policy"))
     )
   :resource-base (s-url "http://temporary-namespace-special/resources/reports/")

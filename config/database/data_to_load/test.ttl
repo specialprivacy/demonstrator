@@ -2,7 +2,7 @@
 <http://temporary-namespace-special/resources/report/59CE24BD72144E0009000013>  a <http://temporary-namespace-special/Report>.
 <http://temporary-namespace-special/resources/report/59CE24BD72144E0009000013>  <http://temporary-namespace-special/log>  "event B complied" .
 <http://temporary-namespace-special/resources/report/59CE24BD72144E0009000013>  <http://temporary-namespace-special/status>  "OK" .
-<http://temporary-namespace-special/resources/report/59CE24BD72144E0009000013>  <http://temporary-namespace-special/timestamp>  "1519382881" .
+<http://temporary-namespace-special/resources/report/59CE24BD72144E0009000013>  <http://temporary-namespace-special/timestamp>  "Wed Mar 07 2018 10:35:19 GMT+0100 (CET)" .
 <http://temporary-namespace-special/resources/report/59CE24BD72144E0009000013>  <http://temporary-namespace-special/policy>  "policy number 1" .
 
 
@@ -11,5 +11,5 @@
 <http://temporary-namespace-special/resources/report/59CE24BD72144E0009013000>  a <http://temporary-namespace-special/Report>.
 <http://temporary-namespace-special/resources/report/59CE24BD72144E0009013000>  <http://temporary-namespace-special/log>  "event A did not comply with the policy set by user U" .
 <http://temporary-namespace-special/resources/report/59CE24BD72144E0009013000>  <http://temporary-namespace-special/status>  "error" .
-<http://temporary-namespace-special/resources/report/59CE24BD72144E0009013000>  <http://temporary-namespace-special/timestamp>  "-255445919" .
+<http://temporary-namespace-special/resources/report/59CE24BD72144E0009013000>  <http://temporary-namespace-special/timestamp>  "Wed Mar 01 2012 10:35:19 GMT+0100 (CET)" .
 <http://temporary-namespace-special/resources/report/59CE24BD72144E0009013000>  <http://temporary-namespace-special/policy>  "policy number 2" .
