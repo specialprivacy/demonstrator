@@ -34,8 +34,13 @@ services:
     compliance-checker:
       image: ubuntu
 
-    kafka:
-      image: ubuntu
-
-    zookeeper:
-      image: ubuntu
+  zookeeper:
+    image: flowofcontrol/docker-zookeeper
+  kafka:
+    image: flowofcontrol/docker-kafka
+    depends_on:
+      - zookeeper
+    volumes:
+      - ./config:/kafka-config
+    links:
+      - zookeeper:zookeeper
