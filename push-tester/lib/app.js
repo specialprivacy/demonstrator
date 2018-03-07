@@ -13,6 +13,7 @@ app.use(childLogger)
 app.get('/connect', (req, res, next) => {
   res.status(OK)
   res.set('content-type', 'text/event-stream')
+  res.set('X-Accel-Buffering', 'no')
   const emitter = new RandomStream(req.log)
   emitter.pipe(res)
   req.on('close', () => {
