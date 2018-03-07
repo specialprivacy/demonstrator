@@ -1,4 +1,4 @@
-version: '2'
+version: '2.1'
 services:
   consent-ui:
     build: ./consent-management-frontend
