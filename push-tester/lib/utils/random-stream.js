@@ -21,6 +21,8 @@ class RandomStream extends Readable {
 
         const event = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')[Math.floor(Math.random()*26)];
         const status = ['ok', 'error'][Math.floor(Math.random()*2)];
+        const purpose = ['accounting', 'administration', 'charity', 'news'][Math.floor(Math.random()*4)];
+        const attributes = [["birth_date", "location"], ["browsing_history", "location"], ["degree", "location"]][Math.floor(Math.random()*3)];
         const user = '0123456789'.split('')[Math.floor(Math.random()*10)] +
             'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')[Math.floor(Math.random()*26)] +
             '0123456789'.split('')[Math.floor(Math.random()*10)] +
@@ -50,17 +52,19 @@ class RandomStream extends Readable {
           data: {
               data: [{
                 attributes : {
-                  status: status,
-                  log: log,
-                  policy: policy,
-                  timestamp: Date(),
+                  status,
+                  attributes,
+                  purpose,
+                  log,
+                  policy,
+                  timestamp: new Date(),
                 },
                 id: uuid.v4(),
                 type: "reports"
             }]
           }
-        })
-        this._log.info(`sending message: ${JSON.stringify(message)}`)
+        });
+        this._log.info(`sending message: ${JSON.stringify(message)}`);
         if (!this.isTerminated) this.push(message)
       }, 5000)
     }

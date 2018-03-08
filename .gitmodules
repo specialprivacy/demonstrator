@@ -4,3 +4,6 @@
 [submodule "policy-checking-frontend"]
 	path = policy-checking-frontend
 	url = git@git.tenforce.com:special/policy-checking-frontend.git
+[submodule "overview-ui"]
+	path = overview-ui
+	url = git@git.tenforce.com:arnaud.sjongers/overview-ui.git

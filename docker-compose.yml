@@ -57,3 +57,12 @@ services:
     build: ./push-tester
     ports:
       - "555:80"
+
+  overview-ui:
+    build: ./overview-ui/
+    links:
+      - dispatcher:backend
+    ports:
+      - 80:80
+    volumes:
+      - ./config/nginx:/etc/nginx/conf.d
