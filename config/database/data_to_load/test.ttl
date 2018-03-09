@@ -4,7 +4,7 @@
 <http://temporary-namespace-special/resources/report/59CE24BD72144E0009000013>  <http://temporary-namespace-special/status>  "OK" .
 <http://temporary-namespace-special/resources/report/59CE24BD72144E0009000013>  <http://temporary-namespace-special/timestamp>  "Wed Mar 07 2018 10:35:19 GMT+0100 (CET)" .
 <http://temporary-namespace-special/resources/report/59CE24BD72144E0009000013>  <http://temporary-namespace-special/policy>  "Policy 1D" .
-<http://temporary-namespace-special/resources/report/59CE24BD72144E0009000013>  <http://temporary-namespace-special/purpose>  "news" .
+<http://temporary-namespace-special/resources/report/59CE24BD72144E0009000013>  <http://temporary-namespace-special/purpose>  "tourist" .
 <http://temporary-namespace-special/resources/report/59CE24BD72144E0009000013>  <http://temporary-namespace-special/attribute>  "birth_date" .
 <http://temporary-namespace-special/resources/report/59CE24BD72144E0009000013>  <http://temporary-namespace-special/attribute>  "location" .
 
