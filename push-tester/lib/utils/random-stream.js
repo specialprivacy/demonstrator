@@ -1,26 +1,35 @@
-const {Readable} = require('stream')
-const sse = require('sse-utils')
-const uuid = require('uuid')
+const {Readable} = require('stream');
+const sse = require('sse-utils');
+const uuid = require('uuid');
 
 class RandomStream extends Readable {
   constructor (log) {
-    super({ objectMode: true })
-    this._log = log
+    super({ objectMode: true });
+    this._log = log;
     this.isTerminated = false
   }
 
   terminate () {
-    this.isTerminated = true
+    this.isTerminated = true;
     clearInterval(this.looper)
   }
 
   _read () {
-    if (this.isTerminated) return this.push(null)
+    let i = 0;
+    if (this.isTerminated) return this.push(null);
     if (!this.looper) {
       this.looper = setInterval(() => {
 
         const event = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')[Math.floor(Math.random()*26)];
-        const status = ['ok', 'error'][Math.floor(Math.random()*2)];
+        const statuses = ['ok', 'error'];
+        let status;
+        if(i%10 == 0) {
+          status = statuses[1];
+        }
+        else{
+          status = statuses[0];
+        }
+        i++;
         const purpose = ['accounting', 'administration', 'charity', 'tourist'][Math.floor(Math.random()*4)];
         const attributes = [["birth_date", "location"], ["browsing_history", "location"], ["degree", "location"]][Math.floor(Math.random()*3)];
         const user = '0123456789'.split('')[Math.floor(Math.random()*10)] +
@@ -30,7 +39,7 @@ class RandomStream extends Readable {
         const policy = "Policy " +
             '0123456789'.split('')[Math.floor(Math.random()*10)] +
             'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')[Math.floor(Math.random()*26)];
-        var log = `Event ${event} complied`;
+        var log = `Event ${event} complied with the policy set by user ${user}`;
         if(status === "error") {
           // event A did not comply with the policy set by user U
           log = `Event ${event} did not comply with the policy set by user ${user}`;
@@ -57,7 +66,7 @@ class RandomStream extends Readable {
                   purpose,
                   log,
                   policy,
-                  timestamp: new Date(),
+                  timestamp: new Date()
                 },
                 id: uuid.v4(),
                 type: "reports"
@@ -66,9 +75,9 @@ class RandomStream extends Readable {
         });
         this._log.info(`sending message: ${JSON.stringify(message)}`);
         if (!this.isTerminated) this.push(message)
-      }, 5000)
+      }, 1000)
     }
   }
 }
 
-module.exports = RandomStream
+module.exports = RandomStream;
