@@ -14,13 +14,20 @@ class RandomStream extends Readable {
     clearInterval(this.looper)
   }
 
+  uuidv4() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+      var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+      return v.toString(16);
+    });
+  }
+
   _read () {
     let i = 0;
     if (this.isTerminated) return this.push(null);
     if (!this.looper) {
       this.looper = setInterval(() => {
 
-        const event = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')[Math.floor(Math.random()*26)];
+        const event = uuid.v4();
         const statuses = ['ok', 'error'];
         let status;
         if(i%10 == 0) {
@@ -30,20 +37,10 @@ class RandomStream extends Readable {
           status = statuses[0];
         }
         i++;
-        const purpose = ['accounting', 'administration', 'charity', 'tourist'][Math.floor(Math.random()*4)];
-        const attributes = [["birth_date", "location"], ["browsing_history", "location"], ["degree", "location"]][Math.floor(Math.random()*3)];
-        const user = '0123456789'.split('')[Math.floor(Math.random()*10)] +
-            'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')[Math.floor(Math.random()*26)] +
-            '0123456789'.split('')[Math.floor(Math.random()*10)] +
-            'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')[Math.floor(Math.random()*26)];
-        const policy = "Policy " +
-            '0123456789'.split('')[Math.floor(Math.random()*10)] +
-            'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')[Math.floor(Math.random()*26)];
-        var log = `Event ${event} complied with the policy set by user ${user}`;
-        if(status === "error") {
-          // event A did not comply with the policy set by user U
-          log = `Event ${event} did not comply with the policy set by user ${user}`;
-        }
+        const purpose = ['lifestyle', 'nutrition', 'activities'][Math.floor(Math.random()*4)];
+        const attributes = [["heart_rate"],["age", "calories"], ["calories", "location"], ["age", "heart_rate"], ["age", "calories", "heart_rate", "location"]][Math.floor(Math.random()*6)];
+        const user = uuid.v4();
+        const policy = uuid.v4();
 
         // the two data keys are important
         // inside the second data, you should have an array of jsonapi complient data
@@ -62,9 +59,10 @@ class RandomStream extends Readable {
               data: [{
                 attributes : {
                   status,
+                  user,
+                  event,
                   attributes,
                   purpose,
-                  log,
                   policy,
                   timestamp: new Date()
                 },
