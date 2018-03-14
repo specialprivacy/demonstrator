@@ -37,8 +37,8 @@ class RandomStream extends Readable {
           status = statuses[0];
         }
         i++;
-        const purpose = ['lifestyle', 'nutrition', 'activities'][Math.floor(Math.random()*4)];
-        const attributes = [["heart_rate"],["age", "calories"], ["calories", "location"], ["age", "heart_rate"], ["age", "calories", "heart_rate", "location"]][Math.floor(Math.random()*6)];
+        const purpose = ['lifestyle', 'nutrition', 'activities'][Math.floor(Math.random()*3)];
+        const attributes = [["heart_rate"],["age", "calories"], ["calories", "location"], ["age", "heart_rate"], ["age", "calories", "heart_rate", "location"]][Math.floor(Math.random()*5)];
         const user = uuid.v4();
         const policy = uuid.v4();
 
