@@ -21,7 +21,7 @@ services:
     links:
       - dispatcher:backend
     ports:
-      - 80:80
+      - "82:80"
     volumes:
       - ./config/nginx:/etc/nginx/conf.d
 
