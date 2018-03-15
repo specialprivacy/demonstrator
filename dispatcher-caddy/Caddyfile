@@ -1,0 +1,28 @@
+:80
+
+# Fetch the request-id or get a new one
+request_id x-request-id
+header / x-request-id {request_id}
+# Make the logs docker friendly and inject the request-id
+log / stdout "{request_id} - {common}"
+errors stderr
+
+# Push-tester proxy
+proxy /push-tester {$PUSH_TESTER} {
+  without /push-tester
+  transparent
+  header_upstream x-request-id {request_id}
+  header_upstream connection ""
+}
+
+rewrite {
+  if_op or
+  if {path} starts_with /reports
+  to /resources{uri}
+}
+
+proxy /resources {$RESOURCES} {
+  without /resources
+  transparent
+  header_upstream x-request-id {request_id}
+}

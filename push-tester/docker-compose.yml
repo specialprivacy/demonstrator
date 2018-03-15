@@ -1,0 +1,10 @@
+version: "3"
+services:
+  dispatcher:
+    image: demo-dispatcher
+    environment:
+      - PUSH_TESTER=http://sse-demo
+    ports:
+      - "80:80"
+  sse-demo:
+    build: .
