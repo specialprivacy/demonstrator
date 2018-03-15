@@ -30,7 +30,6 @@ services:
       ports:
         - "555:80"
 
-
   dispatcher:
     build: ./dispatcher-caddy
     # image: semtech/mu-dispatcher:1.0.1
@@ -52,13 +51,13 @@ services:
       - "8890:8890"
 
   consent-backend:
-      image: ubuntu
+    image: ubuntu
 
-    overview-backend:
-      image: ubuntu
+  overview-backend:
+    image: ubuntu
 
-    compliance-checker:
-      image: ubuntu
+  compliance-checker:
+    image: ubuntu
 
   zookeeper:
     image: flowofcontrol/docker-zookeeper
@@ -67,6 +66,8 @@ services:
     depends_on:
       - zookeeper
     volumes:
-      - ./config:/kafka-config
+      - ./config/kafka:/kafka-config
     links:
       - zookeeper:zookeeper
+    ports:
+      - "9092:9092"

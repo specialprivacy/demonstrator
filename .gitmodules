@@ -7,3 +7,6 @@
 [submodule "overview-ui"]
 	path = overview-ui
 	url = git@git.tenforce.com:arnaud.sjongers/overview-ui.git
+[submodule "consent-ui"]
+	path = consent-ui
+	url = https://git.ai.wu.ac.at/specialprivacy/consent.git
