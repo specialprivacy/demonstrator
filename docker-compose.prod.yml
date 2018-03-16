@@ -1,7 +1,7 @@
 version: '2.1'
 services:
   consent-ui:
-    image: ubuntu
+    image: specialregistry.wdullaer.com/special/prox-consent:latest
     volumes:
       - ./config/nginx:/etc/nginx/conf.d
     ports:
