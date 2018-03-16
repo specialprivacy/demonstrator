@@ -1,14 +1,16 @@
 version: '2.1'
 services:
   consent-ui:
-    build: ./consent-management-frontend
+    image: ubuntu
     volumes:
       - ./config/nginx:/etc/nginx/conf.d
     ports:
       - "80:80"
+    links:
+      - dispatcher:backend
 
   policy-checking-frontend:
-    build: ./policy-checking-frontend
+    image: ubuntu
     volumes:
       - ./config/nginx:/etc/nginx/conf.d
     ports:
@@ -17,7 +19,7 @@ services:
       - dispatcher:backend
 
   overview-ui:
-    build: ./overview-ui/
+    image: ubuntu
     links:
       - dispatcher:backend
     ports:
@@ -26,12 +28,12 @@ services:
       - ./config/nginx:/etc/nginx/conf.d
 
   push-tester:
-      build: ./push-tester
-      ports:
-        - "555:80"
+    image: ubuntu
+    ports:
+      - "555:80"
 
   dispatcher:
-    build: ./dispatcher-caddy
+    image: ubuntu
     # image: semtech/mu-dispatcher:1.0.1
     # links:
     #   - resource:resource
@@ -50,6 +52,15 @@ services:
       - ./config/database/data_to_load:/var/lib/virtuoso/db/toLoad
     ports:
       - "8890:8890"
+
+  resource:
+    image: semtech/mu-cl-resources:1.15.0
+    links:
+      - database:database
+    volumes:
+      - ./config/resources:/config
+    environment:
+      BOOT: mu-cl-resources
 
   consent-backend:
     image: ubuntu
