@@ -1,6 +1,3 @@
-[submodule "consent-management-frontend"]
-	path = consent-management-frontend
-	url = git@git.tenforce.com:special/consent-management-frontend.git
 [submodule "policy-checking-frontend"]
 	path = policy-checking-frontend
 	url = git@git.tenforce.com:special/policy-checking-frontend.git
@@ -8,3 +5,6 @@
 	path = overview-ui
 	url = git@git.tenforce.com:arnaud.sjongers/overview-ui.git
 
+[submodule "prox-consent"]
+	path = prox-consent
+	url = git@git.tenforce.com:special/prox-consent.git

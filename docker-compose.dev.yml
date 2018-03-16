@@ -1,13 +1,9 @@
 version: '2.1'
 services:
   consent-ui:
-    build: ./consent-management-frontend
-    volumes:
-      - ./config/nginx:/etc/nginx/conf.d
+    build: ./prox-consent/prox
     ports:
       - "80:80"
-    links:
-      - dispatcher:backend
 
   policy-checking-frontend:
     build: ./policy-checking-frontend
