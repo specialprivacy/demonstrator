@@ -19,7 +19,7 @@ services:
       - dispatcher:backend
 
   overview-ui:
-    image: ubuntu
+    image: specialregistry.wdullaer.com/special/overview-ui:latest
     links:
       - dispatcher:backend
     ports:
