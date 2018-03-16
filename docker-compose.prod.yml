@@ -10,7 +10,7 @@ services:
       - dispatcher:backend
 
   policy-checking-frontend:
-    image: ubuntu
+    image: specialregistry.wdullaer.com/special/policy-checking-frontend:latest
     volumes:
       - ./config/nginx:/etc/nginx/conf.d
     ports:
