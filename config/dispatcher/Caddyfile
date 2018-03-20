@@ -8,7 +8,7 @@ log / stdout "{request_id} - {common}"
 errors stderr
 
 # Push-tester proxy
-proxy /push-tester {$PUSH_TESTER} {
+proxy /push-tester http://push-tester {
   without /push-tester
   transparent
   header_upstream x-request-id {request_id}
@@ -21,8 +21,15 @@ rewrite {
   to /resources{uri}
 }
 
-proxy /resources {$RESOURCES} {
+proxy /resources http://resource {
   without /resources
   transparent
   header_upstream x-request-id {request_id}
 }
+
+proxy /resources-test http://resource {
+  without /resources-test
+  transparent
+  header_upstream x-request-id {request_id}
+}
+

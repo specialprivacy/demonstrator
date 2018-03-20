@@ -23,22 +23,19 @@ services:
     links:
       - dispatcher:backend
     ports:
-      - "82:80"
+      - "81:80"
     volumes:
       - ./config/nginx:/etc/nginx/conf.d
 
   push-tester:
-    image: ubuntu
+    build: ./push-tester
     ports:
       - "555:80"
 
   dispatcher:
-    image: ubuntu
-    # image: semtech/mu-dispatcher:1.0.1
-    # links:
-    #   - resource:resource
-    # volumes:
-    #   - ./config/dispatcher:/config
+    image: specialregistry.wdullaer.com/special/caddyserver:latest
+    volumes:
+      - ./config/dispatcher:/config
     ports:
       - "444:80"
 

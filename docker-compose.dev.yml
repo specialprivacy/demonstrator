@@ -29,12 +29,9 @@ services:
       - "555:80"
 
   dispatcher:
-    build: ./dispatcher-caddy
-    # image: semtech/mu-dispatcher:1.0.1
-    # links:
-    #   - resource:resource
-    # volumes:
-    #   - ./config/dispatcher:/config
+    image: specialregistry.wdullaer.com/special/caddyserver:latest
+    volumes:
+      - ./config/dispatcher:/config
     ports:
       - "444:80"
 
