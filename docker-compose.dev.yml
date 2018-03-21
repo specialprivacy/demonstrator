@@ -29,7 +29,7 @@ services:
       - "555:80"
 
   dispatcher:
-    image: specialregistry.wdullaer.com/special/caddyserver:latest
+    image: tenforce/caddyserver:latest
     volumes:
       - ./config/dispatcher:/config
     ports:
