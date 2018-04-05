@@ -16,6 +16,7 @@ services:
     environment:
       - FRONTEND=http://overview-ui
       - SSE_PROXY=http://sse-proxy
+      - KEYCLOAK_PROXY=http://keycloak:8080
 
   consent-ui:
     image: tianon/true
@@ -29,11 +30,13 @@ services:
   compliance-checker:
     image: tianon/true
 
+  # Kafka setup (should maybe go in external deployment)
   zookeeper:
     image: flowofcontrol/docker-zookeeper
 
   # Networking setup is not perfect yet and will most likely change slightly once
   # I get around to testing it with multiple nodes on swarm. For local dev the current setup works fine
+  # TODO: save data in a volume (or mount from host)
   kafka:
     image: wurstmeister/kafka
     ports:
@@ -53,3 +56,25 @@ services:
       KAFKA_CREATE_TOPICS: application-logs:1:1,full-policies:1:1:compact,policies-audit:1:1,checked-application-logs:1:1
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+
+  # Keycloak (authentication) setup (should maybe go into an external deployment)
+  # TODO: move secrets into docker secrets
+  keycloak:
+    image: jboss/keycloak:latest
+    environment:
+      KEYCLOAK_USER: keycloak
+      KEYCLOAK_PASSWORD: keycloak
+      DB_VENDOR: postgres
+      POSTGRES_PASSWORD: keycloak
+  postgres:
+    image: postgres:9-alpine
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: keycloak
+    volumes:
+      - keycloakdb:/var/lib/postgresql/data
+
+volumes:
+  keycloakdb:
+    driver: local
