@@ -6,17 +6,17 @@ services:
   sse-proxy:
     image: specialregistry.wdullaer.com/special/kafka-sse-proxy:latest
     environment:
-      - BROKERS=kafka:9092
-      - TOPIC=checked-application-logs
+      BROKERS: kafka:9092
+      TOPIC: checked-application-logs
 
   dispatcher:
     image: specialregistry.wdullaer.com/special/dispatcher:latest
     ports:
       - "80:80"
     environment:
-      - FRONTEND=http://overview-ui
-      - SSE_PROXY=http://sse-proxy
-      - KEYCLOAK_PROXY=http://keycloak:8080
+      FRONTEND: http://overview-ui
+      SSE_PROXY: http://sse-proxy
+      KEYCLOAK_PROXY: http://keycloak:8080
 
   consent-ui:
     image: tianon/true
@@ -28,7 +28,11 @@ services:
     image: tianon/true
 
   compliance-checker:
-    image: tianon/true
+    image: specialregistry.wdullaer.com/special/compliance-checker:latest
+    environment:
+      KAFKASERVERURL: kafka
+      KAFKASERVERPORT: 9092
+      KAFKATOPIC: application-logs
 
   # Kafka setup (should maybe go in external deployment)
   zookeeper:

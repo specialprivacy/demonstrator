@@ -6,3 +6,6 @@ services:
   overview-ui:
     ports:
       - "82:80"
+  compliance-checker:
+    ports:
+      - "8080:8080"
