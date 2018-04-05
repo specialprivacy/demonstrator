@@ -1,0 +1,55 @@
+version: '3.2'
+services:
+  overview-ui:
+    image: specialregistry.wdullaer.com/special/overview-ui:latest
+
+  sse-proxy:
+    image: specialregistry.wdullaer.com/special/kafka-sse-proxy:latest
+    environment:
+      - BROKERS=kafka:9092
+      - TOPIC=checked-application-logs
+
+  dispatcher:
+    image: specialregistry.wdullaer.com/special/dispatcher:latest
+    ports:
+      - "80:80"
+    environment:
+      - FRONTEND=http://overview-ui
+      - SSE_PROXY=http://sse-proxy
+
+  consent-ui:
+    image: tianon/true
+
+  consent-backend:
+    image: tianon/true
+
+  overview-backend:
+    image: tianon/true
+
+  compliance-checker:
+    image: tianon/true
+
+  zookeeper:
+    image: flowofcontrol/docker-zookeeper
+
+  # Networking setup is not perfect yet and will most likely change slightly once
+  # I get around to testing it with multiple nodes on swarm. For local dev the current setup works fine
+  kafka:
+    image: wurstmeister/kafka
+    ports:
+      - target: 9094
+        published: 9094
+        protocol: tcp
+        mode: host
+    depends_on:
+      - zookeeper
+    environment:
+      HOSTNAME_COMMAND: "docker info | grep ^Name: | cut -d' ' -f 2"
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: INSIDE://:9092,OUTSIDE://_{HOSTNAME_COMMAND}:9094
+      KAFKA_LISTENERS: INSIDE://:9092,OUTSIDE://:9094
+      KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
+      KAFKA_CREATE_TOPICS: application-logs:1:1,full-policies:1:1:compact,policies-audit:1:1,checked-application-logs:1:1
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock

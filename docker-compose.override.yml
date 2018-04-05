@@ -1,0 +1,8 @@
+version: '3.2'
+services:
+  sse-proxy:
+    ports:
+      - "555:80"
+  overview-ui:
+    ports:
+      - "82:80"
