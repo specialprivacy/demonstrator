@@ -1,7 +1,7 @@
 version: '3.2'
 services:
   overview-ui:
-    image: specialregistry.wdullaer.com/special/overview-ui:latest
+    image: specialregistry.wdullaer.com/special/overview-ui:build-improvement
 
   sse-proxy:
     image: specialregistry.wdullaer.com/special/kafka-sse-proxy:latest
@@ -14,25 +14,45 @@ services:
     ports:
       - "80:80"
     environment:
-      FRONTEND: http://overview-ui
+      DOMAIN: ':80'
+      EMAIL: 'off'
+      FRONTEND: http://consent-management-frontend
+      POLICY_CRUD_UI: http://data-controller-policy-management-frontend
+      CONSENT_UI: http://consent-management-frontend
+      TRANSPARENCY_UI: http://overview-ui
       SSE_PROXY: http://sse-proxy
-      KEYCLOAK_PROXY: http://keycloak:8080
+      CONSENT_MANAGEMENT_BACKEND: http://consent-management-backend:8081
+      KEYCLOAK: http://keycloak:8080
 
-  consent-ui:
-    image: tianon/true
+  # TODO: Add configuration
+  consent-management-frontend:
+    image: specialregistry.wdullaer.com/special/consent-management-frontend:automated-build
 
-  consent-backend:
-    image: tianon/true
+  consent-management-backend:
+    image: specialregistry.wdullaer.com/special/consent-management-backend:automated-build-test
+    environment:
+      RETHINKDB_HOST: rethinkdb
+      RETHINKDB_PORT: 28015
+      KAFKA_BROKER_LIST: kafka:9094
+      CHANGE_LOGS_TOPIC: policies-audit
+      FULL_POLICIES_TOPIC: full-policies
+      ENSURE_KAFKA_RUNNING: 'true'
 
-  overview-backend:
-    image: tianon/true
+  # TODO: Add configuration
+  data-controller-policy-management-frontend:
+    image: specialregistry.wdullaer.com/special/data-controller-policy-management-frontend:automated-build
 
   compliance-checker:
     image: specialregistry.wdullaer.com/special/compliance-checker:latest
     environment:
-      KAFKASERVERURL: kafka
-      KAFKASERVERPORT: 9092
-      KAFKATOPIC: application-logs
+      KAFKA_URL_LIST: "kafka:9092"
+      KAFKA_CLIENT_ID: 1
+      KAFKA_TOPIC_POLICY: "full-policies"
+      KAFKA_TOPIC_ACCESS: "application-logs"
+      KAFKA_TOPIC_CONSENT: "checked-application-logs"
+
+  rethinkdb:
+    image: rethinkdb:2.3
 
   # Kafka setup (should maybe go in external deployment)
   zookeeper:
@@ -68,8 +88,8 @@ services:
     environment:
       KEYCLOAK_USER: keycloak
       KEYCLOAK_PASSWORD: keycloak
-      DB_VENDOR: postgres
-      POSTGRES_PASSWORD: keycloak
+      DB_VENDOR: POSTGRES
+      DB_PASSWORD: keycloak
   postgres:
     image: postgres:9-alpine
     environment:
