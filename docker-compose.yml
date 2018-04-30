@@ -29,7 +29,7 @@ services:
     image: specialregistry.wdullaer.com/special/consent-management-frontend:automated-build
 
   consent-management-backend:
-    image: specialregistry.wdullaer.com/special/consent-management-backend:automated-build-test
+    image: specialregistry.wdullaer.com/special/consent-management-backend:latest
     environment:
       RETHINKDB_HOST: rethinkdb
       RETHINKDB_PORT: 28015
@@ -37,6 +37,9 @@ services:
       CHANGE_LOGS_TOPIC: policies-audit
       FULL_POLICIES_TOPIC: full-policies
       ENSURE_KAFKA_RUNNING: 'true'
+      AUTH_CLIENT_ID: consent-management-backend
+      AUTH_CLIENT_SECRET: changeme-with-your-local-uuid
+      AUTH_USERINFO_ENDPOINT: http://keycloak:8080/auth/realms/master/protocol/openid-connect/userinfo
 
   # TODO: Add configuration
   data-controller-policy-management-frontend:

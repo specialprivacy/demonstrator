@@ -43,6 +43,8 @@ services:
       restart_policy:
         condition: on-failure
   consent-management-backend:
+    environment:
+      AUTH_CLIENT_SECRET: changeme-with-your-local-uuid
     logging:
       driver: json-file
       options:
