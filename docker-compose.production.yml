@@ -1,0 +1,117 @@
+version: '3.2'
+services:
+  overview-ui:
+    logging:
+      driver: json-file
+      options:
+        max-size: 1m
+        max-file: 1
+    deploy:
+      restart_policy:
+        condition: on-failure
+  sse-proxy:
+    logging:
+      driver: json-file
+      options:
+        max-size: 1m
+        max-file: 1
+    deploy:
+      restart_policy:
+        condition: on-failure
+  dispatcher:
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      DOMAIN: special-demonstrator.wdullaer.com
+      EMAIL: wouter.dullaert@gmail.com
+    logging:
+      driver: json-file
+      options:
+        max-size: 1m
+        max-file: 1
+    deploy:
+      restart_policy:
+        condition: on-failure
+  consent-management-frontend:
+    logging:
+      driver: json-file
+      options:
+        max-size: 1m
+        max-file: 1
+    deploy:
+      restart_policy:
+        condition: on-failure
+  consent-management-backend:
+    logging:
+      driver: json-file
+      options:
+        max-size: 1m
+        max-file: 1
+    deploy:
+      restart_policy:
+        condition: on-failure
+  data-controller-policy-management-frontend:
+    logging:
+      driver: json-file
+      options:
+        max-size: 1m
+        max-file: 1
+    deploy:
+      restart_policy:
+        condition: on-failure
+  compliance-checker:
+    logging:
+      driver: json-file
+      options:
+        max-size: 1m
+        max-file: 1
+    deploy:
+      restart_policy:
+        condition: on-failure
+  rethinkdb:
+    logging:
+      driver: json-file
+      options:
+        max-size: 1m
+        max-file: 1
+    deploy:
+      restart_policy:
+        condition: on-failure
+  zookeeper:
+    logging:
+      driver: json-file
+      options:
+        max-size: 1m
+        max-file: 1
+    deploy:
+      restart_policy:
+        condition: on-failure
+  kafka:
+    logging:
+      driver: json-file
+      options:
+        max-size: 1m
+        max-file: 1
+    deploy:
+      restart_policy:
+        condition: on-failure
+  keycloak:
+    logging:
+      driver: json-file
+      options:
+        max-size: 1m
+        max-file: 1
+    deploy:
+      restart_policy:
+        condition: on-failure
+  postgres:
+    logging:
+      driver: json-file
+      options:
+        max-size: 1m
+        max-file: 1
+    deploy:
+      restart_policy:
+        condition: on-failure
+  # TODO: Add gliderlabs/logspout as a global service here so we can pipe logs to an external service (eg: papertrail)
