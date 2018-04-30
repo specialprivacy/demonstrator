@@ -90,6 +90,7 @@ services:
       KEYCLOAK_PASSWORD: keycloak
       DB_VENDOR: POSTGRES
       DB_PASSWORD: keycloak
+      PROXY_ADDRESS_FORWARDING: 'true'
   postgres:
     image: postgres:9-alpine
     environment:
