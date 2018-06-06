@@ -1,0 +1,40 @@
+{
+  "settings": {
+    "baseUrl": "http://keycloak:8080/auth",
+    "username": "keycloak",
+    "password": "keycloak",
+    "grant_type": "password",
+    "client_id": "admin-cli"
+  },
+  "realm": "master",
+  "client": {
+    "clientId": "special-platform",
+    "secret": "special-platform-secret",
+    "redirectUris": [
+      "/callback/*"
+    ],
+    "defaultRoles": [
+      "admin",
+      "user"
+    ]
+  },
+  "users": [{
+      "username": "bernard",
+      "enabled": true,
+      "credentials": [{
+        "type": "password",
+        "temporary": false,
+        "value": "bernard"
+      }]
+    },
+    {
+      "username": "antoine",
+      "enabled": true,
+      "credentials": [{
+        "type": "password",
+        "temporary": false,
+        "value": "antoine"
+      }]
+    }
+  ]
+}

@@ -1,11 +1,22 @@
-version: '3.2'
+version: '3.4'
 services:
-  sse-proxy:
+  mobile-frontend:
+    image: mobile-ui
+  dispatcher:
+    image: special-dispatcher
+    environment:
+      MOBILE_FRONTEND: http://mobile-frontend
+  consent-management-backend:
+    environment:
+      SERVER_AUTH_CALLBACK: http://localhost/callback
+  transparency-backend:
     ports:
       - "555:80"
-  overview-ui:
+  transparency-frontend:
     ports:
       - "82:80"
   compliance-checker:
     ports:
       - "8080:8080"
+  keycloak-init:
+    build: keycloak-init/ 

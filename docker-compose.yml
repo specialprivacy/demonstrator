@@ -1,49 +1,56 @@
-version: '3.2'
+version: '3.4'
 services:
-  overview-ui:
-    image: specialregistry.wdullaer.com/special/overview-ui:build-improvement
+  mobile-frontend:
+    image: specialregistry.wdullaer.com/special/mobile-frontend:latest
 
-  sse-proxy:
+  transparency-frontend:
+    image: specialregistry.wdullaer.com/special/overview-ui:disabled-location
+
+  transparency-backend:
     image: specialregistry.wdullaer.com/special/kafka-sse-proxy:latest
     environment:
       BROKERS: kafka:9092
       TOPIC: checked-application-logs
 
   dispatcher:
-    image: specialregistry.wdullaer.com/special/dispatcher:latest
+    image: specialregistry.wdullaer.com/special/dispatcher:mobile-frontend
     ports:
       - "80:80"
     environment:
-      DOMAIN: ':80'
+      DOMAIN: 'localhost:80'
       EMAIL: 'off'
-      FRONTEND: http://consent-management-frontend
       POLICY_CRUD_UI: http://data-controller-policy-management-frontend
       CONSENT_UI: http://consent-management-frontend
-      TRANSPARENCY_UI: http://overview-ui
-      SSE_PROXY: http://sse-proxy
-      CONSENT_MANAGEMENT_BACKEND: http://consent-management-backend:8081
+      TRANSPARENCY_UI: http://transparency-frontend
+      TRANSPARENCY_BACKEND: http://transparency-backend
+      CONSENT_MANAGEMENT_BACKEND: http://consent-management-backend
       KEYCLOAK: http://keycloak:8080
+      MOBILE_FRONTEND: http://mobile-frontend
 
   # TODO: Add configuration
   consent-management-frontend:
-    image: specialregistry.wdullaer.com/special/consent-management-frontend:automated-build
+    image: specialregistry.wdullaer.com/special/consent-management-frontend:latest
 
   consent-management-backend:
-    image: specialregistry.wdullaer.com/special/consent-management-backend:latest
+    image: specialregistry.wdullaer.com/special/consent-management-backend:flush-messages-test
     environment:
+      SERVER_HOST: consent-management-backend # Please don't do this, just bind to 0.0.0.0 in the container
+      SERVER_PORT: 80
       RETHINKDB_HOST: rethinkdb
       RETHINKDB_PORT: 28015
-      KAFKA_BROKER_LIST: kafka:9094
+      KAFKA_BROKER_LIST: kafka:9092
+      KAFKA_TIMEOUT: 60000
       CHANGE_LOGS_TOPIC: policies-audit
       FULL_POLICIES_TOPIC: full-policies
-      ENSURE_KAFKA_RUNNING: 'true'
-      AUTH_CLIENT_ID: consent-management-backend
-      AUTH_CLIENT_SECRET: changeme-with-your-local-uuid
-      AUTH_USERINFO_ENDPOINT: http://keycloak:8080/auth/realms/master/protocol/openid-connect/userinfo
+      AUTH_LOGIN_URL: https://special-demonstrator.wdullaer.com/auth/realms/master/protocol/openid-connect/auth
+      AUTH_CLIENT_ID: special-platform
+      AUTH_CLIENT_SECRET: a0a8587f-4e33-466b-bf98-1c489b413b97
+      AUTH_USERINFO_ENDPOINT: https://special-demonstrator.wdullaer.com/auth/realms/master/protocol/openid-connect/userinfo
+      AUTH_TOKEN_ENDPOINT: https://special-demonstrator.wdullaer.com/auth/realms/master/protocol/openid-connect/token
 
   # TODO: Add configuration
   data-controller-policy-management-frontend:
-    image: specialregistry.wdullaer.com/special/data-controller-policy-management-frontend:automated-build
+    image: specialregistry.wdullaer.com/special/data-controller-policy-management-frontend:latest
 
   compliance-checker:
     image: specialregistry.wdullaer.com/special/compliance-checker:latest
@@ -56,6 +63,18 @@ services:
 
   rethinkdb:
     image: rethinkdb:2.3
+    volumes:
+      - rethinkdb:/data
+
+  demo-log-generator:
+    image: specialregistry.wdullaer.com/special/demo-log-generator:latest
+    environment:
+      PRODUCER_SPEED: 1750
+      KAFKA_URL_LIST: kafka:9092
+      KAFKA_CLIENT_ID: 1001
+      KAFKA_TOPIC_POLICY: full-policies
+      KAFKA_TOPIC_ACCESS: application-logs
+      KAFKA_TOPIC_CONSENT: checked-application-logs
 
   # Kafka setup (should maybe go in external deployment)
   zookeeper:
@@ -83,6 +102,7 @@ services:
       KAFKA_CREATE_TOPICS: application-logs:1:1,full-policies:1:1:compact,policies-audit:1:1,checked-application-logs:1:1
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - kafkalogs:/kafka
 
   # Keycloak (authentication) setup (should maybe go into an external deployment)
   # TODO: move secrets into docker secrets
@@ -102,7 +122,13 @@ services:
       POSTGRES_PASSWORD: keycloak
     volumes:
       - keycloakdb:/var/lib/postgresql/data
+# keycloak-init:
+#   image: specialregistry.wdullaer.com/special/keycloak-init:latest
 
 volumes:
   keycloakdb:
+    driver: local
+  rethinkdb:
+    driver: local
+  kafkalogs:
     driver: local

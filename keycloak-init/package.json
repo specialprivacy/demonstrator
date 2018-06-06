@@ -1,0 +1,14 @@
+{
+  "name": "init-keycloak",
+  "version": "0.0.1",
+  "description": "Script to populate keycloak with initial data.",
+  "main": "app.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "Nóra Szepes",
+  "license": "ISC",
+  "dependencies": {
+    "keycloak-admin-client": "^0.12.0"
+  }
+}
