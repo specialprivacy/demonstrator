@@ -20,16 +20,16 @@ services:
       - "80:80"
       - "443:443"
     environment:
-      DOMAIN: special-demonstrator.wdullaer.com
-      EMAIL: wouter.dullaert@gmail.com
+      DOMAIN: demonstrator-special.tenforce.com
+      EMAIL: joeri.moreno@gmail.com
     logging: *default-logging
   consent-management-frontend:
     logging: *default-logging
   consent-management-backend:
     environment:
       AUTH_CLIENT_SECRET: a0a8587f-4e33-466b-bf98-1c489b413b97
-      AUTH_USERINFO_ENDPOINT: https://special-demonstrator.wdullaer.com/auth/realms/master/protocol/openid-connect/userinfo
-      AUTH_TOKEN_ENDPOINT: https://special-demonstrator.wdullaer.com/auth/realms/master/protocol/openid-connect/token
+      AUTH_USERINFO_ENDPOINT: https://demonstator-special.tenforce.com/auth/realms/master/protocol/openid-connect/userinfo
+      AUTH_TOKEN_ENDPOINT: https://demonstator-special.tenforce.com/auth/realms/master/protocol/openid-connect/token
     logging: *default-logging
   data-controller-policy-management-frontend:
     logging: *default-logging

@@ -1,19 +1,19 @@
 version: '3.4'
 services:
   mobile-frontend:
-    image: specialregistry.wdullaer.com/special/mobile-frontend:latest
+    image: registry-special.tenforce.com/special/mobile-frontend:latest
 
   transparency-frontend:
-    image: specialregistry.wdullaer.com/special/overview-ui:disabled-location
+    image: registry-special.tenforce.com/special/overview-ui:disabled-location
 
   transparency-backend:
-    image: specialregistry.wdullaer.com/special/kafka-sse-proxy:latest
+    image: registry-special.tenforce.com/special/kafka-sse-proxy:latest
     environment:
       BROKERS: kafka:9092
       TOPIC: checked-application-logs
 
   dispatcher:
-    image: specialregistry.wdullaer.com/special/dispatcher:mobile-frontend
+    image: registry-special.tenforce.com/special/dispatcher:mobile-frontend
     ports:
       - "80:80"
     environment:
@@ -29,10 +29,10 @@ services:
 
   # TODO: Add configuration
   consent-management-frontend:
-    image: specialregistry.wdullaer.com/special/consent-management-frontend:latest
+    image: registry-special.tenforce.com/special/consent-management-frontend:latest
 
   consent-management-backend:
-    image: specialregistry.wdullaer.com/special/consent-management-backend:flush-messages-test
+    image: registry-special.tenforce.com/special/consent-management-backend:flush-messages-test
     environment:
       SERVER_HOST: consent-management-backend # Please don't do this, just bind to 0.0.0.0 in the container
       SERVER_PORT: 80
@@ -42,18 +42,18 @@ services:
       KAFKA_TIMEOUT: 60000
       CHANGE_LOGS_TOPIC: policies-audit
       FULL_POLICIES_TOPIC: full-policies
-      AUTH_LOGIN_URL: https://special-demonstrator.wdullaer.com/auth/realms/master/protocol/openid-connect/auth
+      AUTH_LOGIN_URL: https://demonstrator-special.tenforce.com/auth/realms/master/protocol/openid-connect/auth
       AUTH_CLIENT_ID: special-platform
       AUTH_CLIENT_SECRET: a0a8587f-4e33-466b-bf98-1c489b413b97
-      AUTH_USERINFO_ENDPOINT: https://special-demonstrator.wdullaer.com/auth/realms/master/protocol/openid-connect/userinfo
-      AUTH_TOKEN_ENDPOINT: https://special-demonstrator.wdullaer.com/auth/realms/master/protocol/openid-connect/token
+      AUTH_USERINFO_ENDPOINT: https://demonstrator-special.tenforce.com/auth/realms/master/protocol/openid-connect/userinfo
+      AUTH_TOKEN_ENDPOINT: https://demonstrator-special.tenforce.com/auth/realms/master/protocol/openid-connect/token
 
   # TODO: Add configuration
   data-controller-policy-management-frontend:
-    image: specialregistry.wdullaer.com/special/data-controller-policy-management-frontend:latest
+    image: registry-special.tenforce.com/special/data-controller-policy-management-frontend:latest
 
   compliance-checker:
-    image: specialregistry.wdullaer.com/special/compliance-checker:latest
+    image: registry-special.tenforce.com/special/compliance-checker:latest
     environment:
       KAFKA_URL_LIST: "kafka:9092"
       KAFKA_CLIENT_ID: 1
@@ -67,7 +67,7 @@ services:
       - rethinkdb:/data
 
   demo-log-generator:
-    image: specialregistry.wdullaer.com/special/demo-log-generator:latest
+    image: registry-special.tenforce.com/special/demo-log-generator:latest
     environment:
       PRODUCER_SPEED: 1750
       KAFKA_URL_LIST: kafka:9092
