@@ -4,7 +4,7 @@ services:
     image: registry-special.tenforce.com/special/mobile-frontend:latest
 
   transparency-frontend:
-    image: registry-special.tenforce.com/special/overview-ui:disabled-location
+    image: registry-special.tenforce.com/special/overview-ui:latest
 
   transparency-backend:
     image: registry-special.tenforce.com/special/kafka-sse-proxy:latest
@@ -13,11 +13,11 @@ services:
       TOPIC: checked-application-logs
 
   dispatcher:
-    image: registry-special.tenforce.com/special/dispatcher:mobile-frontend
+    image: registry-special.tenforce.com/special/dispatcher:latest
     ports:
       - "80:80"
     environment:
-      DOMAIN: 'localhost:80'
+      DOMAIN: $DOMAIN:80
       EMAIL: 'off'
       POLICY_CRUD_UI: http://data-controller-policy-management-frontend
       CONSENT_UI: http://consent-management-frontend
@@ -32,21 +32,21 @@ services:
     image: registry-special.tenforce.com/special/consent-management-frontend:latest
 
   consent-management-backend:
-    image: registry-special.tenforce.com/special/consent-management-backend:flush-messages-test
+    image: registry-special.tenforce.com/special/consent-management-backend:latest
     environment:
       SERVER_HOST: consent-management-backend # Please don't do this, just bind to 0.0.0.0 in the container
       SERVER_PORT: 80
       RETHINKDB_HOST: rethinkdb
       RETHINKDB_PORT: 28015
       KAFKA_BROKER_LIST: kafka:9092
-      KAFKA_TIMEOUT: 60000
       CHANGE_LOGS_TOPIC: policies-audit
       FULL_POLICIES_TOPIC: full-policies
-      AUTH_LOGIN_URL: https://demonstrator-special.tenforce.com/auth/realms/master/protocol/openid-connect/auth
+      AUTH_LOGIN_ENDPOINT: http://$DOMAIN/auth/realms/master/protocol/openid-connect/auth
       AUTH_CLIENT_ID: special-platform
-      AUTH_CLIENT_SECRET: a0a8587f-4e33-466b-bf98-1c489b413b97
-      AUTH_USERINFO_ENDPOINT: https://demonstrator-special.tenforce.com/auth/realms/master/protocol/openid-connect/userinfo
-      AUTH_TOKEN_ENDPOINT: https://demonstrator-special.tenforce.com/auth/realms/master/protocol/openid-connect/token
+      AUTH_CLIENT_SECRET: special-platform-secret
+      AUTH_USERINFO_ENDPOINT: http://$DOMAIN/auth/realms/master/protocol/openid-connect/userinfo
+      AUTH_TOKEN_ENDPOINT: http://$DOMAIN/auth/realms/master/protocol/openid-connect/token
+      SERVER_AUTH_CALLBACK_ENDPOINT: http://$DOMAIN/callback
 
   # TODO: Add configuration
   data-controller-policy-management-frontend:
@@ -66,19 +66,23 @@ services:
     volumes:
       - rethinkdb:/data
 
-  demo-log-generator:
-    image: registry-special.tenforce.com/special/demo-log-generator:latest
+  demonstrator-log-generator:
+    image: registry-special.tenforce.com/special/demonstrator-log-generator:latest
     environment:
-      PRODUCER_SPEED: 1750
-      KAFKA_URL_LIST: kafka:9092
-      KAFKA_CLIENT_ID: 1001
-      KAFKA_TOPIC_POLICY: full-policies
-      KAFKA_TOPIC_ACCESS: application-logs
-      KAFKA_TOPIC_CONSENT: checked-application-logs
+      RATE: 1s
+      KAFKA_BROKER_LIST: kafka:9092
+      KAFKA_TOPIC: application-logs
+      KEYCLOAK_ENDPOINT: http://$DOMAIN/auth
+      KEYCLOAK_USER: keycloak
+      KEYCLOAK_PASSWORD: keycloak
+      BACKEND_ENDPOINT: http://consent-management-backend
 
   # Kafka setup (should maybe go in external deployment)
   zookeeper:
-    image: flowofcontrol/docker-zookeeper
+    image: zookeeper:latest
+    volumes:
+      - zoodata:/data
+      - zoolog:/datalog
 
   # Networking setup is not perfect yet and will most likely change slightly once
   # I get around to testing it with multiple nodes on swarm. For local dev the current setup works fine
@@ -93,10 +97,12 @@ services:
     depends_on:
       - zookeeper
     environment:
-      HOSTNAME_COMMAND: "docker info | grep ^Name: | cut -d' ' -f 2"
+      # HOSTNAME_COMMAND: "docker info | grep ^Name: | cut -d' ' -f 2"
+      KAFKA_ADVERTISED_HOSTNAME: kafka
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
-      KAFKA_ADVERTISED_LISTENERS: INSIDE://:9092,OUTSIDE://_{HOSTNAME_COMMAND}:9094
+      # KAFKA_ADVERTISED_LISTENERS: INSIDE://:9092,OUTSIDE://_{HOSTNAME_COMMAND}:9094
+      KAFKA_ADVERTISED_LISTENERS: INSIDE://:9092,OUTSIDE://:9094
       KAFKA_LISTENERS: INSIDE://:9092,OUTSIDE://:9094
       KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
       KAFKA_CREATE_TOPICS: application-logs:1:1,full-policies:1:1:compact,policies-audit:1:1,checked-application-logs:1:1
@@ -122,8 +128,13 @@ services:
       POSTGRES_PASSWORD: keycloak
     volumes:
       - keycloakdb:/var/lib/postgresql/data
-# keycloak-init:
-#   image: specialregistry.wdullaer.com/special/keycloak-init:latest
+  keycloak-init:
+    image: registry-special.tenforce.com/special/keycloak-init:latest
+    environment:
+      KEYCLOAK_URL: http://keycloak:8080/auth
+      KEYCLOAK_USER: keycloak
+      KEYCLOAK_PASSWORD: keycloak
+      CLIENT_REDIRECT_URI: http://$DOMAIN/callback/*
 
 volumes:
   keycloakdb:
@@ -131,4 +142,8 @@ volumes:
   rethinkdb:
     driver: local
   kafkalogs:
+    driver: local
+  zoodata:
+    driver: local
+  zoolog:
     driver: local

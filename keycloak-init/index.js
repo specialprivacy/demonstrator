@@ -16,7 +16,20 @@ const file = fs.readFile(pathToJson, function(err, data) {
   }
   // parse config
   config = JSON.parse(data);
-  console.log(config.settings);
+  // Overwrite with environment variables if present
+  if (process.env.KEYCLOAK_URL) {
+    config.settings.baseUrl = process.env.KEYCLOAK_URL;
+  }
+  if (process.env.KEYCLOAK_USER) {
+    config.settings.username = process.env.KEYCLOAK_USER;
+  }
+  if (process.env.KEYCLOAK_PASSWORD) {
+    config.settings.password = process.env.KEYCLOAK_PASSWORD;
+  }
+  if (process.env.CLIENT_REDIRECT_URI) {
+    config.client.redirectUris.push(process.env.CLIENT_REDIRECT_URI)
+  }
+  console.log(config);
   initiateKeycloak();
 });
 
@@ -27,7 +40,7 @@ function initiateKeycloak() {
       createClient(admin, config.client, config.users);
     }).catch((e) => {
       console.log(e);
-      console.log("Keycloak is not available yet.\n\n");
+      console.log('Keycloak is not available yet.\n\n');
       retryCounter++;
       if (retryCounter < 30) {
         setTimeout(initiateKeycloak, 6000);
@@ -47,7 +60,7 @@ function createClient(admin, client, users) {
       if (clients.length === 0) {
         console.log(`creating client: ${clientId}`);
         admin.clients.create(config.realm, client).then((newClient) => {
-          console.log(`client created`, `creating users`);
+          console.log('client created', 'creating users');
           users.forEach((user) => {
             createUser(admin, clientId, newClient.id, user);
           });
@@ -65,7 +78,7 @@ function createUser(admin, clientId, idClient, user) {
         console.log(`creating user: ${user.username}`);
         admin.users.create(config.realm, user)
           .then((createdUser) => {
-            console.log(`user created`);
+            console.log('user created');
           });
       }
     });

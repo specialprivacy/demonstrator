@@ -1,15 +1,5 @@
 version: '3.4'
 services:
-  mobile-frontend:
-    image: mobile-ui
-  dispatcher:
-    image: special-dispatcher
-    environment:
-      MOBILE_FRONTEND: http://mobile-frontend
-  consent-management-backend:
-    image: consent-management-backend
-    environment:
-      SERVER_AUTH_CALLBACK: http://localhost/callback
   transparency-backend:
     ports:
       - "555:80"
@@ -20,4 +10,4 @@ services:
     ports:
       - "8080:8080"
   keycloak-init:
-    build: keycloak-init/ 
+    build: keycloak-init/

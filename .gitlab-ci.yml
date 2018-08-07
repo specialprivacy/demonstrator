@@ -1,0 +1,20 @@
+image: docker:git
+services:
+  - docker:dind
+
+stages:
+  - build
+
+variables:
+  REGISTRY_ENDPOINT: registry-special.tenforce.com
+  REGISTRY_IMAGE: registry-special.tenforce.com/special/keycloak-init
+
+before_script:
+  - docker login -u ${REGISTRY_USERNAME} -p ${REGISTRY_PASSWORD} ${REGISTRY_ENDPOINT}
+
+build:
+  stage: build
+  script:
+    - tag=$([ "${CI_COMMIT_REF_NAME}" = "master" ] && echo "latest" || echo "${CI_COMMIT_REF_NAME}")
+    - docker build -t ${REGISTRY_IMAGE}:${tag} keycloak-init/
+    - docker push ${REGISTRY_IMAGE}:${tag}

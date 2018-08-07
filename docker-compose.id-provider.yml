@@ -1,0 +1,27 @@
+version: "3.4"
+
+services:
+  consent-management-backend:
+    environment:
+      AUTH_LOGIN_ENDPOINT: https://demonstrator-special.tenforce.com/auth/realms/master/protocol/openid-connect/auth
+      AUTH_CLIENT_ID: special-platform
+      AUTH_CLIENT_SECRET: a0a8587f-4e33-466b-bf98-1c489b413b97
+      AUTH_USERINFO_ENDPOINT: https://demonstrator-special.tenforce.com/auth/realms/master/protocol/openid-connect/userinfo
+      AUTH_TOKEN_ENDPOINT: https://demonstrator-special.tenforce.com/auth/realms/master/protocol/openid-connect/token
+  demonstrator-log-generator:
+    environment:
+      KAFKA_TOPIC: application-logs
+      KEYCLOAK_ENDPOINT: https://demonstrator-special.tenforce.com/auth
+      # TODO: create a trimmed down account that can only pull users
+      KEYCLOAK_USER: keycloak
+      KEYCLOAK_PASSWORD: keycloak
+
+  keycloak:
+    image: alpine
+    command: echo "Using identity provider at demonstrator-special.tenforce.com. Not launching keycloak"
+  postgres:
+    image: alpine
+    command: echo "Using identity provider at demonstrator-special.tenforce.com. Not launching keycloak-postgres"
+  keycloak-init:
+    image: alpine
+    command: echo "Using identity provider at demonstrator-special.tenforce.com. Not launching keycloak-init"
