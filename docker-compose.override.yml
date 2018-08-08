@@ -36,4 +36,4 @@ services:
     restart: on-failure:3
   keycloak-init:
     build: keycloak-init/
-    restart: never
+    restart: "no"

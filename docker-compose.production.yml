@@ -58,7 +58,6 @@ services:
   demonstrator-log-generator:
     environment:
       KEYCLOAK_ENDPOINT: https://$DOMAIN/auth
-      KEYCLOAK_PASSWORD: $KEYCLOAK_PASSWORD
     logging: *default-logging
     deploy:
       restart_policy:

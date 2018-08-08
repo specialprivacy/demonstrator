@@ -1,3 +1,4 @@
 .idea/
 database
 yarn.lock
+node_modules/

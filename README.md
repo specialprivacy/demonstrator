@@ -52,12 +52,6 @@ In order to run the demonstrator with a local identity provider, a hostname or I
   ip address show eth0
   ```
   where `eth0` is the name of the relevant network interface (for example wired, wireless or virtualbox).
-* Launch the identity provider first (if the IP address from the previous step is 192.168.0.17). This ensures that all required configuration has happened, before the rest of the system tries to use it.
-  ```bash
-  DOMAIN=192.168.0.17 docker-compose up -d postgres keycloak keycloak-init
-  docker-compose logs -f keycloak-init
-  ```
-  Once the `keycloak-init` process finishes (`special-platform_keycloak-init_1 exited with code 0`), you can perform the next step
 * Launch the demonstrator
   ```bash
   DOMAIN=192.168.0.17 docker-compose up

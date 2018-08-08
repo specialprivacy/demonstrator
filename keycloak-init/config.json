@@ -35,6 +35,18 @@
         "temporary": false,
         "value": "antoine"
       }]
+    },
+    {
+      "username": "demonstrator-generator",
+      "enabled": true,
+      "credentials": [{
+        "type": "password",
+        "temporary": false,
+        "value": "demonstrator-generator"
+      }],
+      "clientRoles": {
+        "master-realm": ["view-users"]
+      }
     }
   ]
 }

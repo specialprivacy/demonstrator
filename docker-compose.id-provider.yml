@@ -12,19 +12,16 @@ services:
     environment:
       KAFKA_TOPIC: application-logs
       KEYCLOAK_ENDPOINT: https://demonstrator-special.tenforce.com/auth
-      # TODO: create a trimmed down account that can only pull users
-      KEYCLOAK_USER: keycloak
-      KEYCLOAK_PASSWORD: keycloak
 
   keycloak:
     image: alpine
     command: echo "Using identity provider at demonstrator-special.tenforce.com. Not launching keycloak"
-    restart: never
+    restart: "no"
   postgres:
     image: alpine
     command: echo "Using identity provider at demonstrator-special.tenforce.com. Not launching keycloak-postgres"
-    restart: never
+    restart: "no"
   keycloak-init:
     image: alpine
     command: echo "Using identity provider at demonstrator-special.tenforce.com. Not launching keycloak-init"
-    restart: never
+    restart: "no"

@@ -73,8 +73,8 @@ services:
       KAFKA_BROKER_LIST: kafka:9092
       KAFKA_TOPIC: application-logs
       KEYCLOAK_ENDPOINT: http://$DOMAIN/auth
-      KEYCLOAK_USER: keycloak
-      KEYCLOAK_PASSWORD: keycloak
+      KEYCLOAK_USER: demonstrator-generator
+      KEYCLOAK_PASSWORD: demonstrator-generator
       BACKEND_ENDPOINT: http://consent-management-backend
 
   # Kafka setup (should maybe go in external deployment)
