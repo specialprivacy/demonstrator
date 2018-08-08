@@ -8,6 +8,7 @@ stages:
 variables:
   REGISTRY_ENDPOINT: registry-special.tenforce.com
   REGISTRY_IMAGE: registry-special.tenforce.com/special/keycloak-init
+  DOCKER_HOST: "tcp://docker:2375"
 
 before_script:
   - docker login -u ${REGISTRY_USERNAME} -p ${REGISTRY_PASSWORD} ${REGISTRY_ENDPOINT}
