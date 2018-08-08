@@ -19,9 +19,12 @@ services:
   keycloak:
     image: alpine
     command: echo "Using identity provider at demonstrator-special.tenforce.com. Not launching keycloak"
+    restart: never
   postgres:
     image: alpine
     command: echo "Using identity provider at demonstrator-special.tenforce.com. Not launching keycloak-postgres"
+    restart: never
   keycloak-init:
     image: alpine
     command: echo "Using identity provider at demonstrator-special.tenforce.com. Not launching keycloak-init"
+    restart: never

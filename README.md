@@ -39,7 +39,7 @@ There are two options to run the demonstrator on a single machine: the easy way,
 Once docker is installed, running the demonstrator on a single machine is with a remote identity provider is relatively straightforward. The following command needs to be run from the root of this project:
 
 ```bash
-DOMAIN=localhost docker-compose -f docker-compose.yml -f docker-compose.id-provider.yml up
+DOMAIN=localhost docker-compose -f docker-compose.yml -f docker-compose.override.yml -f docker-compose.id-provider.yml up
 ```
 
 This will download all the necessary docker images, start all the services and make the demonstrator available on `http://localhost`

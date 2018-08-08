@@ -1,5 +1,10 @@
 version: '3.4'
 
+x-default-deploy:
+  &default-deploy
+  restart_policy:
+    condition: on-failure
+    max_attempts: 3
 x-default-logging:
   &default-logging
   driver: json-file
@@ -10,10 +15,13 @@ x-default-logging:
 
 services:
   mobile-frontend:
+    deploy: *default-deploy
     logging: *default-logging
   transparency-frontend:
+    deploy: *default-deploy
     logging: *default-logging
   transparency-backend:
+    deploy: *default-deploy
     logging: *default-logging
   dispatcher:
     ports:
@@ -22,6 +30,7 @@ services:
     environment:
       DOMAIN: $DOMAIN
       EMAIL: $RECOVERY_EMAIL
+    deploy: *default-deploy
     logging: *default-logging
   consent-management-backend:
     environment:
@@ -29,28 +38,40 @@ services:
       AUTH_LOGIN_ENDPOINT: https://$DOMAIN/auth/realms/master/protocol/openid-connect/auth
       AUTH_USERINFO_ENDPOINT: https://$DOMAIN/auth/realms/master/protocol/openid-connect/userinfo
       AUTH_TOKEN_ENDPOINT: https://$DOMAIN/auth/realms/master/protocol/openid-connect/token
+    deploy: *default-deploy
     logging: *default-logging
   data-controller-policy-management-frontend:
+    deploy: *default-deploy
     logging: *default-logging
   compliance-checker:
+    deploy: *default-deploy
     logging: *default-logging
   rethinkdb:
     deploy:
       placement:
         constraints:
           - node.labels.type == rethinkdb
+      restart_policy:
+        condition: on-failure
+        max_attempts: 3
     logging: *default-logging
   demonstrator-log-generator:
     environment:
       KEYCLOAK_ENDPOINT: https://$DOMAIN/auth
       KEYCLOAK_PASSWORD: $KEYCLOAK_PASSWORD
     logging: *default-logging
+    deploy:
+      restart_policy:
+        condition: any
   zookeeper:
     logging: *default-logging
     deploy:
       placement:
         constraints:
           - node.labels.type == kafka
+      restart_policy:
+        condition: on-failure
+        max_attempts: 3
   kafka:
     environment:
       KAFKA_BROKER_ID: 0
@@ -59,8 +80,12 @@ services:
       placement:
         constraints:
           - node.labels.type == kafka
+      restart_policy:
+        condition: on-failure
+        max_attempts: 3
   keycloak:
     logging: *default-logging
+    deploy: *default-deploy
     environment:
       KEYCLOAK_PASSWORD: $KEYCLOAK_PASSWORD
       DB_PASSWORD: $KEYCLOAK_PASSWORD
@@ -72,8 +97,14 @@ services:
       placement:
         constraints:
           - node.labels.type == database
+      restart_policy:
+        condition: on-failure
+        max_attempts: 3
   keycloak-init:
     logging: *default-logging
     environment:
       CLIENT_REDIRECT_URI: https://$DOMAIN/callback/*
       KEYCLOAK_PASSWORD: $KEYCLOAK_PASSWORD
+    deploy:
+      restart_policy:
+        condition: none
