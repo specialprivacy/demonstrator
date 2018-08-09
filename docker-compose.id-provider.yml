@@ -8,7 +8,7 @@ services:
       AUTH_CLIENT_SECRET: a0a8587f-4e33-466b-bf98-1c489b413b97
       AUTH_USERINFO_ENDPOINT: https://demonstrator-special.tenforce.com/auth/realms/master/protocol/openid-connect/userinfo
       AUTH_TOKEN_ENDPOINT: https://demonstrator-special.tenforce.com/auth/realms/master/protocol/openid-connect/token
-  demonstrator-log-generator:
+  log-generator:
     environment:
       KAFKA_TOPIC: application-logs
       KEYCLOAK_ENDPOINT: https://demonstrator-special.tenforce.com/auth

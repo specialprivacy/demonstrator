@@ -16,7 +16,7 @@ services:
     restart: on-failure:3
   consent-management-backend:
     restart: on-failure:3
-  data-controller-policy-management-frontend:
+  policy-admin-frontend:
     restart: on-failure:3
   compliance-checker:
     restart: on-failure:3
@@ -24,7 +24,7 @@ services:
       - "8080:8080"
   rethinkdb:
     restart: on-failure:3
-  demonstrator-log-generator:
+  log-generator:
     restart: always
   zookeeper:
     restart: on-failure:3

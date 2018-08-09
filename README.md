@@ -97,7 +97,7 @@ TODO: insert block and wire architecture diagram here.
 ### SPECIAL components
 These are the components which have been developed as part of the SPECIAL platform. The goal of the demonstrator is to show how they can be used in a real world scenario.
 * **consent-management-backend**  
-  The consent-management-backend is the primary entrypoint for all WP4 UIs. It offers a REST API to retrieve and update policies, both for data subjects and applications. It takes care of authentication, validation, keeping an audit log and informing other services. It uses rethinkdb as a database for its native streaming support.  
+  The consent-management-backend is the primary entrypoint for most WP4 UIs. It offers a REST API to retrieve and update policies, both for data subjects and applications. It takes care of authentication, validation, keeping an audit log and informing other services. It uses rethinkdb as a database for its native streaming support.  
   The code and more information can be found at TODO: create a repository
 * **compliance-checker**  
   The compliance checker is a stream processor which validates that processing log messages are compliant with a users policy. All data is picked from kafka topics and results are also written to a kafka topic. It implements the SPECIAL policy language and can use the standard HermiT reasoner or the custom SPECIAL algorithm. In the demonstrator this component is used to check compliance, but it can also be used for ex-ante checks.  
@@ -130,9 +130,9 @@ These components are custom written software specifically for this demonstrator.
   This service acts as a router and application load balancer. It acts as the entrypoint into the demonstrator, provides TLS termination and exposes the various services as one endpoint to the outside world. The routing is currently hardcoded for the demonstrator using [Caddy](https://caddyserver.com). In a future version we might replace this with [Traefik](https://traefik.io), which will allow the router to be configured based on data in the compose files.
 * **consent-management-frontend**  
   This is a simple CRUD UI which allows a user to update his or her consent. It is only provided for test purposes and not part of WP4 or any SPECIAL recommendations.
-* **data-controller-policy-management-frontend**  
+* **policy-admin-frontend**  
   This is a simple CRUD UI which allows an admin user to register and maintain applications and their policies into the system.
-* **demonstrator-log-generator**  
+* **log-generator**  
   This is a dummy line of business application. It will read the list of users from keycloak and listen to the configured application policies. It will generate a stream of processing events on kafka, not taking into account any consent that has been given.
 * **keycloak-init**  
   This is a simple program which will configure an empty keycloak instance. It will run once and then exit. If it detects keycloak has already been configured, it will do nothing. The configuration that will be loaded is included in this repository to make it easier to test the platform.

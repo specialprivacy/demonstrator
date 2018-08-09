@@ -40,7 +40,7 @@ services:
       AUTH_TOKEN_ENDPOINT: https://$DOMAIN/auth/realms/master/protocol/openid-connect/token
     deploy: *default-deploy
     logging: *default-logging
-  data-controller-policy-management-frontend:
+  policy-admin-frontend:
     deploy: *default-deploy
     logging: *default-logging
   compliance-checker:
@@ -55,7 +55,7 @@ services:
         condition: on-failure
         max_attempts: 3
     logging: *default-logging
-  demonstrator-log-generator:
+  log-generator:
     environment:
       KEYCLOAK_ENDPOINT: https://$DOMAIN/auth
     logging: *default-logging
