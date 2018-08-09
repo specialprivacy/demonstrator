@@ -68,6 +68,8 @@ services:
 
   demonstrator-log-generator:
     image: registry-special.tenforce.com/special/demonstrator-log-generator:latest
+    volumes:
+      - /etc/ssl/certs:/etc/ssl/certs:ro
     environment:
       RATE: 1s
       KAFKA_BROKER_LIST: kafka:9092
@@ -107,7 +109,6 @@ services:
       KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
       KAFKA_CREATE_TOPICS: application-logs:1:1,full-policies:1:1:compact,policies-audit:1:1,checked-application-logs:1:1
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
       - kafkalogs:/kafka
 
   # Keycloak (authentication) setup (should maybe go into an external deployment)
