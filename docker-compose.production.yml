@@ -27,6 +27,8 @@ services:
     ports:
       - "80:80"
       - "443:443"
+    volumes:
+      - caddycert:/root/.caddy/acme
     environment:
       DOMAIN: $DOMAIN
       EMAIL: $RECOVERY_EMAIL
@@ -107,3 +109,6 @@ services:
     deploy:
       restart_policy:
         condition: none
+
+volumes:
+  caddycert:
