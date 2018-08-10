@@ -40,6 +40,7 @@ services:
       AUTH_LOGIN_ENDPOINT: https://$DOMAIN/auth/realms/master/protocol/openid-connect/auth
       AUTH_USERINFO_ENDPOINT: https://$DOMAIN/auth/realms/master/protocol/openid-connect/userinfo
       AUTH_TOKEN_ENDPOINT: https://$DOMAIN/auth/realms/master/protocol/openid-connect/token
+      SERVER_AUTH_CALLBACK_ENDPOINT: https://$DOMAIN/callback
     deploy: *default-deploy
     logging: *default-logging
   policy-admin-frontend:
