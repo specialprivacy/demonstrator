@@ -11,7 +11,8 @@
     "clientId": "special-platform",
     "secret": "special-platform-secret",
     "redirectUris": [
-      "/callback/*"
+      "/callback/*",
+      "http://localhost/callback/*"
     ],
     "defaultRoles": [
       "admin",

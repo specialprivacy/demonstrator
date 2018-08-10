@@ -43,6 +43,7 @@ DOMAIN=localhost docker-compose -f docker-compose.yml -f docker-compose.override
 ```
 
 This will download all the necessary docker images, start all the services and make the demonstrator available on `http://localhost`
+Remark that the DOMAIN variable must be set to `localhost`, authentication will not work with any other value.
 
 #### Slightly Harder Way
 In order to run the demonstrator with a local identity provider, a hostname or IP address of the host machine needs to be passed in as the `DOMAIN` variable. How to obtain this value is operating system and context dependent. We will document how this can be done on a recent linux installation.
