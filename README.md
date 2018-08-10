@@ -49,14 +49,16 @@ Remark that the DOMAIN variable must be set to `localhost`, authentication will 
 In order to run the demonstrator with a local identity provider, a hostname or IP address of the host machine needs to be passed in as the `DOMAIN` variable. How to obtain this value is operating system and context dependent. We will document how this can be done on a recent linux installation.
 
 * Get the IP address
-  ```bash
-  ip address show eth0
-  ```
+
+    ```bash
+    ip address show eth0
+    ```
   where `eth0` is the name of the relevant network interface (for example wired, wireless or virtualbox).
 * Launch the demonstrator
-  ```bash
-  DOMAIN=192.168.0.17 docker-compose up
-  ```
+
+    ```bash
+    DOMAIN=192.168.0.17 docker-compose up
+    ```
 
 This will download all the necessary docker images, start all the services and make the demonstrator available on `http://192.168.0.17`
 
@@ -71,24 +73,28 @@ Deploying on a swarm cluster requires you to set the following environment varia
 Deploying the demonstrator on an existing docker swarm cluster is a four step process:
 1. Add labels for the data stores.  
   Even though the datastores can be sharded and failed over, the demonstrator currently does not contain the necessary configuration. The datastores are therefore pinned to specific hosts using node labels. All of the following key/value pairs need to be present on at least one node: `(type: rethinkdb)`, `(type: database)`, `(type: kafka)`
-  ```bash
-  docker node update --label-add type=rethinkdb swarmnode
-  ```
+
+    ```bash
+    docker node update --label-add type=rethinkdb swarmnode
+    ```
 2. Ensure the node you are deploying too has logged in to the special docker registry
-  ```bash
-  docker login -u special -p T4hMTggkUoxEJnwwT5B7yzB9 registry-special.tenforce.com
-  ```
+
+    ```bash
+    docker login -u special -p T4hMTggkUoxEJnwwT5B7yzB9 registry-special.tenforce.com
+    ```
 3. Merge the docker-compose files together
-  ```bash
-  RECOVERY_EMAIL=foo@example.com \
-  KEYCLOAK_PASSWORD=DVMswdsEtuk7Zs4t6PEKHrS8 \
-  DOMAIN=demonstrator-special.tenforce.com \
-  docker-compose -f docker-compose.yml -f docker-compose.production.yml config > stack.yml
-  ```
+
+    ```bash
+    RECOVERY_EMAIL=foo@example.com \
+    KEYCLOAK_PASSWORD=DVMswdsEtuk7Zs4t6PEKHrS8 \
+    DOMAIN=demonstrator-special.tenforce.com \
+    docker-compose -f docker-compose.yml -f docker-compose.production.yml config >   stack.yml
+    ```
 4. Deploy the stack onto the cluster
-  ```bash
-  docker stack deploy -c stack.yml --with-registry-auth special-demonstrator
-  ```
+
+    ```bash
+    docker stack deploy -c stack.yml --with-registry-auth special-demonstrator
+    ```
 
 ## Components
 This section aims to give a brief overview of the components and their function in the SPECIAL demonstrator. Where relevant, links to code repositories or additional documentation will be provided. The interested reader can find more information on the architecture in [deliverable D3.2 of the H2020 SPECIAL project](https://www.specialprivacy.eu/images/documents/SPECIAL_D3.2_M16_V1.0.pdf).
