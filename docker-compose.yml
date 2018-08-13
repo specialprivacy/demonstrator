@@ -4,7 +4,7 @@ services:
     image: registry-special.tenforce.com/special/mobile-frontend:1.0.0
 
   transparency-frontend:
-    image: registry-special.tenforce.com/special/demonstrator-transparency-frontend:1.0.0
+    image: registry-special.tenforce.com/special/demonstrator-transparency-frontend:1.0.1
 
   transparency-backend:
     image: registry-special.tenforce.com/special/kafka-sse-proxy:latest
@@ -28,10 +28,10 @@ services:
       MOBILE_FRONTEND: http://mobile-frontend
 
   consent-management-frontend:
-    image: registry-special.tenforce.com/special/demonstrator-consent-management-frontend:1.0.0
+    image: registry-special.tenforce.com/special/demonstrator-consent-management-frontend:1.0.1
 
   consent-management-backend:
-    image: registry-special.tenforce.com/special/consent-management-backend:1.0.0
+    image: registry-special.tenforce.com/special/consent-management-backend:1.0.2
     environment:
       SERVER_HOST: consent-management-backend # Please don't do this, just bind to 0.0.0.0 in the container
       SERVER_PORT: 80
@@ -48,7 +48,7 @@ services:
       SERVER_AUTH_CALLBACK_ENDPOINT: http://$DOMAIN/callback
 
   policy-admin-frontend:
-    image: registry-special.tenforce.com/special/demonstrator-policy-admin-frontend:1.0.0
+    image: registry-special.tenforce.com/special/demonstrator-policy-admin-frontend:1.0.2
 
   compliance-checker:
     image: registry-special.tenforce.com/special/compliance-checker:1.0.0
@@ -65,7 +65,7 @@ services:
       - rethinkdb:/data
 
   log-generator:
-    image: registry-special.tenforce.com/special/demonstrator-log-generator:1.0.2
+    image: registry-special.tenforce.com/special/demonstrator-log-generator:1.0.3
     environment:
       RATE: 1s
       KAFKA_BROKER_LIST: kafka:9092
