@@ -36,6 +36,8 @@ build:
 
 publish-github:
   stage: publish
+  variables:
+    GIT_STRATEGY: clone
   script:
     - eval $(ssh-agent -s)
     - echo "${SSH_PRIVATE_KEY}" | ssh-add /dev/stdin
@@ -47,6 +49,8 @@ publish-github:
 # Two seperate jobs so both remotes can be offline / fail without impacting the other sync job
 publish-vienna:
   stage: publish
+  variables:
+    GIT_STRATEGY: clone
   script:
     - eval $(ssh-agent -s)
     - echo "${SSH_PRIVATE_KEY}" | ssh-add /dev/stdin
