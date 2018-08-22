@@ -4,6 +4,7 @@ services:
 
 stages:
   - build
+  - publish
 
 variables:
   REGISTRY_ENDPOINT: registry-special.tenforce.com
@@ -32,3 +33,14 @@ build:
     - tag=$([ "${CI_COMMIT_REF_NAME}" = "master" ] && echo "latest" || echo "${CI_COMMIT_REF_NAME}")
     - docker build -t ${REGISTRY_IMAGE}:${tag} keycloak-init/
     - docker push ${REGISTRY_IMAGE}:${tag}
+
+publish-github:
+  stage: publish
+  script:
+    - eval $(ssh-agent -s)
+    - echo "${SSH_PRIVATE_KEY}" | ssh-add /dev/stdin
+    - mkdir -p ~/.ssh
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+    - git push ${GITHUB_REMOTE} master
+  only:
+    - master
