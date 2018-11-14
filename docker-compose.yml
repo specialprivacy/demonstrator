@@ -7,7 +7,7 @@ services:
     image: registry-special.tenforce.com/special/demonstrator-transparency-frontend:1.0.1
 
   transparency-backend:
-    image: registry-special.tenforce.com/special/kafka-sse-proxy:latest
+    image: registry-special.tenforce.com/special/kafka-sse-proxy:1.0.0
     environment:
       BROKERS: kafka:9092
       TOPIC: checked-application-logs
