@@ -48,7 +48,7 @@ services:
       SERVER_AUTH_CALLBACK_ENDPOINT: http://$DOMAIN/callback
 
   policy-admin-frontend:
-    image: registry-special.tenforce.com/special/demonstrator-policy-admin-frontend:1.0.2
+    image: registry-special.tenforce.com/special/demonstrator-policy-admin-frontend:1.0.3
 
   compliance-checker:
     image: registry-special.tenforce.com/special/compliance-checker:1.0.0
