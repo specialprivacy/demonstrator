@@ -126,11 +126,9 @@ services:
     volumes:
       - keycloakdb:/var/lib/postgresql/data
   keycloak-init:
-    image: registry.tenforce.com/docker/xdc/keycloak-initializer-service:0.0.2
+    image: registry.tenforce.com/docker/xdc/keycloak-initializer-service:special
     environment:
       DOMAIN: $DOMAIN
-    volumes:
-      - ./config.js:/usr/src/app/config.js
 
 volumes:
   keycloakdb:
