@@ -37,9 +37,9 @@ services:
   consent-management-backend:
     environment:
       AUTH_CLIENT_SECRET: special-platform-secret
-      AUTH_LOGIN_ENDPOINT: https://$DOMAIN/auth/realms/master/protocol/openid-connect/auth
-      AUTH_USERINFO_ENDPOINT: https://$DOMAIN/auth/realms/master/protocol/openid-connect/userinfo
-      AUTH_TOKEN_ENDPOINT: https://$DOMAIN/auth/realms/master/protocol/openid-connect/token
+      AUTH_LOGIN_ENDPOINT: https://$DOMAIN/auth/realms/special/protocol/openid-connect/auth
+      AUTH_USERINFO_ENDPOINT: https://$DOMAIN/auth/realms/special/protocol/openid-connect/userinfo
+      AUTH_TOKEN_ENDPOINT: https://$DOMAIN/auth/realms/special/protocol/openid-connect/token
       SERVER_AUTH_CALLBACK_ENDPOINT: https://$DOMAIN/callback
     deploy: *default-deploy
     logging: *default-logging
@@ -61,6 +61,8 @@ services:
   log-generator:
     environment:
       KEYCLOAK_ENDPOINT: https://$DOMAIN/auth
+      KEYCLOAK_CLIENT_SECRET: $KEYCLOAK_CLIENT_SECRET
+      KEYCLOAK_PASSWORD: $KEYCLOAK_GENERATOR_PASSWORD
     logging: *default-logging
     deploy:
       restart_policy:
@@ -105,8 +107,9 @@ services:
   keycloak-init:
     logging: *default-logging
     environment:
-      CLIENT_REDIRECT_URI: https://$DOMAIN/callback/*
+      KEYCLOAK_CLIENT_SECRET: $KEYCLOAK_CLIENT_SECRET
       KEYCLOAK_PASSWORD: $KEYCLOAK_PASSWORD
+      KEYCLOAK_GENERATOR_PASSWORD: $KEYCLOAK_GENERATOR_PASSWORD
     deploy:
       restart_policy:
         condition: none

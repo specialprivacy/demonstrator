@@ -35,5 +35,4 @@ services:
   postgres:
     restart: on-failure:3
   keycloak-init:
-    build: keycloak-init/
     restart: "no"

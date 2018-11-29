@@ -40,11 +40,11 @@ services:
       KAFKA_BROKER_LIST: kafka:9092
       CHANGE_LOGS_TOPIC: policies-audit
       FULL_POLICIES_TOPIC: full-policies
-      AUTH_LOGIN_ENDPOINT: http://$DOMAIN/auth/realms/master/protocol/openid-connect/auth
+      AUTH_LOGIN_ENDPOINT: http://$DOMAIN/auth/realms/special/protocol/openid-connect/auth
       AUTH_CLIENT_ID: special-platform
       AUTH_CLIENT_SECRET: special-platform-secret
-      AUTH_USERINFO_ENDPOINT: http://$DOMAIN/auth/realms/master/protocol/openid-connect/userinfo
-      AUTH_TOKEN_ENDPOINT: http://$DOMAIN/auth/realms/master/protocol/openid-connect/token
+      AUTH_USERINFO_ENDPOINT: http://$DOMAIN/auth/realms/special/protocol/openid-connect/userinfo
+      AUTH_TOKEN_ENDPOINT: http://$DOMAIN/auth/realms/special/protocol/openid-connect/token
       SERVER_AUTH_CALLBACK_ENDPOINT: http://$DOMAIN/callback
 
   policy-admin-frontend:
@@ -65,7 +65,7 @@ services:
       - rethinkdb:/data
 
   log-generator:
-    image: registry-special.tenforce.com/special/demonstrator-log-generator:1.0.4
+    image: registry-special.tenforce.com/special/demonstrator-log-generator:1.0.6
     environment:
       RATE: 1s
       KAFKA_BROKER_LIST: kafka:9092
@@ -126,12 +126,11 @@ services:
     volumes:
       - keycloakdb:/var/lib/postgresql/data
   keycloak-init:
-    image: registry-special.tenforce.com/special/keycloak-init:latest
+    image: registry.tenforce.com/docker/xdc/keycloak-initializer-service:0.0.2
     environment:
-      KEYCLOAK_URL: http://keycloak:8080/auth
-      KEYCLOAK_USER: keycloak
-      KEYCLOAK_PASSWORD: keycloak
-      CLIENT_REDIRECT_URI: http://$DOMAIN/callback/*
+      DOMAIN: $DOMAIN
+    volumes:
+      - ./config.js:/usr/src/app/config.js
 
 volumes:
   keycloakdb:
