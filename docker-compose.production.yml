@@ -107,6 +107,7 @@ services:
   keycloak-init:
     logging: *default-logging
     environment:
+      KEYCLOAK_ENDPOINT: https://$DOMAIN/auth
       KEYCLOAK_CLIENT_SECRET: $KEYCLOAK_CLIENT_SECRET
       KEYCLOAK_PASSWORD: $KEYCLOAK_PASSWORD
       KEYCLOAK_GENERATOR_PASSWORD: $KEYCLOAK_GENERATOR_PASSWORD

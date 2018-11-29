@@ -128,7 +128,7 @@ services:
   keycloak-init:
     image: registry.tenforce.com/docker/xdc/keycloak-initializer-service:special
     environment:
-      DOMAIN: $DOMAIN
+      KEYCLOAK_ENDPOINT: http://$DOMAIN/auth
 
 volumes:
   keycloakdb:
