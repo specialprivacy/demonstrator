@@ -36,7 +36,7 @@ services:
     logging: *default-logging
   consent-management-backend:
     environment:
-      AUTH_CLIENT_SECRET: special-platform-secret
+      AUTH_CLIENT_SECRET: $KEYCLOAK_CLIENT_SECRET
       AUTH_LOGIN_ENDPOINT: https://$DOMAIN/auth/realms/special/protocol/openid-connect/auth
       AUTH_USERINFO_ENDPOINT: https://$DOMAIN/auth/realms/special/protocol/openid-connect/userinfo
       AUTH_TOKEN_ENDPOINT: https://$DOMAIN/auth/realms/special/protocol/openid-connect/token
