@@ -67,7 +67,7 @@ services:
   log-generator:
     image: registry-special.tenforce.com/special/demonstrator-log-generator:1.0.6
     environment:
-      RATE: 1s
+      RATE: 2s
       KAFKA_BROKER_LIST: kafka:9092
       KAFKA_TOPIC: application-logs
       KEYCLOAK_ENDPOINT: http://$DOMAIN/auth
