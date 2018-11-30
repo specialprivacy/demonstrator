@@ -126,7 +126,7 @@ services:
     volumes:
       - keycloakdb:/var/lib/postgresql/data
   keycloak-init:
-    image: registry.tenforce.com/docker/xdc/keycloak-initializer-service:special
+    image: registry-special.tenforce.com/special/keycloak-initializer:special
     environment:
       KEYCLOAK_ENDPOINT: http://$DOMAIN/auth
 
