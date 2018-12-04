@@ -3,16 +3,17 @@ version: "3.4"
 services:
   consent-management-backend:
     environment:
-      AUTH_LOGIN_ENDPOINT: https://demonstrator-special.tenforce.com/auth/realms/master/protocol/openid-connect/auth
+      AUTH_LOGIN_ENDPOINT: https://demonstrator-special.tenforce.com/auth/realms/special/protocol/openid-connect/auth
       AUTH_CLIENT_ID: special-platform
-      AUTH_CLIENT_SECRET: special-platform-secret
-      AUTH_USERINFO_ENDPOINT: https://demonstrator-special.tenforce.com/auth/realms/master/protocol/openid-connect/userinfo
-      AUTH_TOKEN_ENDPOINT: https://demonstrator-special.tenforce.com/auth/realms/master/protocol/openid-connect/token
+      AUTH_CLIENT_SECRET: $KEYCLOAK_CLIENT_SECRET
+      AUTH_USERINFO_ENDPOINT: https://demonstrator-special.tenforce.com/auth/realms/special/protocol/openid-connect/userinfo
+      AUTH_TOKEN_ENDPOINT: https://demonstrator-special.tenforce.com/auth/realms/special/protocol/openid-connect/token
   log-generator:
     environment:
       KAFKA_TOPIC: application-logs
       KEYCLOAK_ENDPOINT: https://demonstrator-special.tenforce.com/auth
-
+      KEYCLOAK_CLIENT_SECRET: $KEYCLOAK_CLIENT_SECRET
+      KEYCLOAK_PASSWORD: $KEYCLOAK_GENERATOR_PASSWORD
   keycloak:
     image: alpine
     command: echo "Using identity provider at demonstrator-special.tenforce.com. Not launching keycloak"

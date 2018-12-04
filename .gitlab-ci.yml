@@ -27,13 +27,6 @@ validate:
     # Validate swarm deploy
     - DOMAIN=test.example.com KEYCLOAK_PASSWORD=test RECOVERY_EMAIL=test@example.com docker-compose -f docker-compose.yml -f docker-compose.production.yml config
 
-build:
-  stage: build
-  script:
-    - tag=$([ "${CI_COMMIT_REF_NAME}" = "master" ] && echo "latest" || echo "${CI_COMMIT_REF_NAME}")
-    - docker build -t ${REGISTRY_IMAGE}:${tag} keycloak-init/
-    - docker push ${REGISTRY_IMAGE}:${tag}
-
 publish-github:
   stage: publish
   variables:
