@@ -23,7 +23,7 @@ services:
       CONSENT_UI: http://consent-management-frontend
       TRANSPARENCY_UI: http://transparency-frontend
       TRANSPARENCY_BACKEND: http://transparency-backend
-      CONSENT_MANAGEMENT_BACKEND: http://consent-management-backend
+      CONSENT_MANAGEMENT_BACKEND: http://consent-management-backend-mongo:3030
       KEYCLOAK: http://keycloak:8080
       MOBILE_FRONTEND: http://mobile-frontend
 
@@ -47,6 +47,31 @@ services:
       AUTH_TOKEN_ENDPOINT: http://$DOMAIN/auth/realms/master/protocol/openid-connect/token
       SERVER_AUTH_CALLBACK_ENDPOINT: http://$DOMAIN/callback
 
+  consent-management-backend-mongo:
+    build: ./consent-management-backend-mongo
+    environment:
+      SERVER_HOST: consent-management-backend-mongo # Please don't do this, just bind to 0.0.0.0 in the container
+      SERVER_PORT: 3030
+      KAFKA_BROKER_LIST: kafka:9092
+      CHANGE_LOGS_TOPIC: policies-audit
+      FULL_POLICIES_TOPIC: full-policies
+      AUTH_LOGIN_ENDPOINT: http://$DOMAIN/auth/realms/master/protocol/openid-connect/auth
+      AUTH_CLIENT_ID: special-platform
+      AUTH_CLIENT_SECRET: special-platform-secret
+      AUTH_USERINFO_ENDPOINT: http://$DOMAIN/auth/realms/master/protocol/openid-connect/userinfo
+      AUTH_TOKEN_ENDPOINT: http://$DOMAIN/auth/realms/master/protocol/openid-connect/token
+      SERVER_AUTH_CALLBACK_ENDPOINT: http://$DOMAIN/callback
+    depends_on:
+      - mongo-rs-setup
+      
+  mongo-db:
+    build: ./mongo-db
+
+  mongo-rs-setup:
+    build: ./mongo-rs-setup
+    depends_on:
+      - mongo-db
+
   policy-admin-frontend:
     image: registry-special.tenforce.com/special/demonstrator-policy-admin-frontend:1.0.3
 
@@ -59,6 +84,8 @@ services:
       KAFKA_TOPIC_ACCESS: "application-logs"
       KAFKA_TOPIC_CONSENT: "checked-application-logs"
 
+  # This won't be used when the consent-management-backend service
+  # is replaced by the one using mongo as db
   rethinkdb:
     image: rethinkdb:2.3
     volumes:
