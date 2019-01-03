@@ -23,7 +23,7 @@ services:
       CONSENT_UI: http://consent-management-frontend
       TRANSPARENCY_UI: http://transparency-frontend
       TRANSPARENCY_BACKEND: http://transparency-backend
-      CONSENT_MANAGEMENT_BACKEND: http://consent-management-backend-mongo:3030
+      CONSENT_MANAGEMENT_BACKEND: http://consent-management-backend
       KEYCLOAK: http://keycloak:8080
       MOBILE_FRONTEND: http://mobile-frontend
 
