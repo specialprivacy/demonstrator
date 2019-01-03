@@ -46,23 +46,6 @@ services:
       AUTH_USERINFO_ENDPOINT: http://$DOMAIN/auth/realms/special/protocol/openid-connect/userinfo
       AUTH_TOKEN_ENDPOINT: http://$DOMAIN/auth/realms/special/protocol/openid-connect/token
       SERVER_AUTH_CALLBACK_ENDPOINT: http://$DOMAIN/callback
-
-  consent-management-backend-mongo:
-    build: ./consent-management-backend-mongo
-    environment:
-      SERVER_HOST: consent-management-backend-mongo # Please don't do this, just bind to 0.0.0.0 in the container
-      SERVER_PORT: 3030
-      KAFKA_BROKER_LIST: kafka:9092
-      CHANGE_LOGS_TOPIC: policies-audit
-      FULL_POLICIES_TOPIC: full-policies
-      AUTH_LOGIN_ENDPOINT: http://$DOMAIN/auth/realms/master/protocol/openid-connect/auth
-      AUTH_CLIENT_ID: special-platform
-      AUTH_CLIENT_SECRET: special-platform-secret
-      AUTH_USERINFO_ENDPOINT: http://$DOMAIN/auth/realms/master/protocol/openid-connect/userinfo
-      AUTH_TOKEN_ENDPOINT: http://$DOMAIN/auth/realms/master/protocol/openid-connect/token
-      SERVER_AUTH_CALLBACK_ENDPOINT: http://$DOMAIN/callback
-    depends_on:
-      - mongo-rs-setup
       
   mongo-db:
     build: ./mongo-db
