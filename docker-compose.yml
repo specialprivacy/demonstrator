@@ -47,13 +47,6 @@ services:
       AUTH_TOKEN_ENDPOINT: http://$DOMAIN/auth/realms/special/protocol/openid-connect/token
       SERVER_AUTH_CALLBACK_ENDPOINT: http://$DOMAIN/callback
       
-  mongo-db:
-    build: ./mongo-db
-
-  mongo-rs-setup:
-    build: ./mongo-rs-setup
-    depends_on:
-      - mongo-db
 
   policy-admin-frontend:
     image: registry-special.tenforce.com/special/demonstrator-policy-admin-frontend:1.0.3
@@ -67,8 +60,6 @@ services:
       KAFKA_TOPIC_ACCESS: "application-logs"
       KAFKA_TOPIC_CONSENT: "checked-application-logs"
 
-  # This won't be used when the consent-management-backend service
-  # is replaced by the one using mongo as db
   rethinkdb:
     image: rethinkdb:2.3
     volumes:
