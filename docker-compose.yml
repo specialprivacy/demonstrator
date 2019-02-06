@@ -31,7 +31,7 @@ services:
     image: registry-special.tenforce.com/special/demonstrator-consent-management-frontend:1.0.1
 
   consent-management-backend:
-    image: registry-special.tenforce.com/special/consent-management-backend:1.0.5
+    image: registry-special.tenforce.com/special/consent-management-backend:1.0.6
     environment:
       SERVER_HOST: consent-management-backend # Please don't do this, just bind to 0.0.0.0 in the container
       SERVER_PORT: 80
