@@ -1,4 +1,5 @@
 version: '3.4'
+
 services:
   mobile-frontend:
     restart: on-failure:3

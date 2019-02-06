@@ -1,4 +1,5 @@
-version: '3.4'
+version: "3.4"
+
 services:
   mobile-frontend:
     image: registry-special.tenforce.com/special/mobile-frontend:1.0.0
@@ -18,7 +19,7 @@ services:
       - "80:80"
     environment:
       DOMAIN: $DOMAIN:80
-      EMAIL: 'off'
+      EMAIL: "off"
       POLICY_CRUD_UI: http://policy-admin-frontend
       CONSENT_UI: http://consent-management-frontend
       TRANSPARENCY_UI: http://transparency-frontend
@@ -47,7 +48,6 @@ services:
       AUTH_TOKEN_ENDPOINT: http://$DOMAIN/auth/realms/special/protocol/openid-connect/token
       SERVER_AUTH_CALLBACK_ENDPOINT: http://$DOMAIN/callback
       
-
   policy-admin-frontend:
     image: registry-special.tenforce.com/special/demonstrator-policy-admin-frontend:1.0.3
 
@@ -117,7 +117,8 @@ services:
       KEYCLOAK_PASSWORD: keycloak
       DB_VENDOR: POSTGRES
       DB_PASSWORD: keycloak
-      PROXY_ADDRESS_FORWARDING: 'true'
+      PROXY_ADDRESS_FORWARDING: "true"
+      
   postgres:
     image: postgres:9-alpine
     environment:
@@ -126,6 +127,7 @@ services:
       POSTGRES_PASSWORD: keycloak
     volumes:
       - keycloakdb:/var/lib/postgresql/data
+
   keycloak-init:
     image: registry-special.tenforce.com/special/keycloak-initializer:special
     environment:
