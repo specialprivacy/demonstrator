@@ -148,6 +148,7 @@ services:
       - KONG_DATABASE=cassandra
       - KONG_PG_HOST=kong-database
       - KONG_CASSANDRA_CONTACT_POINTS=kong-database
+    # xxx maybe better idea to move this command to the run of the docker itself?
     command: ["./wait-for-it.sh", "kong-database:9042", "-t", "0", "--", "kong", "migrations", "bootstrap"]
 
   kong:
@@ -165,14 +166,31 @@ services:
       KONG_ADMIN_LISTEN_SSL: "0.0.0.0:8444"
       KONG_PROXY_ACCESS_LOG: /dev/stdout
       KONG_PROXY_ERROR_LOG: /dev/stderr
-    links:
-      - kong-database:kong-database
+      KONG_PLUGINS: oidc
     ports:
       - 8000:8000
       - 8001:8001
       - 8443:8443
       - 8444:8444
-    command: ["./wait-for-stop.sh", "-h", "kong-database-migrations", "--", "kong", "start"]
+    # xxx maybe better idea to move this command to the run of the docker itself?
+    command: ["./wait-for-stop.sh", "-h", "kong-database-migrations", "--", "kong", "start", "--nginx-conf", "custom_nginx.template"]
+    
+  kong-config:
+    build: ./kong-config
+    depends_on:
+      - kong
+    # xxx maybe better idea to move this command to the run of the docker itself?
+    command: ["./wait-for-it.sh", "kong:8001", "-t", "0", "--", "gongfig", "import", "--url=http://localhost:8001", "--file", "/config.json"]
+    
+  # once we have a successful Kong setup, this service is probably not necessary anymore
+  konga:
+    image: pantsel/konga
+    ports:
+      - 1337:1337
+    volumes:
+      - /var/data/kongadata:/app/kongadata
+    environment:
+      NODE_ENV: production
 
 volumes:
   keycloakdb:
