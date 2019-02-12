@@ -8,7 +8,7 @@ RUN chmod +x /wait-for-stop.sh
 
 COPY custom_nginx.template /custom_nginx.template
 
-COPY landingpage /landingpage
+COPY special /special
 
 # install kong OpenID Connect plugin
 RUN luarocks install kong-oidc

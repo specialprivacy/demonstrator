@@ -100,9 +100,9 @@ http {
         
         # here, we declare our custom location serving our website
         # (or API portal) which we can optimize for serving static assets
-        location / {
-            root /landingpage;
-            index index.htm index.html;
+        location = / {
+            root /special;
+            index index.html;
         }
   
         # injected nginx_proxy_* directives
