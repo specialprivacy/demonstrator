@@ -162,7 +162,7 @@ services:
     build: ./kong-config
     depends_on:
       - kong
-    command: ["./wait-for-it.sh", "kong:8001", "-t", "0", "--", "gongfig", "import", "--url=http://localhost:8001", "--file", "/config.json"]
+    command: ["./wait-for-it.sh", "kong:8001", "-t", "0", "--", "gongfig", "import", "--url=http://kong:8001", "--file", "/config.json"]
     
   konga:
     image: pantsel/konga
