@@ -11,8 +11,6 @@ services:
     restart: on-failure:3
     ports:
       - "82:80"
-  dispatcher:
-    restart: on-failure:3
   consent-management-frontend:
     restart: on-failure:3
   consent-management-backend:
