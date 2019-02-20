@@ -56,7 +56,7 @@ services:
       RATE: 2s
       KAFKA_BROKER_LIST: kafka:9092
       KAFKA_TOPIC: application-logs
-      KEYCLOAK_ENDPOINT: http://$DOMAIN/auth
+      KEYCLOAK_ENDPOINT: http://$DOMAIN:8000/auth
       KEYCLOAK_USER: demonstrator-generator
       KEYCLOAK_PASSWORD: demonstrator-generator
       BACKEND_ENDPOINT: http://consent-management-backend
@@ -116,7 +116,7 @@ services:
   keycloak-init:
     image: registry-special.tenforce.com/special/keycloak-initializer:special
     environment:
-      KEYCLOAK_ENDPOINT: http://$DOMAIN/auth
+      KEYCLOAK_ENDPOINT: http://$DOMAIN:8000/auth
       
   kong-database:
     image: cassandra:2.2.13

@@ -12,4 +12,4 @@ RUN go get "github.com/romanovskyj/gongfig"
 COPY wait-for-it.sh /wait-for-it.sh
 RUN chmod +x /wait-for-it.sh
 
-COPY config.json /config.json
+COPY config.yaml /config.yaml
