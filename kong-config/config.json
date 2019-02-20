@@ -3,7 +3,6 @@
   "consumers": null,
   "plugins": [
     {
-      "id": "51edbe38-ce00-4486-b14c-a2d3a274438b",
       "name": "oidc",
       "config": {
         "bearer_only": "no",
@@ -29,7 +28,6 @@
   ],
   "services": [
     {
-      "id": "b37cb5f1-14a7-42ad-94ff-3355b595fb34",
       "name": "ConsentManagementBackend",
       "host": "consent-management-backend",
       "port": 80,
@@ -39,7 +37,6 @@
       "write_timeout": 60000,
       "routes": [
         {
-          "id": "dcceb564-314f-45c0-a78e-22edd24c69f8",
           "paths": null,
           "strip_path": false,
           "preserve_host": false,
@@ -59,7 +56,6 @@
       ]
     },
     {
-      "id": "466b0357-f747-4144-9656-b34c7173d601",
       "name": "ConsentManagementFrontend",
       "host": "consent-management-frontend",
       "port": 80,
@@ -69,7 +65,6 @@
       "write_timeout": 60000,
       "routes": [
         {
-          "id": "77f03e4c-6780-4dde-9e71-aa495dc9dc15",
           "paths": [
             "/consent"
           ],
@@ -86,7 +81,6 @@
       ]
     },
     {
-      "id": "360352c0-269c-4ce9-9267-544b9a5e433b",
       "name": "MobileFrontend",
       "host": "mobile-frontend",
       "port": 80,
@@ -96,7 +90,6 @@
       "write_timeout": 60000,
       "routes": [
         {
-          "id": "2edca954-8f2c-46f9-9323-aa68555f7238",
           "paths": [
             "/mobile"
           ],
@@ -114,7 +107,6 @@
       ]
     },
     {
-      "id": "26d29d44-7c22-4d93-b2d0-476bfed5e1e8",
       "name": "PolicyAdminFrontend",
       "host": "policy-admin-frontend",
       "port": 80,
@@ -124,7 +116,6 @@
       "write_timeout": 60000,
       "routes": [
         {
-          "id": "9fb1c986-3ea4-456e-be20-fa15cb9e37d6",
           "paths": [
             "/policy-crud"
           ],
@@ -141,7 +132,6 @@
       ]
     },
     {
-      "id": "b79e5540-7d55-4f26-a4a4-2cd30b22749d",
       "name": "TransparencyBackend",
       "host": "transparency-backend",
       "port": 80,
@@ -151,7 +141,6 @@
       "write_timeout": 60000
     },
     {
-      "id": "f4d1ba35-574f-4b5f-925d-2239007f5085",
       "name": "TransparencyFrontend",
       "host": "transparency-frontend",
       "port": 80,
@@ -161,7 +150,6 @@
       "write_timeout": 60000,
       "routes": [
         {
-          "id": "9b9d1376-1968-4b30-bdf1-0fe75b3062f2",
           "paths": [
             "/transparency"
           ],
