@@ -114,9 +114,11 @@ services:
       - keycloakdb:/var/lib/postgresql/data
 
   keycloak-init:
-    image: registry-special.tenforce.com/special/keycloak-initializer:special
+#    image: registry-special.tenforce.com/special/keycloak-initializer:special
+    build: ./keycloak-initializer
     environment:
       KEYCLOAK_ENDPOINT: http://$DOMAIN:8000/auth
+    command: ["./wait-for-stop.sh", "-h", "kong-config", "--", "npm", "start"]
       
   kong-database:
     image: cassandra:2.2.13
@@ -162,7 +164,7 @@ services:
     build: ./kong-config
     depends_on:
       - kong
-    command: ["./wait-for-it.sh", "kong:8001", "-t", "0", "--", "gongfig", "import", "--url=http://kong:8001", "--file", "/config.json"]
+    command: ["./wait-for-it.sh", "kong:8001", "-t", "5", "--", "gongfig", "import", "--url=http://kong:8001", "--file", "/config.yaml"]
     
   konga:
     image: pantsel/konga

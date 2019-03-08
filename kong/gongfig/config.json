@@ -1,10 +1,63 @@
 {
     "certificates": null,
     "consumers": null,
-    "plugins": null,
+    "plugins": [
+        {
+            "name": "oidc",
+            "config": {
+                "bearer_only": "no",
+                "client_id": "special-platform",
+                "client_secret": "84be2f39-35dd-4976-89db-57285eadf30e",
+                "discovery": "https://demonstrator-special.tenforce.com/auth/realms/special/.well-known/openid-configuration",
+                "filters": null,
+                "introspection_endpoint": "null",
+                "introspection_endpoint_auth_method": null,
+                "logout_path": "/logout",
+                "realm": "special",
+                "recovery_page_path": null,
+                "redirect_after_logout_uri": "/",
+                "redirect_uri_path": "/",
+                "response_type": "code",
+                "scope": "all openid",
+                "session_secret": null,
+                "ssl_verify": "no",
+                "token_endpoint_auth_method": "client_secret_post"
+            },
+            "enabled": true
+        }
+    ],
     "services": [
         {
-            "id": "a57dd0e5-c405-4091-aeca-07a9c18e1dd2",
+            "name": "Keycloak",
+            "host": "keycloak",
+            "port": 8080,
+            "protocol": "http",
+            "connect_timeout": 60000,
+            "read_timeout": 60000,
+            "write_timeout": 60000,
+            "routes": [
+                {
+                    "paths": [
+                        "/auth"
+                    ],
+                    "strip_path": false,
+                    "preserve_host": false,
+                    "regex_priority": 0,
+                    "hosts": null,
+                    "protocols": [
+                        "http",
+                        "https"
+                    ],
+                    "methods": [
+                        "DELETE",
+                        "GET",
+                        "POST",
+                        "PUT"
+                    ]
+                }
+            ]
+        },
+        {
             "name": "ConsentManagementBackend",
             "host": "consent-management-backend",
             "port": 80,
@@ -14,7 +67,6 @@
             "write_timeout": 60000,
             "routes": [
                 {
-                    "id": "013b2cb2-3e17-46a9-803d-717d3d043322",
                     "paths": null,
                     "strip_path": false,
                     "preserve_host": false,
@@ -25,44 +77,15 @@
                         "https"
                     ],
                     "methods": [
+                        "DELETE",
                         "GET",
+                        "POST",
                         "PUT"
-                    ]
-                },
-                {
-                    "id": "690a418e-1382-46f3-bf76-affa7b243aeb",
-                    "paths": null,
-                    "strip_path": false,
-                    "preserve_host": false,
-                    "regex_priority": 0,
-                    "hosts": null,
-                    "protocols": [
-                        "http",
-                        "https"
-                    ],
-                    "methods": [
-                        "GET"
-                    ]
-                },
-                {
-                    "id": "d4e67798-f3ee-4434-8b50-a4acead66a04",
-                    "paths": null,
-                    "strip_path": false,
-                    "preserve_host": false,
-                    "regex_priority": 0,
-                    "hosts": null,
-                    "protocols": [
-                        "http",
-                        "https"
-                    ],
-                    "methods": [
-                        "GET"
                     ]
                 }
             ]
         },
         {
-            "id": "9c9a39fa-2cc7-4f79-9318-99d0b60b42c0",
             "name": "ConsentManagementFrontend",
             "host": "consent-management-frontend",
             "port": 80,
@@ -72,7 +95,6 @@
             "write_timeout": 60000,
             "routes": [
                 {
-                    "id": "24269e12-86fd-40b5-a657-91b5c842f773",
                     "paths": [
                         "/consent"
                     ],
@@ -89,17 +111,6 @@
             ]
         },
         {
-            "id": "c08b5922-1c39-4970-9675-ac2456d34fc6",
-            "name": "Keycloak",
-            "host": "keycloak",
-            "port": 8080,
-            "protocol": "http",
-            "connect_timeout": 60000,
-            "read_timeout": 60000,
-            "write_timeout": 60000
-        },
-        {
-            "id": "667fc6e8-c546-4c57-bcbb-f232524245f5",
             "name": "MobileFrontend",
             "host": "mobile-frontend",
             "port": 80,
@@ -109,7 +120,6 @@
             "write_timeout": 60000,
             "routes": [
                 {
-                    "id": "81dacbb5-6b6d-4b9f-adb6-7febfaaa69a5",
                     "paths": [
                         "/mobile"
                     ],
@@ -127,7 +137,6 @@
             ]
         },
         {
-            "id": "af3acb7a-3637-4341-8a9a-614c0124beee",
             "name": "PolicyAdminFrontend",
             "host": "policy-admin-frontend",
             "port": 80,
@@ -137,7 +146,6 @@
             "write_timeout": 60000,
             "routes": [
                 {
-                    "id": "df1e7505-df3d-4b5c-9cb0-0a614fe4abd6",
                     "paths": [
                         "/policy-crud"
                     ],
@@ -154,7 +162,6 @@
             ]
         },
         {
-            "id": "df840f5b-8a5a-4336-8e36-c3eda925b540",
             "name": "TransparencyBackend",
             "host": "transparency-backend",
             "port": 80,
@@ -164,7 +171,6 @@
             "write_timeout": 60000
         },
         {
-            "id": "2619053f-87d6-40c7-8ff3-e08747e62cfc",
             "name": "TransparencyFrontend",
             "host": "transparency-frontend",
             "port": 80,
@@ -174,11 +180,9 @@
             "write_timeout": 60000,
             "routes": [
                 {
-                    "id": "309f9a11-c667-4974-aac7-22f5eb63a3dd",
                     "paths": [
                         "/transparency"
                     ],
-                    "name": "test.transparency.name",
                     "strip_path": true,
                     "preserve_host": false,
                     "regex_priority": 0,
