@@ -114,8 +114,7 @@ services:
       - keycloakdb:/var/lib/postgresql/data
 
   keycloak-init:
-#    image: registry-special.tenforce.com/special/keycloak-initializer:special
-    build: ./keycloak-initializer
+   image: registry-special.tenforce.com/special/keycloak-initializer:special
     environment:
       KEYCLOAK_ENDPOINT: http://$DOMAIN:8000/auth
     command: ["./wait-for-stop.sh", "-h", "kong-config", "--", "npm", "start"]
@@ -128,7 +127,7 @@ services:
       - 9042:9042
       
   kong-database-migrations:
-    build: ./kong-database-migrations
+    image: registry-special.tenforce.com/special/kong-database-migrations:v0.0.1
     depends_on:
       - kong-database
     environment:
@@ -138,7 +137,7 @@ services:
     command: ["./wait-for-it.sh", "kong-database:9042", "-t", "0", "--", "kong", "migrations", "bootstrap"]
 
   kong:
-    build: ./kong
+    image: registry-special.tenforce.com/special/kong:v0.0.1
     depends_on:
       - kong-database
       - kong-database-migrations
@@ -161,7 +160,7 @@ services:
     command: ["./wait-for-stop.sh", "-h", "kong-database-migrations", "--", "kong", "start"]
     
   kong-config:
-    build: ./kong-config
+    image: registry-special.tenforce.com/special/kong-configuration:v0.0.1
     depends_on:
       - kong
     command: ["./wait-for-it.sh", "kong:8001", "-t", "5", "--", "gongfig", "import", "--url=http://kong:8001", "--file", "/config.yaml"]
