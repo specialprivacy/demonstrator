@@ -35,3 +35,7 @@ services:
     restart: on-failure:3
   kong:
     restart: on-failure:3
+  kong-config:
+    volumes:
+    - ./kong_config.json:/config.json
+
