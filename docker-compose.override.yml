@@ -21,8 +21,6 @@ services:
     restart: on-failure:3
   compliance-checker:
     restart: on-failure:3
-    ports:
-      - "8080:8080"
   rethinkdb:
     restart: on-failure:3
   zookeeper:
