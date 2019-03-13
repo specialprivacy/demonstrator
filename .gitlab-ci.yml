@@ -21,11 +21,9 @@ validate:
     entrypoint: [""]
   script:
     # Validate regular local deploy
-    - DOMAIN=localhost docker-compose config
-    # Validate local deploy with remote identity provider
-    - DOMAIN=localhost docker-compose -f docker-compose.yml -f docker-compose.override.yml -f docker-compose.id-provider.yml config
+    - KEYCLOAK_ENDPOINT=localhost docker-compose config
     # Validate swarm deploy
-    - DOMAIN=test.example.com KEYCLOAK_PASSWORD=test RECOVERY_EMAIL=test@example.com docker-compose -f docker-compose.yml -f docker-compose.production.yml config
+    - KEYCLOAK_ENDPOINT=test.example.com KEYCLOAK_PASSWORD=test RECOVERY_EMAIL=test@example.com docker-compose -f docker-compose.yml -f docker-compose.production.yml config
 
 publish-github:
   stage: publish

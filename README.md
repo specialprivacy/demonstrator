@@ -152,3 +152,5 @@ These components are custom written software specifically for this demonstrator.
   This is a simple program which will configure an empty keycloak instance. It will run once and then exit. If it detects keycloak has already been configured, it will do nothing. The configuration that will be loaded is included in this repository to make it easier to test the platform.
 * **kong-init**
   This is a simple program which will setup a new Kong instance. It will run once and then exits. It provides Kong with a version-controlled config file and applies the necessary scripts to the DB behind Kong.
+
+# TODO: Update documentation
