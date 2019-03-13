@@ -145,7 +145,7 @@ services:
     ports:
       - 1337:1337
     volumes:
-      - /var/data/kongadata:/app/kongadata
+      - konga-data:/app/kongadata
     environment:
       NODE_ENV: production
 
@@ -159,4 +159,6 @@ volumes:
   zoodata:
     driver: local
   zoolog:
+    driver: local
+  konga-data:
     driver: local
