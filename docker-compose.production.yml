@@ -115,9 +115,18 @@ services:
 
   dispatcher:
     image: registry-special.tenforce.com/special/demonstrator-dispatcher:kong
+    command: ["/caddy", "-conf", "/config/Caddyfile", "-agree=true"]
+    environment:
+      KONG: http://kong:8000
+    volumes:
+    - caddycert:/root/.caddy/acme
+    ports:
+    - "80:80"
+    - "443:443"
     logging: *default-logging
     deploy: *default-deploy
 
 volumes:
+  caddycert: {}
   keycloakdb:
     driver: local

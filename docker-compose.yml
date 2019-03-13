@@ -131,7 +131,7 @@ services:
       KONG_PROXY_ERROR_LOG: /dev/stderr
       KONG_PLUGINS: oidc
     ports:
-      - 80:8000
+      - 8000:8000
     command: ["./wait-for-stop.sh", "-h", "kong-database-migrations", "--", "kong", "start"]
     
   kong-config:
