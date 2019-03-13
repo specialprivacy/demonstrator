@@ -1,6 +1,9 @@
 version: "3.4"
 
 services:
+  welcome-page:
+    image: registry-special.tenforce.com/special/demonstrator-welcome-page-frontend:v0.0.1
+
   mobile-frontend:
     image: registry-special.tenforce.com/special/mobile-frontend:1.0.0
 
@@ -26,12 +29,12 @@ services:
       KAFKA_BROKER_LIST: kafka:9092
       CHANGE_LOGS_TOPIC: policies-audit
       FULL_POLICIES_TOPIC: full-policies
-      AUTH_LOGIN_ENDPOINT: http://$DOMAIN/auth/realms/special/protocol/openid-connect/auth
+      AUTH_LOGIN_ENDPOINT: $KEYCLOAK_ENDPOINT/auth/realms/special/protocol/openid-connect/auth
       AUTH_CLIENT_ID: special-platform
-      AUTH_CLIENT_SECRET: special-platform-secret
-      AUTH_USERINFO_ENDPOINT: http://$DOMAIN/auth/realms/special/protocol/openid-connect/userinfo
-      AUTH_TOKEN_ENDPOINT: http://$DOMAIN/auth/realms/special/protocol/openid-connect/token
-      SERVER_AUTH_CALLBACK_ENDPOINT: http://$DOMAIN/callback
+      AUTH_CLIENT_SECRET: $KEYCLOAK_CLIENT_SECRET
+      AUTH_USERINFO_ENDPOINT: $KEYCLOAK_ENDPOINT/auth/realms/special/protocol/openid-connect/userinfo
+      AUTH_TOKEN_ENDPOINT: $KEYCLOAK_ENDPOINT/auth/realms/special/protocol/openid-connect/token
+      SERVER_AUTH_CALLBACK_ENDPOINT: http://localhost/callback
       
   policy-admin-frontend:
     image: registry-special.tenforce.com/special/demonstrator-policy-admin-frontend:1.0.3
@@ -52,13 +55,16 @@ services:
 
   log-generator:
     image: registry-special.tenforce.com/special/demonstrator-log-generator:1.0.6
+    restart: always
     environment:
       RATE: 2s
       KAFKA_BROKER_LIST: kafka:9092
       KAFKA_TOPIC: application-logs
-      KEYCLOAK_ENDPOINT: http://keycloak:8080/auth
+      KEYCLOAK_ENDPOINT: $KEYCLOAK_ENDPOINT/auth
       KEYCLOAK_USER: demonstrator-generator
-      KEYCLOAK_PASSWORD: demonstrator-generator
+      KEYCLOAK_PASSWORD: $KEYCLOAK_GENERATOR_PASSWORD
+      KEYCLOAK_CLIENT_ID: special-platform
+      KEYCLOAK_CLIENT_SECRET: $KEYCLOAK_CLIENT_SECRET
       BACKEND_ENDPOINT: http://consent-management-backend
 
   # Kafka setup (should maybe go in external deployment)
@@ -92,38 +98,11 @@ services:
       KAFKA_CREATE_TOPICS: application-logs:1:1,full-policies:1:1:compact,policies-audit:1:1,checked-application-logs:1:1
     volumes:
       - kafkalogs:/kafka
-
-  # Keycloak (authentication) setup (should maybe go into an external deployment)
-  # TODO: move secrets into docker secrets
-  keycloak:
-    image: jboss/keycloak:4.5.0.Final
-    environment:
-      KEYCLOAK_USER: keycloak
-      KEYCLOAK_PASSWORD: keycloak
-      DB_VENDOR: POSTGRES
-      DB_PASSWORD: keycloak
-      PROXY_ADDRESS_FORWARDING: "true"
-      
-  postgres:
-    image: postgres:9-alpine
-    environment:
-      POSTGRES_DB: keycloak
-      POSTGRES_USER: keycloak
-      POSTGRES_PASSWORD: keycloak
-    volumes:
-      - keycloakdb:/var/lib/postgresql/data
-
-  keycloak-init:
-    image: registry-special.tenforce.com/special/keycloak-initializer:special
-    environment:
-      KEYCLOAK_ENDPOINT: http://keycloak:8080/auth
       
   kong-database:
     image: cassandra:2.2.13
     volumes:
       - kong-database:/var/lib/cassandra
-    ports:
-      - 9042:9042
       
   kong-database-migrations:
     image: registry-special.tenforce.com/special/kong-database-migrations:v0.0.1
@@ -152,17 +131,14 @@ services:
       KONG_PROXY_ERROR_LOG: /dev/stderr
       KONG_PLUGINS: oidc
     ports:
-      - 8000:8000
-      - 8001:8001
-      - 8443:8443
-      - 8444:8444
+      - 80:8000
     command: ["./wait-for-stop.sh", "-h", "kong-database-migrations", "--", "kong", "start"]
     
   kong-config:
-    image: registry-special.tenforce.com/special/kong-configuration:v0.0.1
+    image: registry-special.tenforce.com/special/kong-configuration:v0.0.2
     depends_on:
       - kong
-    command: ["./wait-for-it.sh", "kong:8001", "-t", "5", "--", "gongfig", "import", "--url=http://kong:8001", "--file", "/config.yaml"]
+    command: ["./wait-for-it.sh", "kong:8001", "-t", "120", "--", "gongfig", "import", "--url=http://kong:8001", "--file", "/config.json"]
     
   konga:
     image: pantsel/konga
@@ -174,8 +150,6 @@ services:
       NODE_ENV: production
 
 volumes:
-  keycloakdb:
-    driver: local
   kong-database:
     driver: local
   rethinkdb:

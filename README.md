@@ -27,10 +27,8 @@ The repository currently contains 3 files:
   This is the main file that describes how the different components work together to provide the demonstrator service
 * **docker-compose.override.yml**
   This file contains some additional settings which can be useful when developing the service on a local machine. It is automatically overlaid on `docker-compose.yml` by the docker-compose tool.
-* **docker-compose.id-provider.yml**
-  This file contains configuration overrides which point the services to an identity provider hosted on https://demonstrator-special.tenforce.com rather than starting one locally
 * **docker-compose.production.yml**
-  This file contains additional settings needed for running the demonstrator service on a cluster of machines using docker swarm.
+  This file contains additional settings needed for running the demonstrator service on a cluster of machines using docker swarm. It adds keycloak and its dependencies to the stack.
 
 ### Single Machine
 There are two options to run the demonstrator on a single machine: the easy way, where the system uses a dummy identity provider from https://demonstrator-special.tenforce.com and the slightly more complicated one where the identity provider also runs locally.
@@ -39,15 +37,17 @@ There are two options to run the demonstrator on a single machine: the easy way,
 Once docker is installed, running the demonstrator on a single machine is with a remote identity provider is relatively straightforward. The following command needs to be run from the root of this project:
 
 ```bash
-DOMAIN=localhost KEYCLOAK_CLIENT_SECRET=84be2f39-35dd-4976-89db-57285eadf30e KEYCLOAK_GENERATOR_PASSWORD=a6617467-6030-4bfc-85eb-378b8b120d79 docker-compose -f docker-compose.yml -f docker-compose.override.yml -f docker-compose.id-provider.yml up
+docker-compose up
 ```
 
 This will download all the necessary docker images, start all the services and make the demonstrator available on `http://localhost`
-Remark that the DOMAIN variable must be set to `localhost`, authentication will not work with any other value.
+The ENV variables set in .env should take care of this default scenario, where you use a remotely connected Keycloak instance.
+
 TODO: Those credentials should be provided through docker secrets.
+TODO: The Kong config service does not (yet) allow ENV configuration so if a different keycloak instance needs to be used, the Kong will have to be configured manually.
 
 #### Slightly Harder Way
-In order to run the demonstrator with a local identity provider, a hostname or IP address of the host machine needs to be passed in as the `DOMAIN` variable. How to obtain this value is operating system and context dependent. We will document how this can be done on a recent linux installation.
+In order to run the demonstrator with a local identity provider, a hostname or IP address of the host machine needs to be passed in as the `KEYCLOAK_ENDPOINT` variable. How to obtain this value is operating system and context dependent. We will document how this can be done on a recent linux installation.
 
 * Get the IP address
 
@@ -58,16 +58,19 @@ In order to run the demonstrator with a local identity provider, a hostname or I
 * Launch the demonstrator
 
     ```bash
-    DOMAIN=192.168.0.17 docker-compose up
+    KEYCLOAK_ENDPOINT=192.168.0.17 docker-compose -f docker-compose.yml -f docker-compose.production.yml up
     ```
 
 This will download all the necessary docker images, start all the services and make the demonstrator available on `http://192.168.0.17`
+
+NOTE: As Kong can't be configured with ENV yet, you will have to modify the OIDC plugin manually to provide the proper discovery endpoint.
 
 ### Cluster of Machines
 The files included in this project allow the demonstrator to run on a cluster of machines orchestrated with [Docker Swarm Mode](https://docs.docker.com/engine/swarm/). We are not going to describe how to create a swarm mode cluster, there are [plenty](https://docs.docker.com/engine/swarm/swarm-tutorial/) [of](https://docs.microsoft.com/en-us/virtualization/windowscontainers/manage-containers/swarm-mode) [tutorials](https://www.digitalocean.com/community/tutorials/how-to-create-a-cluster-of-docker-containers-with-docker-swarm-and-digitalocean-on-ubuntu-16-04) out there.
 
 Deploying on a swarm cluster requires you to set the following environment variables:
 * **DOMAIN**: The domain on which the system will be deployed. This must be publicly accessible. The system will request a certificate at letsencrypt for this domain.
+* **KEYCLOAK_ENDPOINT**: The domain where the keycloak instance has been deployed.
 * **RECOVERY_EMAIL**: The email address used to request a certificate at letsencrypt. This will allow you to recover the certificate.
 * **KEYCLOAK_PASSWORD**: A password to protect the root user in keycloak
 
@@ -88,7 +91,8 @@ Deploying the demonstrator on an existing docker swarm cluster is a four step pr
     ```bash
     RECOVERY_EMAIL=foo@example.com \
     KEYCLOAK_PASSWORD=DVMswdsEtuk7Zs4t6PEKHrS8 \
-    DOMAIN=demonstrator-special.tenforce.com \
+    DOMAIN=https://demonstrator-special.tenforce.com \
+    KEYCLOAK_ENDPOINT=https://demonstrator-special.tenforce.com \
     docker-compose -f docker-compose.yml -f docker-compose.production.yml config >   stack.yml
     ```
 4. Deploy the stack onto the cluster

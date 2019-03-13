@@ -1,6 +1,8 @@
 version: "3.4"
 
 services:
+  welcome-page:
+    restart: on-failure:3
   mobile-frontend:
     restart: on-failure:3
   transparency-backend:
@@ -23,15 +25,13 @@ services:
       - "8080:8080"
   rethinkdb:
     restart: on-failure:3
-  log-generator:
-    restart: always
   zookeeper:
     restart: on-failure:3
   kafka:
     restart: on-failure:3
-  keycloak:
+  kong-database:
     restart: on-failure:3
-  postgres:
+  kong-database-migrations:
     restart: on-failure:3
-  keycloak-init:
-    restart: "no"
+  kong:
+    restart: on-failure:3
