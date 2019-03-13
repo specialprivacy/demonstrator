@@ -113,6 +113,11 @@ services:
       restart_policy:
         condition: none
 
+  dispatcher:
+    image: registry-special.tenforce.com/special/demonstrator-dispatcher:kong
+    logging: *default-logging
+    deploy: *default-deploy
+
 volumes:
   keycloakdb:
     driver: local
