@@ -14,40 +14,37 @@ x-default-logging:
   # TODO: Add gliderlabs/logspout as a global service in a separate stack so we can pipe logs to an external service (eg: papertrail)
 
 services:
+  welcome-page:
+    deploy: *default-deploy
+    logging: *default-logging
   mobile-frontend:
     deploy: *default-deploy
     logging: *default-logging
+
   transparency-frontend:
     deploy: *default-deploy
     logging: *default-logging
+
   transparency-backend:
     deploy: *default-deploy
     logging: *default-logging
-  kong-database:
+
+  consent-management-frontend:
     deploy: *default-deploy
     logging: *default-logging
-  kong-database-migrations:
-    deploy:
-      restart_policy:
-        condition: none
-    logging: *default-logging
-  kong:
-    deploy: *default-deploy
-    logging: *default-logging
-  kong-config:
-    deploy:
-      restart_policy:
-        condition: none
-    logging: *default-logging
+
   consent-management-backend:
     deploy: *default-deploy
     logging: *default-logging
+
   policy-admin-frontend:
     deploy: *default-deploy
     logging: *default-logging
+
   compliance-checker:
     deploy: *default-deploy
     logging: *default-logging
+
   rethinkdb:
     deploy:
       placement:
@@ -57,13 +54,14 @@ services:
         condition: on-failure
         max_attempts: 3
     logging: *default-logging
+
   log-generator:
-    logging: *default-logging
     deploy:
       restart_policy:
         condition: any
-  zookeeper:
     logging: *default-logging
+
+  zookeeper:
     deploy:
       placement:
         constraints:
@@ -71,10 +69,11 @@ services:
       restart_policy:
         condition: on-failure
         max_attempts: 3
+    logging: *default-logging
+
   kafka:
     environment:
       KAFKA_BROKER_ID: 0
-    logging: *default-logging
     deploy:
       placement:
         constraints:
@@ -82,66 +81,33 @@ services:
       restart_policy:
         condition: on-failure
         max_attempts: 3
-  # Keycloak (authentication) setup (should maybe go into an external deployment)
-  # TODO: move secrets into docker secrets
-  keycloak:
-    image: jboss/keycloak:4.5.0.Final
-    ports:
-    - 8080:8080
-    environment:
-      KEYCLOAK_USER: keycloak
-      KEYCLOAK_PASSWORD: $KEYCLOAK_PASSWORD
-      DB_VENDOR: POSTGRES
-      DB_PASSWORD: $KEYCLOAK_PASSWORD
-      PROXY_ADDRESS_FORWARDING: "true"
     logging: *default-logging
+
+  kong-database:
     deploy: *default-deploy
-
-  postgres:
-    image: postgres:9-alpine
-    environment:
-      POSTGRES_DB: keycloak
-      POSTGRES_USER: keycloak
-      POSTGRES_PASSWORD: $KEYCLOAK_PASSWORD
-    volumes:
-      - keycloakdb:/var/lib/postgresql/data
     logging: *default-logging
-    deploy:
-      placement:
-        constraints:
-          - node.labels.type == database
-      restart_policy:
-        condition: on-failure
-        max_attempts: 3
 
-  keycloak-init:
-    image: registry-special.tenforce.com/special/keycloak-initializer:special
-    environment:
-      KEYCLOAK_ENDPOINT: http://keycloak:8080/auth
-      KEYCLOAK_CLIENT_SECRET: $KEYCLOAK_CLIENT_SECRET
-      KEYCLOAK_PASSWORD: $KEYCLOAK_PASSWORD
-      KEYCLOAK_GENERATOR_PASSWORD: $KEYCLOAK_GENERATOR_PASSWORD
-    logging: *default-logging
+  kong-database-migrations:
     deploy:
       restart_policy:
         condition: none
+    logging: *default-logging
+
+  kong:
+    deploy: *default-deploy
+    logging: *default-logging
+
+  kong-config:
+    deploy:
+      restart_policy:
+        condition: none
+    logging: *default-logging
+
+  konga:
+    deploy: *default-deploy
+    logging: *default-logging
 
   dispatcher:
-    image: registry-special.tenforce.com/special/demonstrator-dispatcher:kong
-    command: ["/caddy", "-conf", "/config/Caddyfile", "-agree=true"]
-    environment:
-      KONG: http://kong:8000
-      DOMAIN: $DOMAIN
-      EMAIL: $RECOVERY_EMAIL
-    volumes:
-    - caddycert:/root/.caddy/acme
-    ports:
-    - "80:80"
-    - "443:443"
-    logging: *default-logging
     deploy: *default-deploy
+    logging: *default-logging
 
-volumes:
-  caddycert: {}
-  keycloakdb:
-    driver: local

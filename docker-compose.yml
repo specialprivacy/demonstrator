@@ -60,7 +60,7 @@ services:
       RATE: 2s
       KAFKA_BROKER_LIST: kafka:9092
       KAFKA_TOPIC: application-logs
-      KEYCLOAK_ENDPOINT: http://keycloak:8080/auth
+      KEYCLOAK_ENDPOINT: $KEYCLOAK_ENDPOINT/auth
       KEYCLOAK_USER: demonstrator-generator
       KEYCLOAK_PASSWORD: $KEYCLOAK_GENERATOR_PASSWORD
       KEYCLOAK_CLIENT_ID: special-platform
@@ -135,7 +135,7 @@ services:
     command: ["./wait-for-stop.sh", "-h", "kong-database-migrations", "--", "kong", "start"]
     
   kong-config:
-    image: registry-special.tenforce.com/special/kong-configuration:keycloak
+    image: registry-special.tenforce.com/special/kong-configuration:v0.0.4
     depends_on:
       - kong
     command: ["./wait-for-it.sh", "kong:8001", "-t", "120", "--", "gongfig", "import", "--url=http://kong:8001", "--file", "/config.json"]
@@ -148,6 +148,19 @@ services:
       - konga-data:/app/kongadata
     environment:
       NODE_ENV: production
+
+  dispatcher:
+    image: registry-special.tenforce.com/special/demonstrator-dispatcher:2.0.0
+    command: ["/caddy", "-conf", "/config/Caddyfile", "-agree=true"]
+    environment:
+      DOMAIN: $DOMAIN
+      PROXY_TO: $PROXY_TO
+      EMAIL: $RECOVERY_EMAIL
+    volumes:
+    - caddycert:/root/.caddy/acme
+    ports:
+    - "80:2015"
+    - "443:443"
 
 volumes:
   kong-database:
