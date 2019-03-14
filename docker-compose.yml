@@ -60,7 +60,7 @@ services:
       RATE: 2s
       KAFKA_BROKER_LIST: kafka:9092
       KAFKA_TOPIC: application-logs
-      KEYCLOAK_ENDPOINT: $KEYCLOAK_ENDPOINT/auth
+      KEYCLOAK_ENDPOINT: http://keycloak:8080/auth
       KEYCLOAK_USER: demonstrator-generator
       KEYCLOAK_PASSWORD: $KEYCLOAK_GENERATOR_PASSWORD
       KEYCLOAK_CLIENT_ID: special-platform

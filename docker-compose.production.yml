@@ -118,6 +118,8 @@ services:
     command: ["/caddy", "-conf", "/config/Caddyfile", "-agree=true"]
     environment:
       KONG: http://kong:8000
+      DOMAIN: $DOMAIN
+      EMAIL: $RECOVERY_EMAIL
     volumes:
     - caddycert:/root/.caddy/acme
     ports:
