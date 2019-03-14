@@ -23,8 +23,21 @@ services:
   transparency-backend:
     deploy: *default-deploy
     logging: *default-logging
+  kong-database:
+    deploy: *default-deploy
+    logging: *default-logging
+  kong-database-migrations:
+    deploy:
+      restart_policy:
+        condition: none
+    logging: *default-logging
   kong:
     deploy: *default-deploy
+    logging: *default-logging
+  kong-config:
+    deploy:
+      restart_policy:
+        condition: none
     logging: *default-logging
   consent-management-backend:
     deploy: *default-deploy
