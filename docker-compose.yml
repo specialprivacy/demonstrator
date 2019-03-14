@@ -163,6 +163,7 @@ services:
     - "443:443"
 
 volumes:
+  caddycert: {}
   kong-database:
     driver: local
   rethinkdb:
