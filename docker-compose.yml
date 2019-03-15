@@ -135,7 +135,7 @@ services:
     command: ["./wait-for-stop.sh", "-h", "kong-database-migrations", "--", "kong", "start"]
     
   kong-config:
-    image: registry-special.tenforce.com/special/kong-configuration:v0.0.6
+    image: registry-special.tenforce.com/special/kong-configuration:v0.0.7
     environment:
       KEYCLOAK_ENDPOINT: $KEYCLOAK_ENDPOINT
     depends_on:
@@ -163,6 +163,12 @@ services:
     ports:
     - "80:2015"
     - "443:443"
+
+  # the personal data gateway
+  personal-data-gateway:
+    image: registry-special.tenforce.com/special/personal-data-gateway:0.0.1
+    ports:
+    - "8888:5000"
 
 volumes:
   caddycert: {}
