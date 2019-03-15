@@ -152,7 +152,7 @@ services:
       NODE_ENV: production
 
   dispatcher:
-    image: registry-special.tenforce.com/special/demonstrator-dispatcher:2.0.1
+    image: registry-special.tenforce.com/special/demonstrator-dispatcher:2.0.2
     command: ["/caddy", "-conf", "/config/Caddyfile", "-agree=true"]
     environment:
       DOMAIN: $DOMAIN
