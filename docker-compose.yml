@@ -135,7 +135,9 @@ services:
     command: ["./wait-for-stop.sh", "-h", "kong-database-migrations", "--", "kong", "start"]
     
   kong-config:
-    image: registry-special.tenforce.com/special/kong-configuration:v0.0.5
+    image: registry-special.tenforce.com/special/kong-configuration:v0.0.6
+    environment:
+      KEYCLOAK_ENDPOINT: $KEYCLOAK_ENDRPOINT
     depends_on:
       - kong
     command: ["./wait-for-it.sh", "kong:8001", "-t", "120", "--", "gongfig", "import", "--url=http://kong:8001", "--file", "/config.json"]
