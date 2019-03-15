@@ -137,7 +137,7 @@ services:
   kong-config:
     image: registry-special.tenforce.com/special/kong-configuration:v0.0.6
     environment:
-      KEYCLOAK_ENDPOINT: $KEYCLOAK_ENDRPOINT
+      KEYCLOAK_ENDPOINT: $KEYCLOAK_ENDPOINT
     depends_on:
       - kong
     command: ["./wait-for-it.sh", "kong:8001", "-t", "120", "--", "gongfig", "import", "--url=http://kong:8001", "--file", "/config.json"]
