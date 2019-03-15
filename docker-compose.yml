@@ -13,28 +13,33 @@ services:
   transparency-backend:
     image: registry-special.tenforce.com/special/kafka-sse-proxy:1.0.0
     environment:
-      BROKERS: kafka:9092
+      BROKERS: "kafka:9092"
       TOPIC: checked-application-logs
 
   consent-management-frontend:
     image: registry-special.tenforce.com/special/demonstrator-consent-management-frontend:1.0.1
 
   consent-management-backend:
-    image: registry-special.tenforce.com/special/consent-management-backend:no-authentication
+    image: registry-special.tenforce.com/special/consent-management-backend-mongo:0.0.2
+    restart: on-failure
     environment:
       SERVER_HOST: consent-management-backend # Please don't do this, just bind to 0.0.0.0 in the container
-      SERVER_PORT: 80
-      RETHINKDB_HOST: rethinkdb
-      RETHINKDB_PORT: 28015
-      KAFKA_BROKER_LIST: kafka:9092
+      KAFKA_BROKER_LIST: "kafka:9092"
       CHANGE_LOGS_TOPIC: policies-audit
       FULL_POLICIES_TOPIC: full-policies
-      AUTH_LOGIN_ENDPOINT: $KEYCLOAK_ENDPOINT/auth/realms/special/protocol/openid-connect/auth
-      AUTH_CLIENT_ID: special-platform
-      AUTH_CLIENT_SECRET: $KEYCLOAK_CLIENT_SECRET
-      AUTH_USERINFO_ENDPOINT: $KEYCLOAK_ENDPOINT/auth/realms/special/protocol/openid-connect/userinfo
-      AUTH_TOKEN_ENDPOINT: $KEYCLOAK_ENDPOINT/auth/realms/special/protocol/openid-connect/token
-      SERVER_AUTH_CALLBACK_ENDPOINT: http://localhost/callback
+    depends_on:
+      - mongo-rs-setup
+
+  mongo-db:
+    image: registry-special.tenforce.com/special/demonstrator-mongo-db:0.0.1
+    volumes:
+    - mongodb:/data
+
+  mongo-rs-setup:
+    image: registry-special.tenforce.com/special/demonstrator-mongo-rs-setup:0.0.1
+    depends_on:
+      - mongo-db
+
       
   policy-admin-frontend:
     image: registry-special.tenforce.com/special/demonstrator-policy-admin-frontend:1.0.3
@@ -47,11 +52,6 @@ services:
       KAFKA_TOPIC_POLICY: "full-policies"
       KAFKA_TOPIC_ACCESS: "application-logs"
       KAFKA_TOPIC_CONSENT: "checked-application-logs"
-
-  rethinkdb:
-    image: rethinkdb:2.3
-    volumes:
-      - rethinkdb:/data
 
   log-generator:
     image: registry-special.tenforce.com/special/demonstrator-log-generator:1.0.6
@@ -150,7 +150,7 @@ services:
       NODE_ENV: production
 
   dispatcher:
-    image: registry-special.tenforce.com/special/demonstrator-dispatcher:2.0.0
+    image: registry-special.tenforce.com/special/demonstrator-dispatcher:2.0.1
     command: ["/caddy", "-conf", "/config/Caddyfile", "-agree=true"]
     environment:
       DOMAIN: $DOMAIN
@@ -166,7 +166,7 @@ volumes:
   caddycert: {}
   kong-database:
     driver: local
-  rethinkdb:
+  mongodb:
     driver: local
   kafkalogs:
     driver: local

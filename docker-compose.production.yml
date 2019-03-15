@@ -4,7 +4,7 @@ x-default-deploy:
   &default-deploy
   restart_policy:
     condition: on-failure
-    max_attempts: 3
+    max_attempts: 5
 x-default-logging:
   &default-logging
   driver: json-file
@@ -37,15 +37,7 @@ services:
     deploy: *default-deploy
     logging: *default-logging
 
-  policy-admin-frontend:
-    deploy: *default-deploy
-    logging: *default-logging
-
-  compliance-checker:
-    deploy: *default-deploy
-    logging: *default-logging
-
-  rethinkdb:
+  mongo-db:
     deploy:
       placement:
         constraints:
@@ -53,6 +45,23 @@ services:
       restart_policy:
         condition: on-failure
         max_attempts: 3
+    logging: *default-logging
+
+  mongo-rs-setup:
+    deploy:
+      placement:
+        constraints:
+          - node.labels.type == rethinkdb
+      restart_policy:
+        condition: none
+    logging: *default-logging
+
+  policy-admin-frontend:
+    deploy: *default-deploy
+    logging: *default-logging
+
+  compliance-checker:
+    deploy: *default-deploy
     logging: *default-logging
 
   log-generator:
