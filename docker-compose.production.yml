@@ -116,10 +116,6 @@ services:
     deploy: *default-deploy
     logging: *default-logging
 
-  dispatcher:
-    deploy: *default-deploy
-    logging: *default-logging
-
   personal-data-gateway:
     deploy: *default-deploy
     logging: *default-logging

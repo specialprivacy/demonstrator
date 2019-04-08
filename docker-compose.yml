@@ -40,7 +40,6 @@ services:
     depends_on:
       - mongo-db
 
-      
   policy-admin-frontend:
     image: registry-special.tenforce.com/special/demonstrator-policy-admin-frontend:1.0.3
 
@@ -150,19 +149,6 @@ services:
       - konga-data:/app/kongadata
     environment:
       NODE_ENV: production
-
-  dispatcher:
-    image: registry-special.tenforce.com/special/demonstrator-dispatcher:2.0.2
-    command: ["/caddy", "-conf", "/config/Caddyfile", "-agree=true"]
-    environment:
-      DOMAIN: $DOMAIN
-      PROXY_TO: $PROXY_TO
-      EMAIL: $RECOVERY_EMAIL
-    volumes:
-    - caddycert:/root/.caddy/acme
-    ports:
-    - "80:2015"
-    - "443:443"
 
   # the personal data gateway
   personal-data-gateway:
