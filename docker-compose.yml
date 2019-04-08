@@ -59,7 +59,7 @@ services:
       RATE: 2s
       KAFKA_BROKER_LIST: kafka:9092
       KAFKA_TOPIC: application-logs
-      KEYCLOAK_ENDPOINT: $KEYCLOAK_ENDPOINT/auth
+      KEYCLOAK_ENDPOINT: $KEYCLOAK_ENDPOINT
       KEYCLOAK_USER: demonstrator-generator
       KEYCLOAK_PASSWORD: $KEYCLOAK_GENERATOR_PASSWORD
       KEYCLOAK_CLIENT_ID: special-platform
@@ -134,7 +134,7 @@ services:
     command: ["./wait-for-stop.sh", "-h", "kong-database-migrations", "--", "kong", "start"]
     
   kong-config:
-    image: registry-special.tenforce.com/special/kong-configuration:v0.0.7
+    image: registry-special.tenforce.com/special/kong-configuration:v0.0.8
     environment:
       KEYCLOAK_ENDPOINT: $KEYCLOAK_ENDPOINT
     depends_on:
