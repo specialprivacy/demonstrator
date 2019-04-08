@@ -23,7 +23,7 @@ services:
     image: registry-special.tenforce.com/special/consent-management-backend-mongo:0.0.2
     restart: on-failure
     environment:
-      SERVER_HOST: consent-management-backend # Please don't do this, just bind to 0.0.0.0 in the container
+      SERVER_HOST: consent-management-backend
       KAFKA_BROKER_LIST: "kafka:9092"
       CHANGE_LOGS_TOPIC: policies-audit
       FULL_POLICIES_TOPIC: full-policies
