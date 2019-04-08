@@ -170,3 +170,8 @@ volumes:
     driver: local
   konga-data:
     driver: local
+
+networks:
+  default:
+    external:
+      name: special-demonstrator
