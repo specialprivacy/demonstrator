@@ -149,8 +149,6 @@ services:
   # the personal data gateway
   personal-data-gateway:
     image: registry-special.tenforce.com/special/personal-data-gateway:0.0.1
-    ports:
-    - "8888:5000"
 
 volumes:
   caddycert: {}
