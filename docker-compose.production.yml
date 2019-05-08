@@ -119,3 +119,25 @@ services:
   personal-data-gateway:
     deploy: *default-deploy
     logging: *default-logging
+    
+  elasticsearch:
+    deploy:
+      placement:
+        constraints:
+          - node.labels.type == kafka
+      restart_policy:
+        condition: on-failure
+        max_attempts: 3
+    logging: *default-logging
+
+  kibana:
+    deploy: *default-deploy
+    logging: *default-logging
+
+  logstash-checked-application-logs:
+    deploy: *default-deploy
+    logging: *default-logging
+
+  logstash-policies-audit:
+    deploy: *default-deploy
+    logging: *default-logging

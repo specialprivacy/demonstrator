@@ -154,3 +154,49 @@ These components are custom written software specifically for this demonstrator.
   This is a simple program which will setup a new Kong instance. It will run once and then exits. It provides Kong with a version-controlled config file and applies the necessary scripts to the DB behind Kong.
 
 # TODO: Update documentation
+
+# Elasticsearch issues
+If the elasticsearch exits with the following error:
+```
+[INFO ][o.e.b.BootstrapChecks    ] [PPEKOmZ] bound or publishing to a non-loopback address, enforcing bootstrap checks
+ERROR: [1] bootstrap checks failed
+[1]: max virtual memory areas vm.max_map_count [65536] is too low, increase to at least [262144]
+[INFO ][o.e.n.Node               ] [PPEKOmZ] stopping ...
+[INFO ][o.e.n.Node               ] [PPEKOmZ] stopped
+[INFO ][o.e.n.Node               ] [PPEKOmZ] closing ...
+[INFO ][o.e.n.Node               ] [PPEKOmZ] closed
+[INFO ][o.e.x.m.j.p.NativeController] Native controller process has stopped - no new native processes can be started
+xdc_elasticsearch_1 exited with code 78
+```
+
+#### Temporary solution
+Use this command to give more max virtual memory area:
+``` bash
+sudo sysctl -w vm.max_map_count=262144
+```
+
+This command has to be set every time you restart your machine.
+
+#### Permanent solution
+
+This is recommended way. First open `/etc/sysctl.conf` file, enter:
+``` bash
+nano /etc/sysctl.conf
+ ```
+
+Now add value:
+variable = value
+
+Close and save the changes. Type the following command to load sysctl settings from the file `/etc/sysctl.conf` file:
+``` bash
+sysctl -p
+```
+
+OR
+``` bash
+sysctl -p /etc/sysctl.conf
+```
+
+The last method will load settings permanently at boot time from `/etc/sysctl.conf` file.
+
+Solution from [here](https://www.cyberciti.biz/faq/howto-set-sysctl-variables/).
