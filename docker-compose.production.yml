@@ -112,9 +112,9 @@ services:
         condition: none
     logging: *default-logging
 
-  konga:
-    deploy: *default-deploy
-    logging: *default-logging
+#  konga:
+#    deploy: *default-deploy
+#    logging: *default-logging
 
   personal-data-gateway:
     deploy: *default-deploy

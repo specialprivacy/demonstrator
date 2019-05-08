@@ -141,14 +141,15 @@ services:
       - kong
     command: ["./wait-for-it.sh", "kong:8001", "-t", "120", "--", "gongfig", "import", "--url=http://kong:8001", "--file", "/config.json"]
     
-  konga:
-    image: pantsel/konga
-    ports:
-      - 1337:1337
-    volumes:
-      - konga-data:/app/kongadata
-    environment:
-      NODE_ENV: production
+#  # Deactivated until we can put it behind the reverse proxy
+#  konga:
+#    image: pantsel/konga
+#    ports:
+#      - 1337:1337
+#    volumes:
+#      - konga-data:/app/kongadata
+#    environment:
+#      NODE_ENV: production
 
   # the personal data gateway
   personal-data-gateway:
