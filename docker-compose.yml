@@ -78,11 +78,6 @@ services:
   # TODO: save data in a volume (or mount from host)
   kafka:
     image: wurstmeister/kafka:2.11-2.0.1
-    ports:
-      - target: 9094
-        published: 9094
-        protocol: tcp
-        mode: host
     depends_on:
       - zookeeper
     environment:
