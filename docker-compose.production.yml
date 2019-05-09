@@ -41,7 +41,7 @@ services:
     deploy:
       placement:
         constraints:
-          - node.labels.type == master-0
+          - node.labels.type == master-1
       restart_policy:
         condition: on-failure
         max_attempts: 3
@@ -51,7 +51,7 @@ services:
     deploy:
       placement:
         constraints:
-          - node.labels.type == master-0
+          - node.labels.type == master-1
       restart_policy:
         condition: none
     logging: *default-logging
@@ -74,7 +74,7 @@ services:
     deploy:
       placement:
         constraints:
-          - node.labels.type == master-1
+          - node.labels.type == master-0
       restart_policy:
         condition: on-failure
         max_attempts: 3
@@ -86,24 +86,39 @@ services:
     deploy:
       placement:
         constraints:
-          - node.labels.type == master-1
+          - node.labels.type == master-0
       restart_policy:
         condition: on-failure
         max_attempts: 3
     logging: *default-logging
 
   kong-database:
-    deploy: *default-deploy
+    deploy:
+      placement:
+        constraints:
+          - node.labels.type == master-1
+      restart_policy:
+        condition: on-failure
+        max_attempts: 3
     logging: *default-logging
 
   kong-database-migrations:
     deploy:
+      placement:
+        constraints:
+          - node.labels.type == master-1
       restart_policy:
         condition: none
     logging: *default-logging
 
   kong:
-    deploy: *default-deploy
+    deploy:
+      placement:
+        constraints:
+          - node.labels.type == master-1
+      restart_policy:
+        condition: on-failure
+        max_attempts: 3
     logging: *default-logging
 
   kong-config:
@@ -131,13 +146,31 @@ services:
     logging: *default-logging
 
   kibana:
-    deploy: *default-deploy
+    deploy:
+      placement:
+        constraints:
+          - node.labels.type == master-0
+      restart_policy:
+        condition: on-failure
+        max_attempts: 3
     logging: *default-logging
 
   logstash-checked-application-logs:
-    deploy: *default-deploy
+    deploy:
+      placement:
+        constraints:
+          - node.labels.type == master-0
+      restart_policy:
+        condition: on-failure
+        max_attempts: 3
     logging: *default-logging
 
   logstash-policies-audit:
-    deploy: *default-deploy
+    deploy:
+      placement:
+        constraints:
+          - node.labels.type == master-0
+      restart_policy:
+        condition: on-failure
+        max_attempts: 3
     logging: *default-logging
