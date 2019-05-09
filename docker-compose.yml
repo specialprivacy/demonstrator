@@ -109,7 +109,7 @@ services:
     command: ["./wait-for-it.sh", "kong-database:9042", "-t", "0", "--", "kong", "migrations", "bootstrap"]
 
   kong:
-    image: registry-special.tenforce.com/special/kong:v0.0.1
+    image: registry-special.tenforce.com/special/kong:v0.0.2
     depends_on:
       - kong-database
       - kong-database-migrations
@@ -124,6 +124,7 @@ services:
       KONG_PROXY_ACCESS_LOG: /dev/stdout
       KONG_PROXY_ERROR_LOG: /dev/stderr
       KONG_PLUGINS: oidc
+      KONG_NGINX_PROXY_SET: "$$session_secret c3BlY2lhbC1wbGF0Zm9ybS1zZXNzaW9uLXNlY3JldA=="
     ports:
       - 8000:8000
     command: ["./wait-for-stop.sh", "-h", "kong-database-migrations", "--", "kong", "start"]
