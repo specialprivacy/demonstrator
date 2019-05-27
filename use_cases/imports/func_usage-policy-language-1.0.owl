@@ -1,0 +1,130 @@
+Prefix(:=<http://www.specialprivacy.eu/langs/usage-policy#>)
+Prefix(owl:=<http://www.w3.org/2002/07/owl#>)
+Prefix(rdf:=<http://www.w3.org/1999/02/22-rdf-syntax-ns#>)
+Prefix(spl:=<http://www.specialprivacy.eu/langs/usage-policy#>)
+Prefix(xml:=<http://www.w3.org/XML/1998/namespace>)
+Prefix(xsd:=<http://www.w3.org/2001/XMLSchema#>)
+Prefix(rdfs:=<http://www.w3.org/2000/01/rdf-schema#>)
+
+
+Ontology(<http://www.specialprivacy.eu/langs/usage-policy>
+
+Declaration(Class(spl:AnyData))
+Declaration(Class(spl:AnyDuration))
+Declaration(Class(spl:AnyLocation))
+Declaration(Class(spl:AnyProcessing))
+Declaration(Class(spl:AnyPurpose))
+Declaration(Class(spl:AnyRecipient))
+Declaration(Class(spl:AnyStorage))
+Declaration(Class(spl:Authorization))
+Declaration(Class(spl:Null))
+Declaration(ObjectProperty(spl:hasData))
+Declaration(ObjectProperty(spl:hasDuration))
+Declaration(ObjectProperty(spl:hasLocation))
+Declaration(ObjectProperty(spl:hasProcessing))
+Declaration(ObjectProperty(spl:hasPurpose))
+Declaration(ObjectProperty(spl:hasRecipient))
+Declaration(ObjectProperty(spl:hasStorage))
+Declaration(DataProperty(spl:durationInDays))
+Declaration(DataProperty(spl:durationInMinutes))
+############################
+#   Object Properties
+############################
+
+# Object Property: spl:hasData (spl:hasData)
+
+FunctionalObjectProperty(spl:hasData)
+ObjectPropertyDomain(spl:hasData spl:Authorization)
+ObjectPropertyRange(spl:hasData spl:AnyData)
+
+# Object Property: spl:hasDuration (spl:hasDuration)
+
+FunctionalObjectProperty(spl:hasDuration)
+ObjectPropertyDomain(spl:hasDuration spl:AnyStorage)
+ObjectPropertyRange(spl:hasDuration spl:AnyDuration)
+
+# Object Property: spl:hasLocation (spl:hasLocation)
+
+FunctionalObjectProperty(spl:hasLocation)
+ObjectPropertyDomain(spl:hasLocation spl:AnyStorage)
+ObjectPropertyRange(spl:hasLocation spl:AnyLocation)
+
+# Object Property: spl:hasProcessing (spl:hasProcessing)
+
+FunctionalObjectProperty(spl:hasProcessing)
+ObjectPropertyDomain(spl:hasProcessing spl:Authorization)
+ObjectPropertyRange(spl:hasProcessing spl:AnyProcessing)
+
+# Object Property: spl:hasPurpose (spl:hasPurpose)
+
+FunctionalObjectProperty(spl:hasPurpose)
+ObjectPropertyDomain(spl:hasPurpose spl:Authorization)
+ObjectPropertyRange(spl:hasPurpose spl:AnyPurpose)
+
+# Object Property: spl:hasRecipient (spl:hasRecipient)
+
+FunctionalObjectProperty(spl:hasRecipient)
+ObjectPropertyDomain(spl:hasRecipient spl:Authorization)
+ObjectPropertyRange(spl:hasRecipient spl:AnyRecipient)
+
+# Object Property: spl:hasStorage (spl:hasStorage)
+
+FunctionalObjectProperty(spl:hasStorage)
+ObjectPropertyDomain(spl:hasStorage spl:Authorization)
+ObjectPropertyRange(spl:hasStorage spl:AnyStorage)
+
+
+############################
+#   Data Properties
+############################
+
+# Data Property: spl:durationInDays (spl:durationInDays)
+
+FunctionalDataProperty(spl:durationInDays)
+DataPropertyDomain(spl:durationInDays spl:AnyStorage)
+DataPropertyRange(spl:durationInDays xsd:positiveInteger)
+
+# Data Property: spl:durationInMinutes (spl:durationInMinutes)
+
+FunctionalDataProperty(spl:durationInMinutes)
+DataPropertyDomain(spl:durationInMinutes spl:AnyStorage)
+DataPropertyRange(spl:durationInMinutes xsd:positiveInteger)
+
+
+
+############################
+#   Classes
+############################
+
+# Class: spl:AnyData (spl:AnyData)
+
+
+# Class: spl:AnyDuration (spl:AnyDuration)
+
+
+# Class: spl:AnyLocation (spl:AnyLocation)
+
+
+# Class: spl:AnyProcessing (spl:AnyProcessing)
+
+
+# Class: spl:AnyPurpose (spl:AnyPurpose)
+
+
+# Class: spl:AnyRecipient (spl:AnyRecipient)
+
+
+# Class: spl:AnyStorage (spl:AnyStorage)
+
+EquivalentClasses(spl:AnyStorage ObjectIntersectionOf(ObjectSomeValuesFrom(spl:hasLocation spl:AnyLocation) DataSomeValuesFrom(spl:durationInDays xsd:positiveInteger)))
+
+# Class: spl:Authorization (spl:Authorization)
+
+EquivalentClasses(spl:Authorization ObjectIntersectionOf(ObjectSomeValuesFrom(spl:hasData owl:Thing) ObjectSomeValuesFrom(spl:hasProcessing owl:Thing) ObjectSomeValuesFrom(spl:hasPurpose owl:Thing) ObjectSomeValuesFrom(spl:hasRecipient owl:Thing) ObjectSomeValuesFrom(spl:hasStorage owl:Thing)))
+
+# Class: spl:Null (spl:Null)
+
+
+
+DisjointClasses(spl:AnyData spl:AnyDuration spl:AnyLocation spl:AnyProcessing spl:AnyPurpose spl:AnyRecipient spl:AnyStorage spl:Authorization spl:Null)
+)

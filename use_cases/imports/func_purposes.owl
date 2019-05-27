@@ -1,0 +1,176 @@
+Prefix(:=<http://www.specialprivacy.eu/vocabs/purposes#>)
+Prefix(owl:=<http://www.w3.org/2002/07/owl#>)
+Prefix(rdf:=<http://www.w3.org/1999/02/22-rdf-syntax-ns#>)
+Prefix(xml:=<http://www.w3.org/XML/1998/namespace>)
+Prefix(xsd:=<http://www.w3.org/2001/XMLSchema#>)
+Prefix(rdfs:=<http://www.w3.org/2000/01/rdf-schema#>)
+Prefix(spl:=<http://www.specialprivacy.eu/langs/usage-policy#>)
+
+
+Ontology(<http://www.specialprivacy.eu/vocabs/purposes>
+
+Declaration(Class(:Account))
+Declaration(Class(:Admin))
+Declaration(Class(:AnyContact))
+Declaration(Class(:Arts))
+Declaration(Class(:AuxPurpose))
+Declaration(Class(:Browsing))
+Declaration(Class(:Charity))
+Declaration(Class(:Communicate))
+Declaration(Class(:Current))
+Declaration(Class(:Custom))
+Declaration(Class(:Delivery))
+Declaration(Class(:Develop))
+Declaration(Class(:Downloads))
+Declaration(Class(:Education))
+Declaration(Class(:Feedback))
+Declaration(Class(:Finmgt))
+Declaration(Class(:Gambling))
+Declaration(Class(:Gaming))
+Declaration(Class(:Government))
+Declaration(Class(:Health))
+Declaration(Class(:Historical))
+Declaration(Class(:Login))
+Declaration(Class(:Marketing))
+Declaration(Class(:News))
+Declaration(Class(:OtherContact))
+Declaration(Class(:Payment))
+Declaration(Class(:Sales))
+Declaration(Class(:Search))
+Declaration(Class(:State))
+Declaration(Class(:Tailoring))
+Declaration(Class(:Telemarketing))
+############################
+#   Classes
+############################
+
+# Class: :Account (:Account)
+
+SubClassOf(:Account :AuxPurpose)
+
+# Class: :Admin (:Admin)
+
+SubClassOf(:Admin spl:AnyPurpose)
+
+# Class: :AnyContact (:AnyContact)
+
+SubClassOf(:AnyContact spl:AnyPurpose)
+
+# Class: :Arts (:Arts)
+
+SubClassOf(:Arts :Current)
+
+# Class: :AuxPurpose (:AuxPurpose)
+
+SubClassOf(:AuxPurpose spl:AnyPurpose)
+
+# Class: :Browsing (:Browsing)
+
+SubClassOf(:Browsing :Current)
+
+# Class: :Charity (:Charity)
+
+SubClassOf(:Charity :Current)
+
+# Class: :Communicate (:Communicate)
+
+SubClassOf(:Communicate :Current)
+
+# Class: :Current (:Current)
+
+SubClassOf(:Current spl:AnyPurpose)
+
+# Class: :Custom (:Custom)
+
+SubClassOf(:Custom :AuxPurpose)
+
+# Class: :Delivery (:Delivery)
+
+SubClassOf(:Delivery :AuxPurpose)
+
+# Class: :Develop (:Develop)
+
+SubClassOf(:Develop spl:AnyPurpose)
+
+# Class: :Downloads (:Downloads)
+
+SubClassOf(:Downloads :Current)
+
+# Class: :Education (:Education)
+
+SubClassOf(:Education :Current)
+
+# Class: :Feedback (:Feedback)
+
+SubClassOf(:Feedback :AuxPurpose)
+
+# Class: :Finmgt (:Finmgt)
+
+SubClassOf(:Finmgt :Current)
+
+# Class: :Gambling (:Gambling)
+
+SubClassOf(:Gambling :Current)
+
+# Class: :Gaming (:Gaming)
+
+SubClassOf(:Gaming :Current)
+
+# Class: :Government (:Government)
+
+SubClassOf(:Government :Current)
+
+# Class: :Health (:Health)
+
+SubClassOf(:Health :Current)
+
+# Class: :Historical (:Historical)
+
+SubClassOf(:Historical spl:AnyPurpose)
+
+# Class: :Login (:Login)
+
+SubClassOf(:Login :AuxPurpose)
+
+# Class: :Marketing (:Marketing)
+
+SubClassOf(:Marketing :AuxPurpose)
+
+# Class: :News (:News)
+
+SubClassOf(:News :Current)
+
+# Class: :OtherContact (:OtherContact)
+
+SubClassOf(:OtherContact :AnyContact)
+DisjointClasses(:OtherContact :Telemarketing)
+
+# Class: :Payment (:Payment)
+
+SubClassOf(:Payment :AuxPurpose)
+
+# Class: :Sales (:Sales)
+
+SubClassOf(:Sales :Current)
+
+# Class: :Search (:Search)
+
+SubClassOf(:Search :Current)
+
+# Class: :State (:State)
+
+SubClassOf(:State :AuxPurpose)
+
+# Class: :Tailoring (:Tailoring)
+
+SubClassOf(:Tailoring spl:AnyPurpose)
+
+# Class: :Telemarketing (:Telemarketing)
+
+SubClassOf(:Telemarketing :AnyContact)
+
+
+DisjointClasses(:Account :Custom :Delivery :Feedback :Login :Marketing :Payment :State)
+DisjointClasses(:Admin :AnyContact :AuxPurpose :Current :Develop :Historical :Tailoring)
+DisjointClasses(:Arts :Browsing :Charity :Communicate :Downloads :Education :Finmgt :Gambling :Gaming :Government :Health :News :Sales :Search)
+)

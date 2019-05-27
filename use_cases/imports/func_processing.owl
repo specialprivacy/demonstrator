@@ -1,0 +1,97 @@
+Prefix(:=<http://www.specialprivacy.eu/vocabs/processing#>)
+Prefix(owl:=<http://www.w3.org/2002/07/owl#>)
+Prefix(rdf:=<http://www.w3.org/1999/02/22-rdf-syntax-ns#>)
+Prefix(spl:=<http://www.specialprivacy.eu/langs/usage-policy#>)
+Prefix(xml:=<http://www.w3.org/XML/1998/namespace>)
+Prefix(xsd:=<http://www.w3.org/2001/XMLSchema#>)
+Prefix(rdfs:=<http://www.w3.org/2000/01/rdf-schema#>)
+Prefix(svpr:=<http://www.specialprivacy.eu/vocabs/processing#>)
+
+
+Ontology(<http://www.specialprivacy.eu/vocabs/processing>
+
+Declaration(Class(svpr:Aggregate))
+Declaration(Class(svpr:Analyse))
+Declaration(Class(svpr:Anonymize))
+Declaration(Class(svpr:Collect))
+Declaration(Class(svpr:Copy))
+Declaration(Class(svpr:Derive))
+Declaration(Class(svpr:Move))
+Declaration(Class(svpr:Query))
+Declaration(Class(svpr:Transfer))
+Declaration(Class(svpr:Archive))
+Declaration(Class(svpr:IncomingTransfer))
+Declaration(Class(svpr:OutgoingTransfer))
+Declaration(Class(svpr:Update))
+Declaration(Class(svpr:Tracking))
+Declaration(Class(svpr:Erase))
+
+
+############################
+#   Classes
+############################
+
+# Class: svpr:Archive (svpr:Archive)
+
+AnnotationAssertion(rdfs:comment svpr:Archive "The Assigner permits the Assignees to store the Asset (in a non-transient form).")
+SubClassOf(svpr:Archive spl:AnyProcessing)
+
+
+# Class: svpr:IncomingTransfer (svpr:IncomingTransfer)
+
+SubClassOf(svpr:IncomingTransfer svpr:Transfer)
+
+# Class: svpr:OutgoingTransfer (svpr:OutgoingTransfer)
+
+SubClassOf(svpr:OutgoingTransfer svpr:Transfer)
+
+
+# Class: svpr:Aggregate (svpr:Aggregate)
+
+SubClassOf(svpr:Aggregate spl:AnyProcessing)
+
+# Class: svpr:Analyse (svpr:Analyse)
+
+SubClassOf(svpr:Analyse svpr:Derive)
+
+# Class: svpr:Anonymize (svpr:Anonymize)
+
+SubClassOf(svpr:Anonymize spl:AnyProcessing)
+
+# Class: svpr:Copy (svpr:Copy)
+
+SubClassOf(svpr:Copy spl:AnyProcessing)
+
+# Class: svpr:Derive (svpr:Derive)
+
+SubClassOf(svpr:Derive spl:AnyProcessing)
+
+# Class: svpr:Move (svpr:Move)
+
+SubClassOf(svpr:Move spl:AnyProcessing)
+
+# Class: svpr:Query (svpr:Query)
+
+SubClassOf(svpr:Query spl:AnyProcessing)
+
+# Class: svpr:Transfer (svpr:Transfer)
+
+SubClassOf(svpr:Transfer spl:AnyProcessing)
+
+# Class: svpr:Tracking (svpr:Tracking)
+
+SubClassOf(svpr:Tracking spl:AnyProcessing)
+
+# Class: svpr:Update (svpr:Update)
+
+SubClassOf(svpr:Update spl:AnyProcessing)
+
+# Class: svpr:Collect (svpr:Collect)
+
+SubClassOf(svpr:Collect svpr:Update)
+
+# Class: svpr:Erase (svpr:Erase)
+
+SubClassOf(svpr:Erase svpr:Update)
+
+)

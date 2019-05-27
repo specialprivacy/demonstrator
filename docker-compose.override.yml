@@ -1,0 +1,35 @@
+version: "3.4"
+
+services:
+  mobile-frontend:
+    restart: on-failure:3
+  transparency-backend:
+    restart: on-failure:3
+    ports:
+      - "555:80"
+  transparency-frontend:
+    restart: on-failure:3
+    ports:
+      - "82:80"
+  consent-management-frontend:
+    restart: on-failure:3
+  consent-management-backend:
+    restart: on-failure:3
+  policy-admin-frontend:
+    restart: on-failure:3
+  compliance-checker:
+    restart: on-failure:3
+    ports:
+      - "8080:8080"
+  rethinkdb:
+    restart: on-failure:3
+  zookeeper:
+    restart: on-failure:3
+  kafka:
+    restart: on-failure:3
+  keycloak:
+    restart: on-failure:3
+  postgres:
+    restart: on-failure:3
+  keycloak-init:
+    restart: "no"

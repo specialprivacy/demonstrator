@@ -1,0 +1,43 @@
+Prefix(:=<http://www.proximus.be/business-policy#>)
+Prefix(owl:=<http://www.w3.org/2002/07/owl#>)
+Prefix(rdf:=<http://www.w3.org/1999/02/22-rdf-syntax-ns#>)
+Prefix(xml:=<http://www.w3.org/XML/1998/namespace>)
+Prefix(xsd:=<http://www.w3.org/2001/XMLSchema#>)
+Prefix(rdfs:=<http://www.w3.org/2000/01/rdf-schema#>)
+
+
+Ontology(<http://www.proximus.be/business-policy>
+
+Declaration(Class(:CollectSocialEventsData))
+Declaration(Class(:EraseUnnecesaryData))
+Declaration(Class(:PersonalyzeSocialEventRecommendation))
+Declaration(Class(:Profile4RecommenderSystem))
+Declaration(Class(:SocialEventRecommendation))
+
+
+############################
+#   Classes
+############################
+
+# Class: :CollectSocialEventsData (:CollectSocialEventsData)
+
+SubClassOf(:CollectSocialEventsData <http://www.specialprivacy.eu/langs/usage-policy#AnyPurpose>)
+
+# Class: :EraseUnnecesaryData (:EraseUnnecesaryData)
+
+AnnotationAssertion(rdfs:comment :EraseUnnecesaryData "Motivated by GDPR Art.17")
+SubClassOf(:EraseUnnecesaryData <http://www.specialprivacy.eu/langs/usage-policy#AnyPurpose>)
+
+# Class: :PersonalyzeSocialEventRecommendation (:PersonalyzeSocialEventRecommendation)
+
+SubClassOf(:PersonalyzeSocialEventRecommendation <http://www.specialprivacy.eu/langs/usage-policy#AnyPurpose>)
+
+# Class: :Profile4RecommenderSystem (:Profile4RecommenderSystem)
+
+SubClassOf(:Profile4RecommenderSystem <http://www.specialprivacy.eu/vocabs/data#Profile>)
+
+# Class: :SocialEventRecommendation (:SocialEventRecommendation)
+
+SubClassOf(:SocialEventRecommendation <http://www.specialprivacy.eu/langs/usage-policy#AnyPurpose>)
+
+)

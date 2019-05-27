@@ -1,0 +1,48 @@
+Prefix(owl:=<http://www.w3.org/2002/07/owl#>)
+Prefix(rdf:=<http://www.w3.org/1999/02/22-rdf-syntax-ns#>)
+Prefix(spl:=<http://www.specialprivacy.eu/langs/usage-policy#>)
+Prefix(svr:=<http://www.specialprivacy.eu/vocabs/recipients#>)
+Prefix(xml:=<http://www.w3.org/XML/1998/namespace>)
+Prefix(xsd:=<http://www.w3.org/2001/XMLSchema#>)
+Prefix(rdfs:=<http://www.w3.org/2000/01/rdf-schema#>)
+
+
+Ontology(<http://www.specialprivacy.eu/vocabs/recipients>
+
+Declaration(Class(svr:Delivery))
+Declaration(Class(svr:OtherRecipient))
+Declaration(Class(svr:Ours))
+Declaration(Class(svr:Public))
+Declaration(Class(svr:Same))
+Declaration(Class(svr:Unrelated))
+############################
+#   Classes
+############################
+
+# Class: svr:Delivery (svr:Delivery)
+
+SubClassOf(svr:Delivery  spl:AnyRecipient)
+
+# Class: svr:OtherRecipient (svr:OtherRecipient)
+
+SubClassOf(svr:OtherRecipient  spl:AnyRecipient)
+
+# Class: svr:Ours (svr:Ours)
+
+SubClassOf(svr:Ours  spl:AnyRecipient)
+
+# Class: svr:Public (svr:Public)
+
+SubClassOf(svr:Public  spl:AnyRecipient)
+
+# Class: svr:Same (svr:Same)
+
+SubClassOf(svr:Same  spl:AnyRecipient)
+
+# Class: svr:Unrelated (svr:Unrelated)
+
+SubClassOf(svr:Unrelated  spl:AnyRecipient)
+
+
+DisjointClasses(svr:Delivery svr:OtherRecipient svr:Ours svr:Public svr:Same svr:Unrelated)
+)

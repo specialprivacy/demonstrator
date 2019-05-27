@@ -1,0 +1,10 @@
+Prefix(bp:=<http://www.thomsonreuters.com/business-policy#>)
+Prefix(owl:=<http://www.w3.org/2002/07/owl#>)
+Prefix(rdf:=<http://www.w3.org/1999/02/22-rdf-syntax-ns#>)
+Prefix(xml:=<http://www.w3.org/XML/1998/namespace>)
+Prefix(xsd:=<http://www.w3.org/2001/XMLSchema#>)
+Prefix(rdfs:=<http://www.w3.org/2000/01/rdf-schema#>)
+Ontology(<http://www.thomsonreuters.com/business-policy/Policy5_2964>
+EquivalentClasses(bp:DataSubjectPolicy_S-ID_2964
+ObjectIntersectionOf(ObjectSomeValuesFrom(<http://www.specialprivacy.eu/langs/usage-policy#hasData> ObjectIntersectionOf(<http://www.specialprivacy.eu/langs/usage-policy#AnyData> <http://www.specialprivacy.eu/vocabs/data#PII> <http://www.specialprivacy.eu/vocabs/data#Social>)) ObjectSomeValuesFrom(<http://www.specialprivacy.eu/langs/usage-policy#hasProcessing> <http://www.specialprivacy.eu/vocabs/processing#Query>) ObjectSomeValuesFrom(<http://www.specialprivacy.eu/langs/usage-policy#hasPurpose> ObjectIntersectionOf(<http://www.specialprivacy.eu/langs/usage-policy#AnyPurpose> bp:TF)) ObjectSomeValuesFrom(<http://www.specialprivacy.eu/langs/usage-policy#hasRecipient> ObjectIntersectionOf(<http://www.specialprivacy.eu/langs/usage-policy#AnyRecipient> bp:TR <http://www.specialprivacy.eu/vocabs/recipients#Ours>)) ObjectSomeValuesFrom(<http://www.specialprivacy.eu/langs/usage-policy#hasStorage> ObjectIntersectionOf(<http://www.specialprivacy.eu/langs/usage-policy#AnyStorage> ObjectSomeValuesFrom(bp:durationOf <http://www.specialprivacy.eu/vocabs/processing#Query>) ObjectSomeValuesFrom(<http://www.specialprivacy.eu/vocabs/locations#isHeld> <http://www.specialprivacy.eu/vocabs/locations#InMemory>) ObjectSomeValuesFrom(<http://www.specialprivacy.eu/langs/usage-policy#hasLocation> ObjectIntersectionOf(<http://www.specialprivacy.eu/langs/usage-policy#AnyLocation> bp:UK <http://www.specialprivacy.eu/vocabs/locations#ControllerServers>)) DataSomeValuesFrom(<http://www.specialprivacy.eu/langs/usage-policy#durationInMinutes> DatatypeRestriction(xsd:integer xsd:maxInclusive "5"^^xsd:integer))))) 
+)) 
