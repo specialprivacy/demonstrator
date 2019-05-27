@@ -44,22 +44,20 @@ services:
       KAFKA_TOPIC_POLICY: "full-policies"
       KAFKA_TOPIC_ACCESS: "application-logs"
       KAFKA_TOPIC_CONSENT: "checked-application-logs"
+    volumes:
+      - ./use_cases:/policies
 
   rethinkdb:
     image: rethinkdb:2.3
     volumes:
       - rethinkdb:/data
 
-  log-generator:
-    image: registry-special.tenforce.com/special/demonstrator-log-generator:1.0.6
-    environment:
-      RATE: 2s
-      KAFKA_BROKER_LIST: kafka:9092
-      KAFKA_TOPIC: application-logs
-      KEYCLOAK_ENDPOINT: http://keycloak:8080/auth
-      KEYCLOAK_USER: demonstrator-generator
-      KEYCLOAK_PASSWORD: demonstrator-generator
-      BACKEND_ENDPOINT: http://consent-management-backend
+  pdg:
+    build: ./personal-data-gateway
+    volumes:
+      - ./personal-data-gateway/app:/app # reload
+    ports:
+      - "8888:5000"
 
   # Kafka setup (should maybe go in external deployment)
   zookeeper:

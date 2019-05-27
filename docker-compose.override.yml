@@ -23,8 +23,6 @@ services:
       - "8080:8080"
   rethinkdb:
     restart: on-failure:3
-  log-generator:
-    restart: always
   zookeeper:
     restart: on-failure:3
   kafka:

@@ -1,0 +1,165 @@
+Prefix(:=<http://www.specialprivacy.eu/vocabs/data#>)
+Prefix(owl:=<http://www.w3.org/2002/07/owl#>)
+Prefix(rdf:=<http://www.w3.org/1999/02/22-rdf-syntax-ns#>)
+Prefix(spl:=<http://www.specialprivacy.eu/langs/usage-policy#>)
+Prefix(svd:=<http://www.specialprivacy.eu/vocabs/data#>)
+Prefix(xml:=<http://www.w3.org/XML/1998/namespace>)
+Prefix(xsd:=<http://www.w3.org/2001/XMLSchema#>)
+Prefix(rdfs:=<http://www.w3.org/2000/01/rdf-schema#>)
+
+
+Ontology(<http://www.specialprivacy.eu/vocabs/data>
+
+Declaration(Class(svd:Activity))
+Declaration(Class(svd:Anonymized))
+Declaration(Class(svd:AudiovisualActivity))
+Declaration(Class(svd:Computer))
+Declaration(Class(svd:Content))
+Declaration(Class(svd:Demographic))
+Declaration(Class(svd:Derived))
+Declaration(Class(svd:Financial))
+Declaration(Class(svd:Government))
+Declaration(Class(svd:Health))
+Declaration(Class(svd:Interactive))
+Declaration(Class(svd:Judicial))
+Declaration(Class(svd:Location))
+Declaration(Class(svd:Navigation))
+Declaration(Class(svd:Online))
+Declaration(Class(svd:OnlineActivity))
+Declaration(Class(svd:Physical))
+Declaration(Class(svd:PhysicalActivity))
+Declaration(Class(svd:Political))
+Declaration(Class(svd:Preference))
+Declaration(Class(svd:Profile))
+Declaration(Class(svd:Purchase))
+Declaration(Class(svd:Social))
+Declaration(Class(svd:State))
+Declaration(Class(svd:Statistical))
+Declaration(Class(svd:TelecomActivity))
+Declaration(Class(svd:UniqueId))
+Declaration(Class(svd:Date))
+Declaration(Class(svd:PII))
+
+############################
+#   Classes
+############################
+
+# Class: svd:Activity (svd:Activity)
+
+SubClassOf(svd:Activity spl:AnyData)
+
+# Class: svd:Anonymized (svd:Anonymized)
+
+SubClassOf(svd:Anonymized spl:AnyData)
+
+# Class: svd:AudiovisualActivity (svd:AudiovisualActivity)
+
+SubClassOf(svd:AudiovisualActivity svd:Activity)
+
+# Class: svd:Computer (svd:Computer)
+
+SubClassOf(svd:Computer spl:AnyData)
+
+# Class: svd:Content (svd:Content)
+
+SubClassOf(svd:Content spl:AnyData)
+
+# Class: svd:Demographic (svd:Demographic)
+
+SubClassOf(svd:Demographic spl:AnyData)
+
+# Class: svd:Derived (svd:Derived)
+
+SubClassOf(svd:Derived spl:AnyData)
+
+# Class: svd:Financial (svd:Financial)
+
+SubClassOf(svd:Financial spl:AnyData)
+
+# Class: svd:Government (svd:Government)
+
+SubClassOf(svd:Government spl:AnyData)
+DisjointClasses(svd:Government svd:UniqueId)
+
+# Class: svd:Health (svd:Health)
+
+SubClassOf(svd:Health spl:AnyData)
+
+# Class: svd:Interactive (svd:Interactive)
+
+SubClassOf(svd:Interactive spl:AnyData)
+
+# Class: svd:Judicial (svd:Judicial)
+
+SubClassOf(svd:Judicial spl:AnyData)
+
+# Class: svd:Location (svd:Location)
+
+SubClassOf(svd:Location spl:AnyData)
+
+# Class: svd:Navigation (svd:Navigation)
+
+SubClassOf(svd:Navigation spl:AnyData)
+
+# Class: svd:Online (svd:Online)
+
+SubClassOf(svd:Online spl:AnyData)
+
+# Class: svd:OnlineActivity (svd:OnlineActivity)
+
+SubClassOf(svd:OnlineActivity svd:Activity)
+DisjointClasses(svd:OnlineActivity svd:PhysicalActivity)
+
+# Class: svd:Physical (svd:Physical)
+
+SubClassOf(svd:Physical spl:AnyData)
+
+# Class: svd:PhysicalActivity (svd:PhysicalActivity)
+
+SubClassOf(svd:PhysicalActivity svd:Activity)
+
+# Class: svd:Political (svd:Political)
+
+SubClassOf(svd:Political spl:AnyData)
+
+# Class: svd:Preference (svd:Preference)
+
+SubClassOf(svd:Preference spl:AnyData)
+
+# Class: svd:Profile (svd:Profile)
+
+SubClassOf(svd:Profile svd:Derived)
+
+# Class: svd:Purchase (svd:Purchase)
+
+SubClassOf(svd:Purchase spl:AnyData)
+
+# Class: svd:Social (svd:Social)
+
+SubClassOf(svd:Social spl:AnyData)
+
+# Class: svd:State (svd:State)
+
+SubClassOf(svd:State spl:AnyData)
+
+# Class: svd:Statistical (svd:Statistical)
+
+SubClassOf(svd:Statistical svd:Derived)
+
+# Class: svd:TelecomActivity (svd:TelecomActivity)
+
+SubClassOf(svd:TelecomActivity svd:Activity)
+
+# Class: svd:UniqueId (svd:UniqueId)
+
+SubClassOf(svd:UniqueId spl:AnyData)
+
+# Class: svd:Date (svd:Date)
+
+SubClassOf(svd:Date spl:AnyData)
+
+# Class: svd:PII (svd:PII)
+
+SubClassOf(svd:PII spl:AnyData)
+
+)

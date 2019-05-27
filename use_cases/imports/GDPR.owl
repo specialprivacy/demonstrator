@@ -1,0 +1,635 @@
+Prefix(:=<http://www.specialprivacy.eu/regulations/gdpr#>)
+Prefix(owl:=<http://www.w3.org/2002/07/owl#>)
+Prefix(rdf:=<http://www.w3.org/1999/02/22-rdf-syntax-ns#>)
+Prefix(spl:=<http://www.specialprivacy.eu/langs/usage-policy#>)
+Prefix(xml:=<http://www.w3.org/XML/1998/namespace>)
+Prefix(xsd:=<http://www.w3.org/2001/XMLSchema#>)
+Prefix(rdfs:=<http://www.w3.org/2000/01/rdf-schema#>)
+Prefix(sbpl:=<http://www.specialprivacy.eu/langs/business-policy#>)
+
+
+Ontology(<http://www.specialprivacy.eu/regulations/gdpr>
+
+Declaration(Class(:Art10_CriminalData))
+Declaration(Class(:Art12-22_SubjectRights))
+Declaration(Class(:Art32-37_Obligations))
+Declaration(Class(:Art6_1_a_Consent))
+Declaration(Class(:Art6_1_b_Contract))
+Declaration(Class(:Art6_1_c_LegalObligation))
+Declaration(Class(:Art6_1_d_VitalInterest))
+Declaration(Class(:Art6_1_e_LegitimateInterest))
+Declaration(Class(:Art6_1_e_PublicInterest))
+Declaration(Class(:Art6_LawfulProcessing))
+Declaration(Class(:Art85_FreedomOfExpressionAndInformation))
+Declaration(Class(:Art9_2_a_Consent))
+Declaration(Class(:Art9_2_b_EmploymentAndSocialSecurity))
+Declaration(Class(:Art9_2_c_VitalInterest))
+Declaration(Class(:Art9_2_d_LegitimateActivitiesOfAssociations))
+Declaration(Class(:Art9_2_e_PublicData))
+Declaration(Class(:Art9_2_f_Juducial))
+Declaration(Class(:Art9_2_g_PublicInterest))
+Declaration(Class(:Art9_2_h_PreventiveOrOccupationalMedicine))
+Declaration(Class(:Art9_2_i_PublicHealth))
+Declaration(Class(:Art9_2_j_ArchivingResearchStatistics))
+Declaration(Class(:Art9_SensitiveData))
+Declaration(Class(:BeliefData))
+Declaration(Class(:BiometricData))
+Declaration(Class(:Chap2_LawfulProcessiong))
+Declaration(Class(:Chap3_RightsOfDataSubjects))
+Declaration(Class(:Chap4_ControllerAndProcessorObligations))
+Declaration(Class(:Chap5_DataTransfer))
+Declaration(Class(:Chap9_Derogations))
+Declaration(Class(:CriminalConvictionData_as_per_Art10))
+Declaration(Class(:CriminalConvictionRelatedPurpose))
+Declaration(Class(:DataSubjectRights))
+Declaration(Class(:Exceptions_as_per_Art23))
+Declaration(Class(:GDPR_Requirements))
+Declaration(Class(:GeneticData))
+Declaration(Class(:HealthData))
+Declaration(Class(:HealthcareManagement))
+Declaration(Class(:HealthcarePurpose))
+Declaration(Class(:HistoricalResearchPurpose))
+Declaration(Class(:LawfulEmploymentRelatedPurpose))
+Declaration(Class(:LawfulSocialSecurityPurpose))
+Declaration(Class(:LegalBasis))
+Declaration(Class(:LegalPurpose))
+Declaration(Class(:MedicalDiagnosis))
+Declaration(Class(:MedicalTreatment))
+Declaration(Class(:NationalLaw_as_per_Art85))
+Declaration(Class(:NonCriminalConvictionData_as_per_Art10))
+Declaration(Class(:NonPersonalData))
+Declaration(Class(:NonSecurityMeasureData_as_per_Art10))
+Declaration(Class(:NonSensitiveData_as_per_Art9))
+Declaration(Class(:OccupationalMedicine))
+Declaration(Class(:PersonalData))
+Declaration(Class(:PersonalHealthPurpose))
+Declaration(Class(:PoliticalData))
+Declaration(Class(:PreventiveMedicine))
+Declaration(Class(:PublicData))
+Declaration(Class(:PublicHealthPurpose))
+Declaration(Class(:RacialData))
+Declaration(Class(:ReligiousData))
+Declaration(Class(:RequirementsOfArt10))
+Declaration(Class(:Right))
+Declaration(Class(:RightOfAccess))
+Declaration(Class(:RightToBeInformed))
+Declaration(Class(:RightToBeInformedWithDataSubjectProvenace))
+Declaration(Class(:RightToBeInformedWithThirdPartyProvence))
+Declaration(Class(:RightToCompensationAndLiability))
+Declaration(Class(:RightToErasure))
+Declaration(Class(:RightToNotCompletelyAutomatedDecisionMaking))
+Declaration(Class(:RightToNotificationRegardingRectificationOrErasure))
+Declaration(Class(:RightToObject))
+Declaration(Class(:RightToPortability))
+Declaration(Class(:RightToRectification))
+Declaration(Class(:RightToRestrictionOfProcessing))
+Declaration(Class(:RightToWithdrawConsent))
+Declaration(Class(:ScientificReaserchPurpose))
+Declaration(Class(:SecurityMeasureData_as_per_Art10))
+Declaration(Class(:SecurityMeasureRelatedPupose))
+Declaration(Class(:SensitiveData_as_per_Art9))
+Declaration(Class(:SexualData))
+Declaration(Class(:SocialCarePurpose))
+Declaration(Class(:StatisticalPurpose))
+Declaration(Class(:TradeUnionMembershipData))
+Declaration(Class(:WorkingCapacityAssessment))
+Declaration(ObjectProperty(:grants))
+Declaration(ObjectProperty(:hasDataSubject))
+Declaration(ObjectProperty(:hasLegalBasis))
+Declaration(ObjectProperty(:isAuthorizedBy))
+Declaration(ObjectProperty(:isControlledBy))
+Declaration(AnnotationProperty(:checkBeforeUse))
+
+############################
+#   Object Properties
+############################
+
+# Object Property: :grants (:grants)
+
+SubObjectPropertyOf(:grants owl:topObjectProperty)
+
+# Object Property: :hasDataSubject (:hasDataSubject)
+
+AnnotationAssertion(rdfs:comment :hasDataSubject "New role with respect to the initial vocabulary (D2.1 deliverable)")
+
+# Object Property: :hasLegalBasis (:hasLegalBasis)
+
+AnnotationAssertion(rdfs:comment :hasLegalBasis "This property is new with respect to the initial policy vocabulary.")
+SubObjectPropertyOf(:hasLegalBasis owl:topObjectProperty)
+FunctionalObjectProperty(:hasLegalBasis)
+ObjectPropertyRange(:hasLegalBasis :LegalBasis)
+
+
+
+############################
+#   Classes
+############################
+
+# Class: :Art10_CriminalData (:Art10_CriminalData)
+
+EquivalentClasses(:Art10_CriminalData ObjectUnionOf(ObjectSomeValuesFrom(sbpl:hasDuty :RequirementsOfArt10) ObjectSomeValuesFrom(spl:hasData :NonCriminalConvictionData_as_per_Art10)))
+
+# Class: :Art12-22_SubjectRights (:Art12-22_SubjectRights)
+
+SubClassOf(:Art12-22_SubjectRights sbpl:AnyDuty)
+
+# Class: :Art32-37_Obligations (:Art32-37_Obligations)
+
+SubClassOf(:Art32-37_Obligations sbpl:AnyDuty)
+
+# Class: :Art6_1_a_Consent (:Art6_1_a_Consent)
+
+SubClassOf(:Art6_1_a_Consent :LegalBasis)
+
+# Class: :Art6_1_b_Contract (:Art6_1_b_Contract)
+
+SubClassOf(:Art6_1_b_Contract :LegalBasis)
+
+# Class: :Art6_1_c_LegalObligation (:Art6_1_c_LegalObligation)
+
+SubClassOf(:Art6_1_c_LegalObligation :LegalBasis)
+
+# Class: :Art6_1_d_VitalInterest (:Art6_1_d_VitalInterest)
+
+SubClassOf(:Art6_1_d_VitalInterest :LegalBasis)
+
+# Class: :Art6_1_e_LegitimateInterest (:Art6_1_e_LegitimateInterest)
+
+SubClassOf(:Art6_1_e_LegitimateInterest :LegalBasis)
+
+# Class: :Art6_1_e_PublicInterest (:Art6_1_e_PublicInterest)
+
+SubClassOf(:Art6_1_e_PublicInterest :LegalBasis)
+
+# Class: :Art6_LawfulProcessing (:Art6_LawfulProcessing)
+
+EquivalentClasses(:Art6_LawfulProcessing ObjectUnionOf(ObjectSomeValuesFrom(spl:hasData :NonPersonalData) ObjectSomeValuesFrom(:hasLegalBasis ObjectUnionOf(:Art6_1_a_Consent :Art6_1_b_Contract :Art6_1_c_LegalObligation :Art6_1_d_VitalInterest :Art6_1_e_LegitimateInterest :Art6_1_e_PublicInterest))))
+
+# Class: :Art85_FreedomOfExpressionAndInformation (:Art85_FreedomOfExpressionAndInformation)
+
+EquivalentClasses(:Art85_FreedomOfExpressionAndInformation ObjectSomeValuesFrom(:hasLegalBasis :NationalLaw_as_per_Art85))
+
+# Class: :Art9_2_a_Consent (:Art9_2_a_Consent)
+
+SubClassOf(:Art9_2_a_Consent :Art6_1_a_Consent)
+
+# Class: :Art9_2_b_EmploymentAndSocialSecurity (:Art9_2_b_EmploymentAndSocialSecurity)
+
+SubClassOf(:Art9_2_b_EmploymentAndSocialSecurity :LegalBasis)
+
+# Class: :Art9_2_c_VitalInterest (:Art9_2_c_VitalInterest)
+
+SubClassOf(:Art9_2_c_VitalInterest :Art6_1_d_VitalInterest)
+
+# Class: :Art9_2_d_LegitimateActivitiesOfAssociations (:Art9_2_d_LegitimateActivitiesOfAssociations)
+
+SubClassOf(:Art9_2_d_LegitimateActivitiesOfAssociations :LegalBasis)
+
+# Class: :Art9_2_e_PublicData (:Art9_2_e_PublicData)
+
+SubClassOf(:Art9_2_e_PublicData :LegalBasis)
+
+# Class: :Art9_2_f_Juducial (:Art9_2_f_Juducial)
+
+SubClassOf(:Art9_2_f_Juducial :LegalBasis)
+
+# Class: :Art9_2_g_PublicInterest (:Art9_2_g_PublicInterest)
+
+SubClassOf(:Art9_2_g_PublicInterest :Art6_1_e_PublicInterest)
+
+# Class: :Art9_2_h_PreventiveOrOccupationalMedicine (:Art9_2_h_PreventiveOrOccupationalMedicine)
+
+SubClassOf(:Art9_2_h_PreventiveOrOccupationalMedicine :LegalBasis)
+
+# Class: :Art9_2_i_PublicHealth (:Art9_2_i_PublicHealth)
+
+SubClassOf(:Art9_2_i_PublicHealth :LegalBasis)
+
+# Class: :Art9_2_j_ArchivingResearchStatistics (:Art9_2_j_ArchivingResearchStatistics)
+
+SubClassOf(:Art9_2_j_ArchivingResearchStatistics :LegalBasis)
+
+# Class: :Art9_SensitiveData (:Art9_SensitiveData)
+
+EquivalentClasses(:Art9_SensitiveData ObjectUnionOf(ObjectSomeValuesFrom(spl:hasData :NonSensitiveData_as_per_Art9) ObjectSomeValuesFrom(:hasLegalBasis ObjectUnionOf(:Art9_2_a_Consent :Art9_2_b_EmploymentAndSocialSecurity :Art9_2_c_VitalInterest :Art9_2_d_LegitimateActivitiesOfAssociations :Art9_2_e_PublicData :Art9_2_f_Juducial :Art9_2_g_PublicInterest :Art9_2_h_PreventiveOrOccupationalMedicine :Art9_2_i_PublicHealth :Art9_2_j_ArchivingResearchStatistics))))
+
+# Class: :BeliefData (:BeliefData)
+
+SubClassOf(:BeliefData :SensitiveData_as_per_Art9)
+
+# Class: :BiometricData (:BiometricData)
+
+SubClassOf(:BiometricData :SensitiveData_as_per_Art9)
+
+# Class: :Chap2_LawfulProcessiong (:Chap2_LawfulProcessiong)
+
+EquivalentClasses(:Chap2_LawfulProcessiong ObjectIntersectionOf(:Art10_CriminalData :Art6_LawfulProcessing :Art9_SensitiveData))
+
+# Class: :Chap3_RightsOfDataSubjects (:Chap3_RightsOfDataSubjects)
+
+EquivalentClasses(:Chap3_RightsOfDataSubjects ObjectUnionOf(:Exceptions_as_per_Art23 ObjectSomeValuesFrom(sbpl:hasDuty :Art12-22_SubjectRights)))
+
+# Class: :Chap4_ControllerAndProcessorObligations (:Chap4_ControllerAndProcessorObligations)
+
+EquivalentClasses(:Chap4_ControllerAndProcessorObligations ObjectSomeValuesFrom(sbpl:hasDuty :Art32-37_Obligations))
+
+# Class: :CriminalConvictionData_as_per_Art10 (:CriminalConvictionData_as_per_Art10)
+
+SubClassOf(:CriminalConvictionData_as_per_Art10 spl:AnyData)
+DisjointClasses(:CriminalConvictionData_as_per_Art10 :NonCriminalConvictionData_as_per_Art10)
+
+# Class: :CriminalConvictionRelatedPurpose (:CriminalConvictionRelatedPurpose)
+
+SubClassOf(:CriminalConvictionRelatedPurpose :LegalPurpose)
+
+# Class: :DataSubjectRights (:DataSubjectRights)
+
+AnnotationAssertion(rdfs:comment :DataSubjectRights "Actions or information that the data subject has the right to request")
+SubClassOf(:DataSubjectRights :Right)
+
+# Class: :GDPR_Requirements (:GDPR_Requirements)
+
+EquivalentClasses(:GDPR_Requirements ObjectUnionOf(ObjectUnionOf(:Chap9_Derogations ObjectIntersectionOf(:Chap2_LawfulProcessiong :Chap3_RightsOfDataSubjects :Chap4_ControllerAndProcessorObligations :Chap5_DataTransfer)) ObjectSomeValuesFrom(spl:hasData :NonPersonalData)))
+
+# Class: :GeneticData (:GeneticData)
+
+SubClassOf(:GeneticData :SensitiveData_as_per_Art9)
+
+# Class: :HealthData (:HealthData)
+
+SubClassOf(:HealthData :SensitiveData_as_per_Art9)
+
+# Class: :HealthcareManagement (:HealthcareManagement)
+
+SubClassOf(:HealthcareManagement :HealthcarePurpose)
+
+# Class: :HealthcarePurpose (:HealthcarePurpose)
+
+AnnotationAssertion(rdfs:comment :HealthcarePurpose "Art 9 (2) h")
+SubClassOf(:HealthcarePurpose spl:AnyPurpose)
+
+# Class: :HistoricalResearchPurpose (:HistoricalResearchPurpose)
+
+SubClassOf(:HistoricalResearchPurpose spl:AnyPurpose)
+
+# Class: :LawfulEmploymentRelatedPurpose (:LawfulEmploymentRelatedPurpose)
+
+AnnotationAssertion(rdfs:comment :LawfulEmploymentRelatedPurpose "Art 9 (2) b
+
+processing is necessary for the purposes of 
+carrying out the obligations
+and exercising specific rights of the controller
+or of the data subject
+in the field of employment
+and social security
+and social protection law
+in so far as it is authorised by Union
+or Member State law
+or a collective agreement pursuant to member state law
+providing for appropriate safeguards for the fundamental rights and the interests of the data subject")
+SubClassOf(:LawfulEmploymentRelatedPurpose spl:AnyPurpose)
+
+# Class: :LawfulSocialSecurityPurpose (:LawfulSocialSecurityPurpose)
+
+AnnotationAssertion(rdfs:comment :LawfulSocialSecurityPurpose "Art 9 (2) b
+
+processing is necessary for the purposes of 
+carrying out the obligations
+and exercising specific rights of the controller
+or of the data subject
+in the field of employment
+and social security
+and social protection law
+in so far as it is authorised by Union
+or Member State law
+or a collective agreement pursuant to member state law
+providing for appropriate safeguards for the fundamental rights and the interests of the data subject")
+AnnotationAssertion(rdfs:comment :LawfulSocialSecurityPurpose "Art 9 (2) f
+
+processing is necessary for the 
+establishment
+exercise
+or defence of legal claims 
+or whenever courts are acting in their judical capacity")
+SubClassOf(:LawfulSocialSecurityPurpose spl:AnyPurpose)
+
+# Class: :LegalPurpose (:LegalPurpose)
+
+AnnotationAssertion(rdfs:comment :LegalPurpose "Art 9.2 (f)
+
+processing is necessary for the establishment, exercise or defence of legal claims or whenever courts are acting in their judicial capacity")
+SubClassOf(:LegalPurpose spl:AnyPurpose)
+
+# Class: :MedicalDiagnosis (:MedicalDiagnosis)
+
+SubClassOf(:MedicalDiagnosis :HealthcarePurpose)
+
+# Class: :MedicalTreatment (:MedicalTreatment)
+
+SubClassOf(:MedicalTreatment :HealthcarePurpose)
+
+# Class: :NationalLaw_as_per_Art85 (:NationalLaw_as_per_Art85)
+
+AnnotationAssertion(rdfs:comment :NationalLaw_as_per_Art85 "Art 85
+
+1)
+Member States shall by law reconcile the right to the protection of personal data pursuant to this Regulation with the right to freedom of expression and information, including processing for journalistic purposes and the purposes of academic, artistic or literary expression.
+2)
+For processing carried out for journalistic purposes or the purpose of academic artistic or literary expression, Member States shall provide for exemptions or derogations from Chapter II (principles), Chapter III (rights of the data subject), Chapter IV (controller and processor), Chapter V (transfer of personal data to third countries or international organisations), Chapter VI (independent supervisory authorities), Chapter VII (cooperation and consistency) and Chapter IX (specific data processing situations) if they are necessary to reconcile the right to the protection of personal data with the freedom of expression and information.
+3)
+Each Member State shall notify to the Commission the provisions of its law which it has adopted pursuant to paragraph 2 and, without delay, any subsequent amendment law or amendment affecting them.")
+SubClassOf(:NationalLaw_as_per_Art85 :LegalBasis)
+
+# Class: :NonCriminalConvictionData_as_per_Art10 (:NonCriminalConvictionData_as_per_Art10)
+
+SubClassOf(:NonCriminalConvictionData_as_per_Art10 spl:AnyData)
+
+# Class: :NonPersonalData (:NonPersonalData)
+
+SubClassOf(:NonPersonalData spl:AnyData)
+DisjointClasses(:NonPersonalData :PersonalData)
+
+# Class: :NonSecurityMeasureData_as_per_Art10 (:NonSecurityMeasureData_as_per_Art10)
+
+SubClassOf(:NonSecurityMeasureData_as_per_Art10 spl:AnyData)
+
+# Class: :NonSensitiveData_as_per_Art9 (:NonSensitiveData_as_per_Art9)
+
+SubClassOf(:NonSensitiveData_as_per_Art9 :PersonalData)
+DisjointClasses(:NonSensitiveData_as_per_Art9 :SensitiveData_as_per_Art9)
+
+# Class: :OccupationalMedicine (:OccupationalMedicine)
+
+SubClassOf(:OccupationalMedicine :HealthcarePurpose)
+
+# Class: :PersonalData (:PersonalData)
+
+SubClassOf(:PersonalData spl:AnyData)
+
+# Class: :PersonalHealthPurpose (:PersonalHealthPurpose)
+
+SubClassOf(:PersonalHealthPurpose :HealthcarePurpose)
+
+# Class: :PoliticalData (:PoliticalData)
+
+SubClassOf(:PoliticalData :SensitiveData_as_per_Art9)
+
+# Class: :PreventiveMedicine (:PreventiveMedicine)
+
+SubClassOf(:PreventiveMedicine :HealthcarePurpose)
+
+# Class: :PublicData (:PublicData)
+
+SubClassOf(:PublicData spl:AnyData)
+
+# Class: :PublicHealthPurpose (:PublicHealthPurpose)
+
+SubClassOf(:PublicHealthPurpose :HealthcarePurpose)
+
+# Class: :RacialData (:RacialData)
+
+SubClassOf(:RacialData :SensitiveData_as_per_Art9)
+
+# Class: :ReligiousData (:ReligiousData)
+
+SubClassOf(:ReligiousData :SensitiveData_as_per_Art9)
+
+# Class: :Right (:Right)
+
+AnnotationAssertion(rdfs:comment :Right "A right consists in a action that one of the parties (data subject or recipient) may  request to the other party. This second party has the duty to perform the requested action unless a lawfully objection sussists.")
+
+# Class: :RightOfAccess (:RightOfAccess)
+
+AnnotationAssertion(rdfs:comment :RightOfAccess "Article 15
+
+The data subject shall have the right to obtain from the controller confirmation as to whether or not personal data concerning him or her are being processed, and, where that is the case, access to the personal data and the following information:
+the purposes of the processing;
+the categories of personal data concerned;
+the recipients or categories of recipient to whom the personal data have been or will be disclosed, in particular recipients in third countries or international organisations;
+where possible, the envisaged period for which the personal data will be stored, or, if not possible, the criteria used to determine that period;
+the existence of the right to request from the controller rectification or erasure of personal data or restriction of processing of personal data concerning the data subject or to object to such processing;
+the right to lodge a complaint with a supervisory authority;
+where the personal data are not collected from the data subject, any available information as to their source;
+the existence of automated decision-making, including profiling, referred to in Article 22(1) and (4) and, at least in those cases, meaningful information about the logic involved, as well as the significance and the envisaged consequences of such processing for the data subject.
+Where personal data are transferred to a third country or to an international organisation, the data subject shall have the right to be informed of the appropriate safeguards pursuant to Article 46 relating to the transfer.
+1The controller shall provide a copy of the personal data undergoing processing. 2For any further copies requested by the data subject, the controller may charge a reasonable fee based on administrative costs. 3Where the data subject makes the request by electronic means, and unless otherwise requested by the data subject, the information shall be provided in a commonly used electronic form.
+The right to obtain a copy referred to in paragraph 3 shall not adversely affect the rights and freedoms of others.")
+SubClassOf(:RightOfAccess :Right)
+
+# Class: :RightToBeInformed (:RightToBeInformed)
+
+AnnotationAssertion(rdfs:comment :RightToBeInformed "")
+SubClassOf(:RightToBeInformed :Right)
+
+# Class: :RightToBeInformedWithDataSubjectProvenace (:RightToBeInformedWithDataSubjectProvenace)
+
+AnnotationAssertion(rdfs:comment :RightToBeInformedWithDataSubjectProvenace "Art 13
+
+1)
+Where personal data relating to a data subject are collected from the data subject, the controller shall, at the time when personal data are obtained, provide the data subject with all of the following information:
+a) the identity and the contact details of the controller and, where applicable, of the controller’s representative;
+
+b) the contact details of the data protection officer, where applicable;
+
+c) the purposes of the processing for which the personal data are intended as well as the legal basis for the processing;
+
+d) where the processing is based on point (f) of Article 6(1), the legitimate interests pursued by the controller or by a third party;
+
+e) the recipients or categories of recipients of the personal data, if any;
+
+f) where applicable, the fact that the controller intends to transfer personal data to a third country or international organisation and the existence or absence of an adequacy decision by the Commission, or in the case of transfers referred to in Article 46 or 47, or the second subparagraph of Article 49(1), reference to the appropriate or suitable safeguards and the means by which to obtain a copy of them or where they have been made available.
+2)
+In addition to the information referred to in paragraph 1, the controller shall, at the time when personal data are obtained, provide the data subject with the following further information necessary to ensure fair and transparent processing:
+
+a) the period for which the personal data will be stored, or if that is not possible, the criteria used to determine that period;
+
+b) the existence of the right to request from the controller access to and rectification or erasure of personal data or restriction of processing concerning the data subject or to object to processing as well as the right to data portability;
+
+c) where the processing is based on point (a) of Article 6(1) or point (a) of Article 9(2), the existence of the right to withdraw consent at any time, without affecting the lawfulness of processing based on consent before its withdrawal;
+
+d) the right to lodge a complaint with a supervisory authority;
+
+e) whether the provision of personal data is a statutory or contractual requirement, or a requirement necessary to enter into a contract, as well as whether the data subject is obliged to provide the personal data and of the possible consequences of failure to provide such data;
+
+f) the existence of automated decision-making, including profiling, referred to in Article 22(1) and (4) and, at least in those cases, meaningful information about the logic involved, as well as the significance and the envisaged consequences of such processing for the data subject.
+
+3)
+Where the controller intends to further process the personal data for a purpose other than that for which the personal data were collected, the controller shall provide the data subject prior to that further processing with information on that other purpose and with any relevant further information as referred to in paragraph 2.
+4)
+Paragraphs 1, 2 and 3 shall not apply where and insofar as the data subject already has the information.")
+SubClassOf(:RightToBeInformedWithDataSubjectProvenace :RightToBeInformed)
+
+# Class: :RightToBeInformedWithThirdPartyProvence (:RightToBeInformedWithThirdPartyProvence)
+
+AnnotationAssertion(rdfs:comment :RightToBeInformedWithThirdPartyProvence "Art 14")
+SubClassOf(:RightToBeInformedWithThirdPartyProvence :RightToBeInformed)
+
+# Class: :RightToCompensationAndLiability (:RightToCompensationAndLiability)
+
+AnnotationAssertion(rdfs:comment :RightToCompensationAndLiability "Art 82
+
+1)
+Any person who has suffered material or non-material damage as a result of an infringement of this Regulation shall have the right to receive compensation from the controller or processor for the damage suffered. 
+
+2)
+Any controller involved in processing shall be liable for the damage caused by processing which infringes this Regulation. A processor shall be liable for the damage caused by processing only where it has not complied with obligations of this Regulation specifically directed to processors or where it has acted outside or contrary to lawful instructions of the controller. 
+
+3)
+A controller or processor shall be exempt from liability under paragraph 2 if it proves that it is not in any way responsible for the event giving rise to the damage. 
+
+4)
+Where more than one controller or processor, or both a controller and a processor, are involved in the same processing and where they are, under paragraphs 2 and 3, responsible for any damage caused by processing, each controller or processor shall be held liable for the entire damage in order to ensure effective compensation of the data subject. 
+
+5) Where a controller or processor has, in accordance with paragraph 4, paid full compensation for the damage suffered, that controller or processor shall be entitled to claim back from the other controllers or processors involved in the same processing that part of the compensation corresponding to their part of responsibility for the damage, in accordance with the conditions set out in paragraph 2.
+
+6)
+Court proceedings for exercising the right to receive compensation shall be brought before the courts competent under the law of the Member State referred to in Article 79(2).")
+SubClassOf(:RightToCompensationAndLiability :Right)
+
+# Class: :RightToErasure (:RightToErasure)
+
+AnnotationAssertion(rdfs:comment :RightToErasure "Article 17
+
+1)
+The data subject shall have the right to obtain from the controller the erasure of personal data concerning him or her without undue delay and the controller shall have the obligation to erase personal data without undue delay where one of the following grounds applies: 
+
+(a) the personal data are no longer necessary in relation to the purposes for which they were collected or otherwise processed;
+
+(b) the data subject withdraws consent on which the processing is based according to point (a) of Article 6(1), or point (a) of Article 9(2), and where there is no other legal ground for the processing; 
+
+(c) the data subject objects to the processing pursuant to Article 21(1) and there are no overriding legitimate grounds for the processing, or the data subject objects to the processing pursuant to Article 21(2); 
+
+(d) the personal data have been unlawfully processed; 
+
+(e) the personal data have to be erased for compliance with a legal obligation in Union or Member State law to which the controller is subject; 
+
+(f) the personal data have been collected in relation to the offer of information society services referred to in Article 8(1). 
+
+2)
+Where the controller has made the personal data public and is obliged pursuant to paragraph 1 to erase the personal data, the controller, taking account of available technology and the cost of implementation, shall take reasonable steps, including technical measures, to inform controllers which are processing the personal data that the data subject has requested the erasure by such controllers of any links to, or copy or replication of, those personal data. 
+
+3)
+Paragraphs 1 and 2 shall not apply to the extent that processing is necessary: 
+
+(a) for exercising the right of freedom of expression and information; 
+
+(b) for compliance with a legal obligation which requires processing by Union or Member State law to which the controller is subject or for the performance of a task carried out in the public interest or in the exercise of official authority vested in the controller; 
+
+(c) for reasons of public interest in the area of public health in accordance with points (h) and (i) of Article 9(2) as well as Article 9(3); 
+
+(d) for archiving purposes in the public interest, scientific or historical research purposes or statistical purposes in accordance with Article 89(1) in so far as the right referred to in paragraph 1 is likely to render impossible or seriously impair the achievement of the objectives of that processing; or 
+
+(e) for the establishment, exercise or defence of legal claims.")
+SubClassOf(:RightToErasure :Right)
+
+# Class: :RightToNotCompletelyAutomatedDecisionMaking (:RightToNotCompletelyAutomatedDecisionMaking)
+
+AnnotationAssertion(rdfs:comment :RightToNotCompletelyAutomatedDecisionMaking "Art 22
+
+The data subject shall have the right not to be subject to a decision based solely on automated processing, including profiling, which produces legal effects concerning him or her or similarly significantly affects him or her.
+2)
+Paragraph 1 shall not apply if the decision:
+a) is necessary for entering into, or performance of, a contract between the data subject and a data controller;
+b) is authorised by Union or Member State law to which the controller is subject and which also lays down suitable measures to safeguard the data subject’s rights and freedoms and legitimate interests; or
+c) is based on the data subject’s explicit consent.
+3)
+In the cases referred to in points (a) and (c) of paragraph 2, the data controller shall implement suitable measures to safeguard the data subject’s rights and freedoms and legitimate interests, at least the right to obtain human intervention on the part of the controller, to express his or her point of view and to contest the decision.
+4)
+Decisions referred to in paragraph 2 shall not be based on special categories of personal data referred to in Article 9(1), unless point (a) or (g) of Article 9(2) applies and suitable measures to safeguard the data subject’s rights and freedoms and legitimate interests are in place.")
+SubClassOf(:RightToNotCompletelyAutomatedDecisionMaking :Right)
+
+# Class: :RightToNotificationRegardingRectificationOrErasure (:RightToNotificationRegardingRectificationOrErasure)
+
+AnnotationAssertion(rdfs:comment :RightToNotificationRegardingRectificationOrErasure "Art 19
+
+The controller shall communicate any rectification or erasure of personal data or restriction of processing carried out in accordance with Article 16, Article 17(1) and Article 18 to each recipient to whom the personal data have been disclosed, unless this proves impossible or involves disproportionate effort. 2The controller shall inform the data subject about those recipients if the data subject requests it.")
+SubClassOf(:RightToNotificationRegardingRectificationOrErasure :Right)
+
+# Class: :RightToObject (:RightToObject)
+
+AnnotationAssertion(rdfs:comment :RightToObject "Article 21
+
+
+The data subject shall have the right to object, on grounds relating to his or her particular situation, at any time to processing of personal data concerning him or her which is based on point (e) or (f) of Article 6(1), including profiling based on those provisions. 2The controller shall no longer process the personal data unless the controller demonstrates compelling legitimate grounds for the processing which override the interests, rights and freedoms of the data subject or for the establishment, exercise or defence of legal claims.
+Where personal data are processed for direct marketing purposes, the data subject shall have the right to object at any time to processing of personal data concerning him or her for such marketing, which includes profiling to the extent that it is related to such direct marketing.
+Where the data subject objects to processing for direct marketing purposes, the personal data shall no longer be processed for such purposes.
+At the latest at the time of the first communication with the data subject, the right referred to in paragraphs 1 and 2 shall be explicitly brought to the attention of the data subject and shall be presented clearly and separately from any other information.
+In the context of the use of information society services, and notwithstanding Directive 2002/58/EC, the data subject may exercise his or her right to object by automated means using technical specifications.
+Where personal data are processed for scientific or historical research purposes or statistical purposes pursuant to Article 89(1), the data subject, on grounds relating to his or her particular situation, shall have the right to object to processing of personal data concerning him or her, unless the processing is necessary for the performance of a task carried out for reasons of public interest.")
+SubClassOf(:RightToObject :Right)
+
+# Class: :RightToPortability (:RightToPortability)
+
+AnnotationAssertion(rdfs:comment :RightToPortability "Article 20
+
+The data subject shall have the right, where personal data are processed by electronic means and in a structured and commonly used format, to obtain from the controller a copy of data undergoing processing in an electronic and structured format which is commonly used and allows for further use by the data subject.")
+SubClassOf(:RightToPortability :Right)
+
+# Class: :RightToRectification (:RightToRectification)
+
+AnnotationAssertion(rdfs:comment :RightToRectification "Article 16
+
+The data subject shall have the right to obtain from the controller the rectification of personal data relating to them which are inaccurate. The data subject shall have the right to obtain completion of incomplete personal data, including by way of supplementing a corrective statement.")
+SubClassOf(:RightToRectification :Right)
+
+# Class: :RightToRestrictionOfProcessing (:RightToRestrictionOfProcessing)
+
+AnnotationAssertion(rdfs:comment :RightToRestrictionOfProcessing "Art 18
+
+1)
+The data subject shall have the right to obtain from the controller restriction of processing where one of the following applies:
+a) the accuracy of the personal data is contested by the data subject, for a period enabling the controller to verify the accuracy of the personal data;
+b) the processing is unlawful and the data subject opposes the erasure of the personal data and requests the restriction of their use instead;
+c) the controller no longer needs the personal data for the purposes of the processing, but they are required by the data subject for the establishment, exercise or defence of legal claims;
+d) the data subject has objected to processing pursuant to Article 21(1) pending the verification whether the legitimate grounds of the controller override those of the data subject.
+2)
+Where processing has been restricted under paragraph 1, such personal data shall, with the exception of storage, only be processed with the data subject’s consent or for the establishment, exercise or defence of legal claims or for the protection of the rights of another natural or legal person or for reasons of important public interest of the Union or of a Member State.
+3)
+A data subject who has obtained restriction of processing pursuant to paragraph 1 shall be informed by the controller before the restriction of processing is lifted.")
+SubClassOf(:RightToRestrictionOfProcessing :Right)
+
+# Class: :RightToWithdrawConsent (:RightToWithdrawConsent)
+
+AnnotationAssertion(rdfs:comment :RightToWithdrawConsent "Art 7 (3)
+
+The data subject shall have the right to withdraw his or her consent at any time. The withdrawal of consent shall not affect the lawfulness of processing based on consent before its withdrawal. Prior to giving consent, the data subject shall be informed thereof. It shall be as easy to withdraw as to give consent.")
+SubClassOf(:RightToWithdrawConsent :Right)
+
+# Class: :ScientificReaserchPurpose (:ScientificReaserchPurpose)
+
+SubClassOf(:ScientificReaserchPurpose spl:AnyPurpose)
+
+# Class: :SecurityMeasureData_as_per_Art10 (:SecurityMeasureData_as_per_Art10)
+
+SubClassOf(:SecurityMeasureData_as_per_Art10 spl:AnyData)
+
+# Class: :SecurityMeasureRelatedPupose (:SecurityMeasureRelatedPupose)
+
+SubClassOf(:SecurityMeasureRelatedPupose spl:AnyPurpose)
+
+# Class: :SensitiveData_as_per_Art9 (:SensitiveData_as_per_Art9)
+
+SubClassOf(:SensitiveData_as_per_Art9 :PersonalData)
+
+# Class: :SexualData (:SexualData)
+
+SubClassOf(:SexualData :SensitiveData_as_per_Art9)
+
+# Class: :SocialCarePurpose (:SocialCarePurpose)
+
+SubClassOf(:SocialCarePurpose spl:AnyPurpose)
+
+# Class: :StatisticalPurpose (:StatisticalPurpose)
+
+SubClassOf(:StatisticalPurpose spl:AnyPurpose)
+
+# Class: :TradeUnionMembershipData (:TradeUnionMembershipData)
+
+SubClassOf(:TradeUnionMembershipData :SensitiveData_as_per_Art9)
+
+# Class: :WorkingCapacityAssessment (:WorkingCapacityAssessment)
+
+SubClassOf(:WorkingCapacityAssessment :HealthcarePurpose)
+
+
+)

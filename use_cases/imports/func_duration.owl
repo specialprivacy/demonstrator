@@ -1,0 +1,39 @@
+Prefix(owl:=<http://www.w3.org/2002/07/owl#>)
+Prefix(rdf:=<http://www.w3.org/1999/02/22-rdf-syntax-ns#>)
+Prefix(svdu:=<http://www.specialprivacy.eu/vocabs/duration#>)
+Prefix(spl:=<http://www.specialprivacy.eu/langs/usage-policy#>)
+Prefix(xml:=<http://www.w3.org/XML/1998/namespace>)
+Prefix(xsd:=<http://www.w3.org/2001/XMLSchema#>)
+Prefix(rdfs:=<http://www.w3.org/2000/01/rdf-schema#>)
+
+
+Ontology(<http://www.specialprivacy.eu/vocabs/duration>
+
+Declaration(Class(svdu:BusinessPractices))
+Declaration(Class(svdu:Indefinitely))
+Declaration(Class(svdu:LegalRequirement))
+Declaration(Class(svdu:StatedPurpose))
+
+############################
+#   Classes
+############################
+
+# Class: svdu:BusinessPractices (svdu:BusinessPractices)
+
+SubClassOf(svdu:BusinessPractices spl:AnyDuration)
+
+# Class: svdu:Indefinitely (svdu:Indefinitely)
+
+SubClassOf(svdu:Indefinitely spl:AnyDuration)
+
+# Class: svdu:LegalRequirement (svdu:LegalRequirement)
+
+SubClassOf(svdu:LegalRequirement spl:AnyDuration)
+
+# Class: svdu:StatedPurpose (svdu:StatedPurpose)
+
+SubClassOf(svdu:StatedPurpose spl:AnyDuration)
+
+
+DisjointClasses(svdu:BusinessPractices svdu:Indefinitely svdu:LegalRequirement svdu:StatedPurpose)
+)

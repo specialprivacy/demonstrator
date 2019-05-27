@@ -1,0 +1,109 @@
+Prefix(:=<http://www.thomsonreuters.com/business-policy#>)
+Prefix(owl:=<http://www.w3.org/2002/07/owl#>)
+Prefix(rdf:=<http://www.w3.org/1999/02/22-rdf-syntax-ns#>)
+Prefix(xml:=<http://www.w3.org/XML/1998/namespace>)
+Prefix(xsd:=<http://www.w3.org/2001/XMLSchema#>)
+Prefix(rdfs:=<http://www.w3.org/2000/01/rdf-schema#>)
+
+
+Ontology(<http://www.thomsonreuters.com/business-policy>
+
+Declaration(Class(:AdverseInformation))
+Declaration(Class(:ApplyIdentifier))
+Declaration(Class(:ComplianceWithFinancialRegulation))
+Declaration(Class(:IdentityProfile))
+Declaration(Class(:ML))
+Declaration(Class(:NegativeMedia))
+Declaration(Class(:PEP))
+Declaration(Class(:PoliticalExposureMatch))
+Declaration(Class(:RiskProfile))
+Declaration(Class(:SanctionListsMatch))
+Declaration(Class(:Sanctions))
+Declaration(Class(:TF))
+Declaration(Class(:TR))
+Declaration(Class(:UK))
+Declaration(ObjectProperty(:durationOf))
+
+
+############################
+#   Classes
+############################
+
+# Class: <http://www.specialprivacy.eu/vocabs/data#Financial> (<http://www.specialprivacy.eu/vocabs/data#Financial>)
+
+AnnotationAssertion(rdfs:comment <http://www.specialprivacy.eu/vocabs/data#Financial> "Information about an individual’s finances including	
+- Bank Statements
+- Utility bills
+etc.")
+
+# Class: <http://www.specialprivacy.eu/vocabs/data#Government> (<http://www.specialprivacy.eu/vocabs/data#Government>)
+
+AnnotationAssertion(rdfs:comment <http://www.specialprivacy.eu/vocabs/data#Government> "Identifiers issued by a government for purposes of consistently identifying the individual, such as:
+- Passport
+- Government issued ID card
+- Birth Certificate
+- Driver’s license
+etc.")
+
+
+# Class: :AdverseInformation (:AdverseInformation)
+
+SubClassOf(:AdverseInformation <http://www.specialprivacy.eu/langs/usage-policy#AnyData>)
+
+# Class: :ApplyIdentifier (:ApplyIdentifier)
+
+SubClassOf(:ApplyIdentifier <http://www.specialprivacy.eu/vocabs/processing#Derive>)
+
+# Class: :ComplianceWithFinancialRegulation (:ComplianceWithFinancialRegulation)
+
+SubClassOf(:ComplianceWithFinancialRegulation <http://www.specialprivacy.eu/langs/usage-policy#AnyPurpose>)
+
+# Class: :IdentityProfile (:IdentityProfile)
+
+SubClassOf(:IdentityProfile <http://www.specialprivacy.eu/vocabs/data#Profile>)
+
+# Class: :ML (:ML)
+
+AnnotationAssertion(rdfs:comment :ML "Money Laundering Regulation")
+SubClassOf(:ML :ComplianceWithFinancialRegulation)
+
+# Class: :NegativeMedia (:NegativeMedia)
+
+SubClassOf(:NegativeMedia <http://www.specialprivacy.eu/langs/usage-policy#AnyData>)
+
+# Class: :PEP (:PEP)
+
+AnnotationAssertion(rdfs:comment :PEP "Political Exposure")
+SubClassOf(:PEP :ComplianceWithFinancialRegulation)
+
+# Class: :PoliticalExposureMatch (:PoliticalExposureMatch)
+
+SubClassOf(:PoliticalExposureMatch :AdverseInformation)
+
+# Class: :RiskProfile (:RiskProfile)
+
+SubClassOf(:RiskProfile <http://www.specialprivacy.eu/vocabs/data#Profile>)
+
+# Class: :SanctionListsMatch (:SanctionListsMatch)
+
+SubClassOf(:SanctionListsMatch :AdverseInformation)
+
+# Class: :Sanctions (:Sanctions)
+
+AnnotationAssertion(rdfs:comment :Sanctions "Sanctions Lists")
+SubClassOf(:Sanctions :ComplianceWithFinancialRegulation)
+
+# Class: :TF (:TF)
+
+AnnotationAssertion(rdfs:comment :TF "Terrorist Financing Regulation")
+SubClassOf(:TF :ComplianceWithFinancialRegulation)
+
+# Class: :TR (:TR)
+
+SubClassOf(:TR <http://www.specialprivacy.eu/langs/usage-policy#AnyRecipient>)
+
+# Class: :UK (:UK)
+
+SubClassOf(:UK <http://www.specialprivacy.eu/vocabs/locations#EU>)
+
+)

@@ -1,0 +1,19 @@
+Prefix(owl:=<http://www.w3.org/2002/07/owl#>)
+Prefix(rdf:=<http://www.w3.org/1999/02/22-rdf-syntax-ns#>)
+Prefix(spl:=<http://www.specialprivacy.eu/langs/usage-policy#>)
+Prefix(xml:=<http://www.w3.org/XML/1998/namespace>)
+Prefix(xsd:=<http://www.w3.org/2001/XMLSchema#>)
+Prefix(rdfs:=<http://www.w3.org/2000/01/rdf-schema#>)
+Prefix(sbpl:=<http://www.specialprivacy.eu/langs/business-policy#>)
+
+Ontology(<http://www.specialprivacy.eu/langs/business-policy>
+
+Declaration(Class(sbpl:AnyDuty))
+Declaration(Class(sbpl:GetConsent))
+Declaration(ObjectProperty(sbpl:hasDuty))
+
+ObjectPropertyDomain(sbpl:hasDuty spl:Authorization)
+ObjectPropertyRange(sbpl:hasDuty sbpl:AnyDuty)
+
+SubClassOf(sbpl:GetConsent sbpl:AnyDuty)
+)

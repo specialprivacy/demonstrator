@@ -1,0 +1,66 @@
+Prefix(owl:=<http://www.w3.org/2002/07/owl#>)
+Prefix(rdf:=<http://www.w3.org/1999/02/22-rdf-syntax-ns#>)
+Prefix(spl:=<http://www.specialprivacy.eu/langs/usage-policy#>)
+Prefix(svl:=<http://www.specialprivacy.eu/vocabs/locations#>)
+Prefix(xml:=<http://www.w3.org/XML/1998/namespace>)
+Prefix(xsd:=<http://www.w3.org/2001/XMLSchema#>)
+Prefix(rdfs:=<http://www.w3.org/2000/01/rdf-schema#>)
+
+
+Ontology(<http://www.specialprivacy.eu/vocabs/locations>
+
+Declaration(Class(svl:ControllerServers))
+Declaration(Class(svl:EU))
+Declaration(Class(svl:EULike))
+Declaration(Class(svl:OtherCountries))
+Declaration(Class(svl:ProcessorServers))
+Declaration(Class(svl:ThirdParty))
+Declaration(Class(svl:InMemory))
+Declaration(ObjectProperty(svl:isHeld))
+
+
+############################
+#   Object Properties
+############################
+
+# Object Property:  (svl:isHeld)
+
+ObjectPropertyDomain(svl:isHeld spl:AnyStorage)
+ObjectPropertyRange(svl:isHeld spl:AnyLocation)
+
+############################
+#   Classes
+############################
+
+# Class: svl:ControllerServers (svl:ControllerServers)
+
+SubClassOf(svl:ControllerServers spl:AnyLocation)
+
+# Class: svl:EU (svl:EU)
+
+SubClassOf(svl:EU spl:AnyLocation)
+
+# Class: svl:EULike (svl:EULike)
+
+SubClassOf(svl:EULike spl:AnyLocation)
+
+# Class: svl:OtherCountries (svl:OtherCountries)
+
+SubClassOf(svl:OtherCountries spl:AnyLocation)
+
+# Class: svl:ProcessorServers (svl:ProcessorServers)
+
+SubClassOf(svl:ProcessorServers spl:AnyLocation)
+
+# Class: svl:ThirdParty (svl:ThirdParty)
+
+SubClassOf(svl:ThirdParty spl:AnyLocation)
+
+# Class: svl:InMemory (svl:InMemory)
+
+SubClassOf(svl:InMemory spl:AnyLocation)
+
+
+DisjointClasses(svl:ControllerServers svl:ProcessorServers svl:ThirdParty)
+DisjointClasses(svl:EU svl:EULike svl:OtherCountries)
+)
