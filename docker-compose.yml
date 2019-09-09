@@ -89,15 +89,15 @@ services:
       KAFKA_ADVERTISED_LISTENERS: INSIDE://:9092,OUTSIDE://:9094
       KAFKA_LISTENERS: INSIDE://:9092,OUTSIDE://:9094
       KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
-      KAFKA_CREATE_TOPICS: application-logs:1:1,full-policies:1:1:compact,policies-audit:1:1,checked-application-logs:1:1
+      KAFKA_CREATE_TOPICS: application-logs:1:1,full-policies:1:1:compact,policies-audit:1:1,checked-application-logs:1:1,data-portability-requests:1:1
     volumes:
       - kafkalogs:/kafka
-      
+
   kong-database:
     image: cassandra:2.2.13
     volumes:
       - kong-database:/var/lib/cassandra
-      
+
   kong-database-migrations:
     image: registry-special.tenforce.com/special/kong-database-migrations:v0.0.1
     depends_on:
@@ -128,7 +128,7 @@ services:
     ports:
       - 8000:8000
     command: ["./wait-for-stop.sh", "-h", "kong-database-migrations", "--", "kong", "start"]
-    
+
   kong-config:
     image: registry-special.tenforce.com/special/kong-configuration:v0.0.9
     environment:
@@ -136,40 +136,40 @@ services:
     depends_on:
       - kong
     command: ["./wait-for-it.sh", "kong:8001", "-t", "120", "--", "gongfig", "import", "--url=http://kong:8001", "--file", "/config.json"]
-    
-#  # Deactivated until we can put it behind the reverse proxy
-#  konga:
-#    image: pantsel/konga
-#    ports:
-#      - 1337:1337
-#    volumes:
-#      - konga-data:/app/kongadata
-#    environment:
-#      NODE_ENV: production
+
+  # Deactivated until we can put it behind the reverse proxy
+  konga:
+    image: pantsel/konga
+    ports:
+      - 1337:1337
+    volumes:
+      - konga-data:/app/kongadata
+    environment:
+      NODE_ENV: production
 
   # the personal data gateway
   personal-data-gateway:
     image: registry-special.tenforce.com/special/personal-data-gateway:0.0.1
-      
-  elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:6.4.1
-    environment:
-      ES_JAVA_OPTS: "-Xmx1g -Xms1g"
-    ulimits:
-      nofile:
-        soft: 65536
-        hard: 65536
-    volumes:
-      - esdata:/usr/share/elasticsearch/data
-        
-  kibana:
-    image: docker.elastic.co/kibana/kibana:6.4.1
-    environment:
-      SERVER_BASEPATH: "/kibana"
-      SERVER_REWRITEBASEPATH: "true"
-    logging:
-      driver: none
-  
+
+#  elasticsearch:
+#    image: docker.elastic.co/elasticsearch/elasticsearch:6.4.1
+#    environment:
+#      ES_JAVA_OPTS: "-Xmx1g -Xms1g"
+#    ulimits:
+#      nofile:
+#        soft: 65536
+#        hard: 65536
+#    volumes:
+#      - esdata:/usr/share/elasticsearch/data
+#
+#  kibana:
+#    image: docker.elastic.co/kibana/kibana:6.4.1
+#    environment:
+#      SERVER_BASEPATH: "/kibana"
+#      SERVER_REWRITEBASEPATH: "true"
+#    logging:
+#      driver: none
+
   logstash-checked-application-logs:
     image: registry-special.tenforce.com/special/logstash-from-kafka:0.0.1
     environment:
@@ -177,7 +177,7 @@ services:
       ELASTICSEARCH_ENDPOINT: elasticsearch
       SOURCE_TOPIC: checked-application-logs
       TARGET_INDEX: checked-application-logs
-      
+
   logstash-policies-audit:
     image: registry-special.tenforce.com/special/logstash-from-kafka:0.0.1
     environment:
@@ -185,6 +185,13 @@ services:
       ELASTICSEARCH_ENDPOINT: elasticsearch
       SOURCE_TOPIC: policies-audit
       TARGET_INDEX: policies-audit
+
+  data-portability:
+    build: ./data-portability
+    ports:
+      - 8123:8080
+    environment:
+      KAFKA_BROKER_LIST: "kafka:9092"
 
 volumes:
   caddycert: {}
@@ -199,8 +206,6 @@ volumes:
   zoolog:
     driver: local
   konga-data:
-    driver: local
-  esdata:
     driver: local
 
 networks:
