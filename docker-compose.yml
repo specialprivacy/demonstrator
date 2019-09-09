@@ -54,6 +54,11 @@ services:
     volumes:
       - ./use_cases:/policies
 
+  rethinkdb:
+    image: rethinkdb:2.3
+    volumes:
+      - ./use_cases:/policies
+
   log-generator:
     image: registry-special.tenforce.com/special/demonstrator-log-generator:1.0.6
     restart: always
