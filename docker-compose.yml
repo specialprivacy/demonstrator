@@ -130,7 +130,8 @@ services:
     command: ["./wait-for-stop.sh", "-h", "kong-database-migrations", "--", "kong", "start"]
 
   kong-config:
-    image: registry-special.tenforce.com/special/kong-configuration:v0.0.9
+    #image: registry-special.tenforce.com/special/kong-configuration:v0.0.9
+    build: ./kong-configuration-service
     environment:
       KEYCLOAK_ENDPOINT: $KEYCLOAK_ENDPOINT
     depends_on:
