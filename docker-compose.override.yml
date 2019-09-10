@@ -20,16 +20,8 @@ services:
   compliance-checker:
     restart: on-failure:3
     ports:
-      - "8080:8080"
-  rethinkdb:
-    restart: on-failure:3
+      - "8102:8080"
   zookeeper:
     restart: on-failure:3
   kafka:
     restart: on-failure:3
-  keycloak:
-    restart: on-failure:3
-  postgres:
-    restart: on-failure:3
-  keycloak-init:
-    restart: "no"

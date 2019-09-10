@@ -73,17 +73,12 @@ services:
       KEYCLOAK_CLIENT_SECRET: $KEYCLOAK_CLIENT_SECRET
       BACKEND_ENDPOINT: http://consent-management-backend
 
-  rethinkdb:
-    image: rethinkdb:2.3
-    volumes:
-      - rethinkdb:/data
-
   pdg:
     build: ./personal-data-gateway
     volumes:
       - ./personal-data-gateway/app:/app # reload
     ports:
-      - "8888:5000"
+      - "8101:5000"
 
   # Kafka setup (should maybe go in external deployment)
   zookeeper:
