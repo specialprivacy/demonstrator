@@ -130,8 +130,7 @@ services:
     command: ["./wait-for-stop.sh", "-h", "kong-database-migrations", "--", "kong", "start"]
 
   kong-config:
-    #image: registry-special.tenforce.com/special/kong-configuration:v0.0.9
-    build: ./kong-configuration-service
+    image: registry-special.tenforce.com/special/kong-configuration:v0.0.9
     environment:
       KEYCLOAK_ENDPOINT: $KEYCLOAK_ENDPOINT
     depends_on:
@@ -152,24 +151,24 @@ services:
   personal-data-gateway:
     image: registry-special.tenforce.com/special/personal-data-gateway:0.0.1
 
-#  elasticsearch:
-#    image: docker.elastic.co/elasticsearch/elasticsearch:6.4.1
-#    environment:
-#      ES_JAVA_OPTS: "-Xmx1g -Xms1g"
-#    ulimits:
-#      nofile:
-#        soft: 65536
-#        hard: 65536
-#    volumes:
-#      - esdata:/usr/share/elasticsearch/data
-#
-#  kibana:
-#    image: docker.elastic.co/kibana/kibana:6.4.1
-#    environment:
-#      SERVER_BASEPATH: "/kibana"
-#      SERVER_REWRITEBASEPATH: "true"
-#    logging:
-#      driver: none
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.4.1
+    environment:
+      ES_JAVA_OPTS: "-Xmx1g -Xms1g"
+    ulimits:
+      nofile:
+        soft: 65536
+        hard: 65536
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:6.4.1
+    environment:
+      SERVER_BASEPATH: "/kibana"
+      SERVER_REWRITEBASEPATH: "true"
+    logging:
+      driver: none
 
   logstash-checked-application-logs:
     image: registry-special.tenforce.com/special/logstash-from-kafka:0.0.1
@@ -207,6 +206,8 @@ volumes:
   zoolog:
     driver: local
   konga-data:
+    driver: local
+  esdata:
     driver: local
 
 networks:
