@@ -187,7 +187,7 @@ services:
       TARGET_INDEX: policies-audit
 
   data-portability:
-    build: ./data-portability
+    image: registry-special.tenforce.com/special/data-portability:0.0.1
     ports:
       - 8123:8080
     environment:
