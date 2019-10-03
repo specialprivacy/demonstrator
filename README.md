@@ -50,7 +50,7 @@ To start the platform:
 
 This will download all the necessary docker images, start all the services and make the demonstrator available on `http://localhost`
 
-# Elasticsearch issues
+# Elasticsearch configuration
 If the elasticsearch exits with the following error:
 ```
 [INFO ][o.e.b.BootstrapChecks    ] [PPEKOmZ] bound or publishing to a non-loopback address, enforcing bootstrap checks
