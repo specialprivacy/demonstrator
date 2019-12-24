@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:odrl="http://www.w3.org/ns/odrl/2/"
+         xmlns:dc="http://purl.org/dc/terms/"
+         xmlns:dalicc="https://dalicc.poolparty.biz/DALICC/"
+         xmlns:cc="http://creativecommons.org/ns#">
+
+  <odrl:AssetCollection rdf:about="urn:dalicc:target:5d2ff54a-3416-5f49-8833-c9214d730519">
+    <odrl:target rdf:resource="https://dalicc.poolparty.biz/DALICC/CreativeWork"/>
+    <odrl:target rdf:resource="http://purl.org/dc/dcmitype/Dataset"/>
+    <odrl:target rdf:resource="http://purl.org/dc/dcmitype/Software"/>
+    <dc:title>Apache V2</dc:title>
+  </odrl:AssetCollection>
+
+  <odrl:Set rdf:about="https://dalicc.net/license-library/ApacheV2">
+    <dalicc:validityType rdf:resource="https://dalicc.poolparty.biz/DALICC/perpetual"/>
+    <cc:jurisdiction rdf:resource="https://dalicc.poolparty.biz/DALICC/worldwide"/>
+    <odrl:permission>
+      <odrl:Permission>
+        <odrl:target rdf:resource="urn:dalicc:target:5d2ff54a-3416-5f49-8833-c9214d730519"/>
+        <odrl:assigner rdf:resource="urn:dalicc:assigner:5d2ff54a-3416-5f49-8833-c9214d730519"/>
+        <odrl:action rdf:resource="http://www.w3.org/ns/odrl/2/reproduce"/>
+        <odrl:action rdf:resource="http://www.w3.org/ns/odrl/2/display"/>
+        <odrl:action rdf:resource="http://www.w3.org/ns/odrl/2/present"/>
+        <odrl:action rdf:resource="https://dalicc.poolparty.biz/DALICC/ModifiedWorks"/>
+        <odrl:action rdf:resource="http://creativecommons.org/ns#DerivativeWorks"/>
+        <odrl:action rdf:resource="https://creativecommons.org/ns#CommercialUse"/>
+        <odrl:action rdf:resource="https://dalicc.poolparty.biz/DALICC/chargeDistributionFee"/>
+      </odrl:Permission>
+    </odrl:permission>
+
+    <odrl:permission>
+      <odrl:Permission>
+        <odrl:target rdf:resource="urn:dalicc:target:5d2ff54a-3416-5f49-8833-c9214d730519"/>
+        <odrl:assigner rdf:resource="urn:dalicc:assigner:5d2ff54a-3416-5f49-8833-c9214d730519"/>
+        <odrl:action rdf:resource="http://www.w3.org/ns/odrl/2/distribute"/>
+        <odrl:duty>
+          <odrl:Duty>
+            <odrl:action rdf:resource="http://creativecommons.org/ns#Attribution"/>
+            <odrl:action rdf:resource="http://creativecommons.org/ns#Notice"/>
+          </odrl:Duty>
+        </odrl:duty>
+
+      </odrl:Permission>
+    </odrl:permission>
+
+    <odrl:permission>
+      <odrl:Permission>
+        <odrl:target rdf:resource="urn:dalicc:target:5d2ff54a-3416-5f49-8833-c9214d730519"/>
+        <odrl:assigner rdf:resource="urn:dalicc:assigner:5d2ff54a-3416-5f49-8833-c9214d730519"/>
+        <odrl:action rdf:resource="http://www.w3.org/ns/odrl/2/modify"/>
+        <odrl:duty>
+          <odrl:Duty>
+            <odrl:action rdf:resource="http://creativecommons.org/ns#Attribution"/>
+            <odrl:action rdf:resource="https://dalicc.poolparty.biz/DALICC/modificationNotice"/>
+          </odrl:Duty>
+        </odrl:duty>
+
+      </odrl:Permission>
+    </odrl:permission>
+
+    <odrl:permission>
+      <odrl:Permission>
+        <odrl:target rdf:resource="urn:dalicc:target:5d2ff54a-3416-5f49-8833-c9214d730519"/>
+        <odrl:assigner rdf:resource="urn:dalicc:assigner:5d2ff54a-3416-5f49-8833-c9214d730519"/>
+        <odrl:action rdf:resource="http://www.w3.org/ns/odrl/2/derive"/>
+        <odrl:duty>
+          <odrl:Duty>
+            <odrl:action rdf:resource="http://creativecommons.org/ns#Attribution"/>
+            <odrl:action rdf:resource="https://dalicc.poolparty.biz/DALICC/modificationNotice"/>
+          </odrl:Duty>
+        </odrl:duty>
+
+      </odrl:Permission>
+    </odrl:permission>
+
+    <odrl:permission>
+      <odrl:Permission>
+        <odrl:target rdf:resource="urn:dalicc:target:5d2ff54a-3416-5f49-8833-c9214d730519"/>
+        <odrl:assigner rdf:resource="urn:dalicc:assigner:5d2ff54a-3416-5f49-8833-c9214d730519"/>
+        <odrl:action rdf:resource="https://dalicc.poolparty.biz/DALICC/ChangeLicense"/>
+        <odrl:duty>
+          <odrl:Duty>
+            <odrl:action rdf:resource="https://dalicc.poolparty.biz/DALICC/compliantLicense"/>
+          </odrl:Duty>
+        </odrl:duty>
+
+      </odrl:Permission>
+    </odrl:permission>
+
+    <odrl:prohibition>
+      <odrl:Prohibition>
+        <odrl:target rdf:resource="urn:dalicc:target:5d2ff54a-3416-5f49-8833-c9214d730519"/>
+        <odrl:assigner rdf:resource="urn:dalicc:assigner:5d2ff54a-3416-5f49-8833-c9214d730519"/>
+        <odrl:action rdf:resource="https://dalicc.poolparty.biz/DALICC/promote"/>
+      </odrl:Prohibition>
+    </odrl:prohibition>
+
+    <dc:title xml:lang="en">Apache License, Version 2.0</dc:title>
+    <dc:alternative>Apache 2.0</dc:alternative>
+    <dc:alternative>Apache License 2.0</dc:alternative>
+    <dc:alternative>Apache Version 2.0</dc:alternative>
+    <dc:alternative>Apache License Version 2.0</dc:alternative>
+    <dc:publisher>The Apache Software Foundation</dc:publisher>
+    <dc:source rdf:resource="http://www.apache.org/licenses/LICENSE-2.0"/>
+    <cc:legalcode rdf:resource="http://www.apache.org/licenses/LICENSE-2.0"/>
+    <dalicc:WarrantyOrLiabilityAcceptance>While redistributing the Work or Derivative Works thereof, You may choose to offer, and charge a fee for, acceptance of support, warranty, indemnity, or other liability obligations and/or rights consistent with this License. However, in accepting such obligations, You may act only on Your own behalf and on Your sole responsibility, not on behalf of any other Contributor, and only if You agree to indemnify, defend, and hold each Contributor harmless for any liability incurred by, or claims asserted against, such Contributor by reason of your accepting any such warranty or additional liability.</dalicc:WarrantyOrLiabilityAcceptance>
+    <dalicc:WarrantyDisclaimer>Unless required by applicable law or agreed to in writing, Licensor provides the Work (and each Contributor provides its Contributions) on an &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied, including, without limitation, any warranties or conditions of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A PARTICULAR PURPOSE. You are solely responsible for determining the appropriateness of using or redistributing the Work and assume any risks associated with Your exercise of permissions under this License.</dalicc:WarrantyDisclaimer>
+    <dalicc:LiabilityLimitation>In no event and under no legal theory, whether in tort (including negligence), contract, or otherwise, unless required by applicable law (such as deliberate and grossly negligent acts) or agreed to in writing, shall any Contributor be liable to You for damages, including any direct, indirect, special, incidental, or consequential damages of any character arising as a result of this License or out of the use or inability to use the Work (including but not limited to damages for loss of goodwill, work stoppage, computer failure or malfunction, or any and all other commercial damages or losses), even if such Contributor has been advised of the possibility of such damages.</dalicc:LiabilityLimitation>
+  </odrl:Set>
+
+</rdf:RDF>
