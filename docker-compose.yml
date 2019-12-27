@@ -194,7 +194,7 @@ services:
       KAFKA_BROKER_LIST: "kafka:9092"
 
   dynamic-consent:
-    image: registry-special.tenforce.com/special/dynamic-consent:0.0.1
+    image: registry-special.tenforce.com/special/dynamic-consent:0.0.2
 
   linkedgeodata-proxy:
     image: registry-special.tenforce.com/special/linkedgeodata-proxy:0.0.1
