@@ -2,7 +2,7 @@ version: "3.4"
 
 services:
   welcome-page:
-    image: registry-special.tenforce.com/special/demonstrator-welcome-page-frontend:v0.0.2
+    image: registry-special.tenforce.com/special/demonstrator-welcome-page-frontend:v0.0.3
 
   mobile-frontend:
     image: registry-special.tenforce.com/special/mobile-frontend:1.0.0
