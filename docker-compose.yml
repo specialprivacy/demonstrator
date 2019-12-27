@@ -193,6 +193,9 @@ services:
     environment:
       KAFKA_BROKER_LIST: "kafka:9092"
 
+  dynamic-consent:
+    image: registry-special.tenforce.com/special/dynamic-consent:0.0.1
+
 volumes:
   caddycert: {}
   kong-database:
