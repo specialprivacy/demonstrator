@@ -1,4 +1,6 @@
 # SPECIAL Demonstrator
+
+## Description
 This repository contains the system description for the SPECIAL Demonstrator.
 It combines the SPECIAL components with other off the shelve components into a working example system.
 A live copy should be available at https://demonstrator-special.tenforce.com
