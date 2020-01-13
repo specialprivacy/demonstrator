@@ -1,5 +1,17 @@
 # SPECIAL Demonstrator
 
+## Info
+The SPECIAL demonstrator can be found in its deployed version here: https://demonstrator-special.tenforce.com/
+
+The credentials to reach the welcome page are:
+* bernard - bernard
+* antoine - antoine
+
+
+The credentials to reach the dynamic consent prototype at https://demonstrator-special.tenforce.com/dynamic-consent/ are:
+* bernard - roger   => pre-configured user
+* antoine - roger   => new user
+
 ## Description
 This repository contains the system description for the SPECIAL Demonstrator.
 It combines the SPECIAL components with other off the shelve components into a working example system.
