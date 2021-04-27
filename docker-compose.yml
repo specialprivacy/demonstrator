@@ -1,14 +1,13 @@
 version: "3.4"
 
 services:
-  welcome-page:
-    image: registry-special.tenforce.com/special/demonstrator-welcome-page-frontend:v0.0.3
 
-  mobile-frontend:
-    image: registry-special.tenforce.com/special/mobile-frontend:1.0.0
+  ## APPLICATION ##
+  welcome-page:
+    build: ./welcome-page
 
   transparency-frontend:
-    image: registry-special.tenforce.com/special/demonstrator-transparency-frontend:1.0.1
+      image: registry-special.tenforce.com/special/demonstrator-transparency-frontend:1.0.1
 
   transparency-backend:
     image: registry-special.tenforce.com/special/kafka-sse-proxy:1.0.0
@@ -32,8 +31,6 @@ services:
 
   mongo-db:
     image: registry-special.tenforce.com/special/demonstrator-mongo-db:0.0.1
-    volumes:
-    - mongodb:/data
 
   mongo-rs-setup:
     image: registry-special.tenforce.com/special/demonstrator-mongo-rs-setup:0.0.1
@@ -51,33 +48,40 @@ services:
       KAFKA_TOPIC_POLICY: "full-policies"
       KAFKA_TOPIC_ACCESS: "application-logs"
       KAFKA_TOPIC_CONSENT: "checked-application-logs"
+    volumes:
+      - ./use_cases:/policies
 
   log-generator:
-    image: registry-special.tenforce.com/special/demonstrator-log-generator:1.0.6
+    build: ./log-generator
     restart: always
     environment:
-      RATE: $LOG_GENERATOR_RATE
+      RATE: 30s
       KAFKA_BROKER_LIST: kafka:9092
       KAFKA_TOPIC: application-logs
-      KEYCLOAK_ENDPOINT: $KEYCLOAK_ENDPOINT
+      KEYCLOAK_ENDPOINT: https://keycloak:8443/auth
       KEYCLOAK_USER: demonstrator-generator
       KEYCLOAK_PASSWORD: $KEYCLOAK_GENERATOR_PASSWORD
       KEYCLOAK_CLIENT_ID: special-platform
       KEYCLOAK_CLIENT_SECRET: $KEYCLOAK_CLIENT_SECRET
       BACKEND_ENDPOINT: http://consent-management-backend
 
-  # Kafka setup (should maybe go in external deployment)
-  zookeeper:
-    image: zookeeper:latest
+  personal-data-gateway:
+    build: ./personal-data-gateway
     volumes:
-      - zoodata:/data
-      - zoolog:/datalog
+      - ./personal-data-gateway/app:/app # reload
+    ports:
+      - "8101:5000"
 
-  # Networking setup is not perfect yet and will most likely change slightly once
-  # I get around to testing it with multiple nodes on swarm. For local dev the current setup works fine
-  # TODO: save data in a volume (or mount from host)
+  ## KAFKA SETUP ##
+
+  zookeeper:
+    image: zookeeper:3.6.2
+
   kafka:
     image: wurstmeister/kafka:2.11-2.0.1
+    ports:
+      - "9092:9092"
+      - "9094:9094"
     depends_on:
       - zookeeper
     environment:
@@ -90,133 +94,95 @@ services:
       KAFKA_LISTENERS: INSIDE://:9092,OUTSIDE://:9094
       KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
       KAFKA_CREATE_TOPICS: application-logs:1:1,full-policies:1:1:compact,policies-audit:1:1,checked-application-logs:1:1,data-portability-requests:1:1
-    volumes:
-      - kafkalogs:/kafka
 
-  kong-database:
-    image: cassandra:2.2.13
-    volumes:
-      - kong-database:/var/lib/cassandra
+  ## KONG SETUP ##
 
-  kong-database-migrations:
-    image: registry-special.tenforce.com/special/kong-database-migrations:v0.0.1
-    depends_on:
-      - kong-database
+  database-kong:
+    image: postgres:13.2-alpine
     environment:
-      - KONG_DATABASE=cassandra
-      - KONG_PG_HOST=kong-database
-      - KONG_CASSANDRA_CONTACT_POINTS=kong-database
-    command: ["./wait-for-it.sh", "kong-database:9042", "-t", "0", "--", "kong", "migrations", "bootstrap"]
+      POSTGRES_DB: kong
+      POSTGRES_USER: $POSTGRES_USER
+      POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+      POSTGRES_HOST_AUTH_METHOD: trust
+
+  kong-migration:
+    build: ./kong-migration
+    command: "kong migrations bootstrap"
+    environment:
+      KONG_DATABASE: postgres
+      KONG_PG_HOST: database-kong
+      KONG_PG_USER: $POSTGRES_USER
+      KONG_PG_PASSWORD: $POSTGRES_PASSWORD
+    depends_on:
+      - database-kong
+    command: ["./wait-for-it.sh", "--host=database-kong", "--port=5432", "-t", "10", "--", "kong", "migrations", "bootstrap"]
 
   kong:
-    image: registry-special.tenforce.com/special/kong:v0.0.2
-    depends_on:
-      - kong-database
-      - kong-database-migrations
+    build: ./kong
     environment:
-      KONG_DATABASE: cassandra
-      KONG_PG_HOST: kong-database
-      KONG_CASSANDRA_CONTACT_POINTS: kong-database
-      KONG_ADMIN_ACCESS_LOG: /dev/stdout
-      KONG_ADMIN_ERROR_LOG: /dev/stderr
-      KONG_ADMIN_LISTEN: "0.0.0.0:8001"
-      KONG_ADMIN_LISTEN_SSL: "0.0.0.0:8444"
-      KONG_PROXY_ACCESS_LOG: /dev/stdout
-      KONG_PROXY_ERROR_LOG: /dev/stderr
+      KONG_DATABASE: postgres
+      KONG_PG_HOST: database-kong
+      KONG_PG_USER: $POSTGRES_USER
+      KONG_PG_PASSWORD: $POSTGRES_PASSWORD
+      KONG_PROXY_LISTEN: 0.0.0.0:80
+      KONG_PROXY_LISTEN_SSL: 0.0.0.0:8443
+      KONG_ADMIN_LISTEN: 0.0.0.0:8001
       KONG_PLUGINS: oidc
       KONG_NGINX_PROXY_SET: "$$session_secret c3BlY2lhbC1wbGF0Zm9ybS1zZXNzaW9uLXNlY3JldA=="
+      KONG_LOG_LEVEL: info
+      KONG_PROXY_ACCESS_LOG: /dev/stdout
+      KONG_ADMIN_ACCESS_LOG: /dev/stdout
+      KONG_PROXY_ERROR_LOG: /dev/stdout
+      KONG_ADMIN_ERROR_LOG: /dev/stdout
+    depends_on:
+      - kong-migration
+      - database-kong
     ports:
-      - 8000:8000
-    command: ["./wait-for-stop.sh", "-h", "kong-database-migrations", "--", "kong", "start"]
+      - "8001:8001"
+      - "80:80"
+    command: ["./wait-for-stop.sh", "-h", "kong-migration", "--", "kong", "start"]
 
   kong-config:
-    image: registry-special.tenforce.com/special/kong-configuration:v0.0.9
+    build: ./kong-config
     environment:
-      KEYCLOAK_ENDPOINT: $KEYCLOAK_ENDPOINT
+      KEYCLOAK_ENDPOINT: http://localhost/auth
+    command: ["./wait-for-it.sh", "kong:8001", "-t", "120", "--", "node", "/init-kong.js"]
+
+  ## KEYCLOAK SETUP ##
+
+  keycloak:
+    image: jboss/keycloak:12.0.4
+    ports:
+      - 8080:8080
+      - 8443:8443
+    environment:
+      KEYCLOAK_USER: keycloak
+      KEYCLOAK_PASSWORD: $KEYCLOAK_PASSWORD
+      DB_ADDR: database-keycloak
+      DB_VENDOR: POSTGRES
+      DB_DATABASE: keycloak
+      DB_USER: $POSTGRES_USER
+      DB_PASSWORD: $POSTGRES_PASSWORD
+      PROXY_ADDRESS_FORWARDING: "true"
     depends_on:
-      - kong
-    command: ["./wait-for-it.sh", "kong:8001", "-t", "120", "--", "gongfig", "import", "--url=http://kong:8001", "--file", "/config.json"]
+      - database-keycloak
 
-  # Deactivated until we can put it behind the reverse proxy
-  konga:
-    image: pantsel/konga
-    ports:
-      - 1337:1337
-    volumes:
-      - konga-data:/app/kongadata
+  database-keycloak:
+    image: postgres:13.2-alpine
     environment:
-      NODE_ENV: production
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: $POSTGRES_USER
+      POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+      POSTGRES_HOST_AUTH_METHOD: trust
 
-  # the personal data gateway
-  personal-data-gateway:
-    image: registry-special.tenforce.com/special/personal-data-gateway:0.0.1
-
-  elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:6.4.1
+  keycloak-init:
+    build: ./keycloak-initializer
     environment:
-      ES_JAVA_OPTS: "-Xmx1g -Xms1g"
-    ulimits:
-      nofile:
-        soft: 65536
-        hard: 65536
-    volumes:
-      - esdata:/usr/share/elasticsearch/data
+      KEYCLOAK_ENDPOINT: https://keycloak:8443/auth
+      KEYCLOAK_CLIENT_SECRET: $KEYCLOAK_CLIENT_SECRET
+      KEYCLOAK_PASSWORD: $KEYCLOAK_PASSWORD
+      KEYCLOAK_GENERATOR_PASSWORD: $KEYCLOAK_GENERATOR_PASSWORD
+    depends_on:
+      - keycloak
 
-  kibana:
-    image: docker.elastic.co/kibana/kibana:6.4.1
-    environment:
-      SERVER_BASEPATH: "/kibana"
-      SERVER_REWRITEBASEPATH: "true"
-    logging:
-      driver: none
 
-  logstash-checked-application-logs:
-    image: registry-special.tenforce.com/special/logstash-from-kafka:0.0.1
-    environment:
-      KAFKA_ENDPOINT: kafka:9092
-      ELASTICSEARCH_ENDPOINT: elasticsearch
-      SOURCE_TOPIC: checked-application-logs
-      TARGET_INDEX: checked-application-logs
-
-  logstash-policies-audit:
-    image: registry-special.tenforce.com/special/logstash-from-kafka:0.0.1
-    environment:
-      KAFKA_ENDPOINT: kafka:9092
-      ELASTICSEARCH_ENDPOINT: elasticsearch
-      SOURCE_TOPIC: policies-audit
-      TARGET_INDEX: policies-audit
-
-  data-portability:
-    image: registry-special.tenforce.com/special/data-portability:0.0.1
-    ports:
-      - 8123:8080
-    environment:
-      KAFKA_BROKER_LIST: "kafka:9092"
-
-  dynamic-consent:
-    image: registry-special.tenforce.com/special/dynamic-consent:0.0.4
-
-  linkedgeodata-proxy:
-    image: registry-special.tenforce.com/special/linkedgeodata-proxy:0.0.1
-
-volumes:
-  caddycert: {}
-  kong-database:
-    driver: local
-  mongodb:
-    driver: local
-  kafkalogs:
-    driver: local
-  zoodata:
-    driver: local
-  zoolog:
-    driver: local
-  konga-data:
-    driver: local
-  esdata:
-    driver: local
-
-networks:
-  default:
-    external:
-      name: special-demonstrator
