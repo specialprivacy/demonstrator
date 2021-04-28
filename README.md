@@ -1,7 +1,6 @@
-# SPECIAL Demonstrator
-This repository contains the system description for the SPECIAL Demonstrator.
-It combines the SPECIAL components with other off the shelve components into a working example system.
-A live copy should be available at https://demonstrator-special.tenforce.com
+# SPECIAL  Lightweight Demonstrator
+This repository contains a lightweight version of the SPECIAL demonstrator.
+It should be simple enough to just clone, initialize and start.
 
 ## Requirements
 
@@ -9,102 +8,20 @@ A live copy should be available at https://demonstrator-special.tenforce.com
 The SPECIAL demonstrator is distributed as a set of docker images with a docker-compose file to wire everything up.
 [Docker](https://www.docker.com/community-edition) is available for all major operating systems. [Docker-compose](https://github.com/docker/compose) comes out of the box with Docker for Windows and Mac, but is a separate install on Linux.
 
-### Docker Image Registry
-Most of the SPECIAL components and the off the shelve software is available on the [public docker image registry](https://hub.docker.com/), but some specific components which are only relevant for this demonstrator are hosted on a private docker registry at registry-special.tenforce.com. In order to successfully pull these, you need to login first:
+## Quick start
+* git clone https://github.com/specialprivacy/demonstrator.git
+* git checkout lightweight
+* git submodule init .
+* git submodule update
+* docker-compose up
+* navigate to http://localhost
 
-* **username**: special
-* **password**: T4hMTggkUoxEJnwwT5B7yzB9
+## Content
 
-```bash
-docker login -u special -p T4hMTggkUoxEJnwwT5B7yzB9 registry-special.tenforce.com
-```
-
-## Running
-
-The repository currently contains 3 files:
+The repository contains a docker-compose.yml configuration file and a set of git submodules.
 
 * **docker-compose.yml**
   This is the main file that describes how the different components work together to provide the demonstrator service
-* **docker-compose.override.yml**
-  This file contains some additional settings which can be useful when developing the service on a local machine. It is automatically overlaid on `docker-compose.yml` by the docker-compose tool.
-* **docker-compose.production.yml**
-  This file contains additional settings needed for running the demonstrator service on a cluster of machines using docker swarm. It adds keycloak and its dependencies to the stack.
-
-### Single Machine
-There are two options to run the demonstrator on a single machine: the easy way, where the system uses a dummy identity provider from https://demonstrator-special.tenforce.com and the slightly more complicated one where the identity provider also runs locally.
-
-#### Easy Way
-Once docker is installed, running the demonstrator on a single machine is with a remote identity provider is relatively straightforward. The following command needs to be run from the root of this project:
-
-```bash
-docker-compose up
-```
-
-This will download all the necessary docker images, start all the services and make the demonstrator available on `http://localhost`
-The ENV variables set in .env should take care of this default scenario, where you use a remotely connected Keycloak instance.
-
-TODO: Those credentials should be provided through docker secrets.
-TODO: The Kong config service does not (yet) allow ENV configuration so if a different keycloak instance needs to be used, the Kong will have to be configured manually.
-
-#### Slightly Harder Way
-In order to run the demonstrator with a local identity provider, a hostname or IP address of the host machine needs to be passed in as the `KEYCLOAK_ENDPOINT` variable. How to obtain this value is operating system and context dependent. We will document how this can be done on a recent linux installation.
-
-* Get the IP address
-
-    ```bash
-    ip address show eth0
-    ```
-  where `eth0` is the name of the relevant network interface (for example wired, wireless or virtualbox).
-* Launch the demonstrator
-
-    ```bash
-    KEYCLOAK_ENDPOINT=192.168.0.17 docker-compose -f docker-compose.yml -f docker-compose.production.yml up
-    ```
-
-This will download all the necessary docker images, start all the services and make the demonstrator available on `http://192.168.0.17`
-
-NOTE: As Kong can't be configured with ENV yet, you will have to modify the OIDC plugin manually to provide the proper discovery endpoint.
-
-### Cluster of Machines
-The files included in this project allow the demonstrator to run on a cluster of machines orchestrated with [Docker Swarm Mode](https://docs.docker.com/engine/swarm/). We are not going to describe how to create a swarm mode cluster, there are [plenty](https://docs.docker.com/engine/swarm/swarm-tutorial/) [of](https://docs.microsoft.com/en-us/virtualization/windowscontainers/manage-containers/swarm-mode) [tutorials](https://www.digitalocean.com/community/tutorials/how-to-create-a-cluster-of-docker-containers-with-docker-swarm-and-digitalocean-on-ubuntu-16-04) out there.
-
-Deploying on a swarm cluster requires you to set the following environment variables:
-* **DOMAIN**: The domain on which the system will be deployed. This must be publicly accessible. The system will request a certificate at letsencrypt for this domain.
-* **KEYCLOAK_ENDPOINT**: The domain where the keycloak instance has been deployed.
-* **RECOVERY_EMAIL**: The email address used to request a certificate at letsencrypt. This will allow you to recover the certificate.
-* **KEYCLOAK_PASSWORD**: A password to protect the root user in keycloak
-
-Deploying the demonstrator on an existing docker swarm cluster is a four step process:
-1. Add labels for the data stores.
-  Even though the data stores can be sharded and failed over, the demonstrator currently does not contain the necessary configuration. The data stores are therefore pinned to specific hosts using node labels. All of the following key/value pairs need to be present on at least one node: `(type: rethinkdb)`, `(type: database)`, `(type: kafka)`
-
-    ```bash
-    docker node update --label-add type=rethinkdb swarmnode
-    ```
-2. Ensure the node you are deploying too has logged in to the special docker registry
-
-    ```bash
-    docker login -u special -p T4hMTggkUoxEJnwwT5B7yzB9 registry-special.tenforce.com
-    ```
-3. Merge the docker-compose files together
-
-    ```bash
-    RECOVERY_EMAIL=foo@example.com \
-    KEYCLOAK_PASSWORD=DVMswdsEtuk7Zs4t6PEKHrS8 \
-    DOMAIN=https://demonstrator-special.tenforce.com \
-    KEYCLOAK_ENDPOINT=https://demonstrator-special.tenforce.com \
-    docker-compose -f docker-compose.yml -f docker-compose.production.yml config >   stack.yml
-    ```
-4. Deploy the stack onto the cluster
-
-    ```bash
-    docker stack deploy -c stack.yml --with-registry-auth special-demonstrator
-    ```
-
-## Components
-This section aims to give a brief overview of the components and their function in the SPECIAL demonstrator. Where relevant, links to code repositories or additional documentation will be provided. The interested reader can find more information on the architecture in [deliverable D3.2 of the H2020 SPECIAL project](https://www.specialprivacy.eu/images/documents/SPECIAL_D3.2_M16_V1.0.pdf).
-
-TODO: insert block and wire architecture diagram here.
 
 ### SPECIAL components
 These are the components which have been developed as part of the SPECIAL platform. The goal of the demonstrator is to show how they can be used in a real world scenario.
@@ -114,9 +31,6 @@ These are the components which have been developed as part of the SPECIAL platfo
 * **compliance-checker**
   The compliance checker is a stream processor which validates that processing log messages are compliant with a users policy. All data is picked from kafka topics and results are also written to a kafka topic. It implements the SPECIAL policy language and can use the standard HermiT reasoner or the custom SPECIAL algorithm. In the demonstrator this component is used to check compliance, but it can also be used for ex-ante checks.
   Its code and more information can be found at https://git.ai.wu.ac.at/specialprivacy/compliance-backend
-* **mobile-frontend**
-  The mobile UI is one of the WP 4 interfaces which presents how user consent can be gathered in a mobile setting. It integrates with the consent-management-backend to store the consent and retrieve policies to consent to.
-  Its code and more information can be found at https://git.ai.wu.ac.at/specialprivacy/prox-consent
 
 ### Off the shelve components
 These are off the shelve pieces of software which are lightly configured, but not customized. In most cases, these are just an example and can be easily swapped out for similar software. In a few cases, the SPECIAL components have a stronger dependency. We will try to highlight these.
@@ -126,12 +40,10 @@ These are off the shelve pieces of software which are lightly configured, but no
   Zookeeper is a dependency of Apache Kafka, providing it with consensus primitives.
 * **kong**
   [Kong](https://konghq.com/) is the API gateway of the SPECIAL platform. It takes care of dispatching and authenticating the incoming requests against keycloak.
-* **rethinkdb**
-  [Rethinkdb](https://www.rethinkdb.com) is the database backend of the consent-management-backend. It is a dependency of this service and can't be replaced with another database.
 * **keycloak**
   [Keycloak](https://keycloak.org) is an example identity provider. It provides the OpenID Connect endpoints the platform uses to authenticate clients. The SPECIAL platform does not depend on Keycloak per se, it depends on the OpenID Connect, and so this component can be replaced by other identity providers such as Azure AD, OpenAM, Google, etc. We picked Keycloak as the example service, because it is relatively easy to deploy and configure and because it provides good federation support, allowing it to expose OpenID Connect endpoints for legacy identity providers which do not have native support.
 * **postgres**
-  This is the backend database of keycloak. It should be considered an embedded component of that system.
+  This is the backend database of keycloak and kong. It should be considered an embedded component of that system.
 
 ### Demonstrator components
 These components are custom written software specifically for this demonstrator. They are not part of the SPECIAL platform as such, but are necessary to make the demonstrator work: for example dummy line of business applications. Some of these components might graduate to become (or be replaced by) SPECIAL components in the future, at which point their code and documentation will be made available.
@@ -140,8 +52,6 @@ These components are custom written software specifically for this demonstrator.
   This is a dummy transparency dashboard. It can visualise the stream of processing events and whether they are compliant. It is not an official WP4 design. It will be replaced with a WP4 transparency dashboard once the integration work is finished.
 * **transparency-backend**
   This is a simple proxy app which exposes a specific kafka topic as a [SSE](https://en.wikipedia.org/wiki/Server-sent_events) stream to a client.
-* **dispatcher**
-  This service acts as a router and application load balancer. It acts as the entry point into the demonstrator, provides TLS termination and exposes the various services as one endpoint to the outside world. The routing is currently hardcoded for the demonstrator using [Caddy](https://caddyserver.com). In a future version we might replace this with [Traefik](https://traefik.io), which will allow the router to be configured based on data in the compose files.
 * **consent-management-frontend**
   This is a simple CRUD UI which allows a user to update his or her consent. It is only provided for test purposes and not part of WP4 or any SPECIAL recommendations.
 * **policy-admin-frontend**
@@ -153,50 +63,6 @@ These components are custom written software specifically for this demonstrator.
 * **kong-init**
   This is a simple program which will setup a new Kong instance. It will run once and then exits. It provides Kong with a version-controlled config file and applies the necessary scripts to the DB behind Kong.
 
-# TODO: Update documentation
-
-# Elasticsearch issues
-If the elasticsearch exits with the following error:
-```
-[INFO ][o.e.b.BootstrapChecks    ] [PPEKOmZ] bound or publishing to a non-loopback address, enforcing bootstrap checks
-ERROR: [1] bootstrap checks failed
-[1]: max virtual memory areas vm.max_map_count [65536] is too low, increase to at least [262144]
-[INFO ][o.e.n.Node               ] [PPEKOmZ] stopping ...
-[INFO ][o.e.n.Node               ] [PPEKOmZ] stopped
-[INFO ][o.e.n.Node               ] [PPEKOmZ] closing ...
-[INFO ][o.e.n.Node               ] [PPEKOmZ] closed
-[INFO ][o.e.x.m.j.p.NativeController] Native controller process has stopped - no new native processes can be started
-xdc_elasticsearch_1 exited with code 78
-```
-
-#### Temporary solution
-Use this command to give more max virtual memory area:
-``` bash
-sudo sysctl -w vm.max_map_count=262144
-```
-
-This command has to be set every time you restart your machine.
-
-#### Permanent solution
-
-This is recommended way. First open `/etc/sysctl.conf` file, enter:
-``` bash
-nano /etc/sysctl.conf
- ```
-
-Now add value:
-variable = value
-
-Close and save the changes. Type the following command to load sysctl settings from the file `/etc/sysctl.conf` file:
-``` bash
-sysctl -p
-```
-
-OR
-``` bash
-sysctl -p /etc/sysctl.conf
-```
-
-The last method will load settings permanently at boot time from `/etc/sysctl.conf` file.
-
-Solution from [here](https://www.cyberciti.biz/faq/howto-set-sysctl-variables/).
+### Known issues
+Some components (the compliance-checker comes to mind) don't include a waiting mechanism and, on occasions, a container will die because its dependancies are not online yet.
+This should be fixed but a workaround is to just restart the specific containers. Initialization containers should not be restarted.
