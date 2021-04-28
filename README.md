@@ -9,8 +9,7 @@ The SPECIAL demonstrator is distributed as a set of docker images with a docker-
 [Docker](https://www.docker.com/community-edition) is available for all major operating systems. [Docker-compose](https://github.com/docker/compose) comes out of the box with Docker for Windows and Mac, but is a separate install on Linux.
 
 ## Quick start
-* git clone https://github.com/specialprivacy/demonstrator.git
-* git checkout lightweight
+* git clone -b lightweight --single-branch https://github.com/specialprivacy/demonstrator.git
 * git submodule init .
 * git submodule update
 * docker-compose up
