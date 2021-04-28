@@ -1,21 +1,21 @@
 [submodule "keycloak-initializer"]
 	path = keycloak-initializer
-	url = git@git.tenforce.com:special/keycloak-initializer.git
+	url = https://github.com/specialprivacy/keycloak-initializer.git
 [submodule "kong"]
 	path = kong
-	url = git@git.tenforce.com:special/kong-service.git
+	url = https://github.com/specialprivacy/kong-service.git
 [submodule "kong-config"]
 	path = kong-config
-	url = git@git.tenforce.com:special/kong-configuration-service.git
+	url = https://github.com/specialprivacy/kong-configuration-service.git
 [submodule "kong-migration"]
 	path = kong-migration
-	url = git@git.tenforce.com:special/kong-database-migration-service.git
+	url = https://github.com/specialprivacy/kong-database-migration-service.git
 [submodule "welcome-page"]
 	path = welcome-page
-	url = git@git.tenforce.com:special/demonstrator-welcome-page-frontend.git
+	url = https://github.com/specialprivacy/demonstrator-welcome-page-frontend.git
 [submodule "log-generator"]
 	path = log-generator
-	url = git@git.tenforce.com:special/demonstrator-log-generator.git
+	url = https://github.com/specialprivacy/demonstrator-log-generator.git
 [submodule "personal-data-gateway"]
 	path = personal-data-gateway
-	url = git@git.tenforce.com:special/personal-data-gateway.git
+	url = https://github.com/specialprivacy/personal-data-gateway.git
