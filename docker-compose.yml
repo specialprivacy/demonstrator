@@ -4,22 +4,22 @@ services:
 
   ## APPLICATION ##
   welcome-page:
-    build: ./welcome-page
+    image: arkhen/demonstrator-welcome-page:latest
 
   transparency-frontend:
-      image: registry-special.tenforce.com/special/demonstrator-transparency-frontend:1.0.1
+      image: arkhen/demonstrator-transparency-frontend:1.0.3
 
   transparency-backend:
-    image: registry-special.tenforce.com/special/kafka-sse-proxy:1.0.0
+    image: arkhen/demonstrator-transparency-backend:latest
     environment:
       BROKERS: "kafka:9092"
       TOPIC: checked-application-logs
 
   consent-management-frontend:
-    image: registry-special.tenforce.com/special/demonstrator-consent-management-frontend:1.0.1
+    image: arkhen/demonstrator-consent-frontend:latest
 
   consent-management-backend:
-    image: registry-special.tenforce.com/special/consent-management-backend-mongo:0.0.2
+    image: arkhen/demonstrator-consent-backend:latest
     restart: on-failure
     environment:
       SERVER_HOST: consent-management-backend
@@ -30,18 +30,19 @@ services:
       - mongo-rs-setup
 
   mongo-db:
-    image: registry-special.tenforce.com/special/demonstrator-mongo-db:0.0.1
+    image: arkhen/demonstrator-mongo:latest
 
   mongo-rs-setup:
-    image: registry-special.tenforce.com/special/demonstrator-mongo-rs-setup:0.0.1
+    image: arkhen/demonstrator-mongo-setup:latest
     depends_on:
       - mongo-db
 
   policy-admin-frontend:
-    image: registry-special.tenforce.com/special/demonstrator-policy-admin-frontend:1.0.3
+    image: arkhen/demonstrator-policy-frontend:latest
 
   compliance-checker:
-    image: registry-special.tenforce.com/special/compliance-checker:1.0.0
+    image: arkhen/demonstrator-compliance-checker:1.0.1
+    restart: on-failure
     environment:
       KAFKA_URL_LIST: "kafka:9092"
       KAFKA_CLIENT_ID: 1
@@ -52,7 +53,7 @@ services:
       - ./use_cases:/policies
 
   log-generator:
-    build: ./log-generator
+    image: arkhen/demonstrator-log-generator:latest
     restart: always
     environment:
       RATE: 30s
@@ -66,9 +67,7 @@ services:
       BACKEND_ENDPOINT: http://consent-management-backend
 
   personal-data-gateway:
-    build: ./personal-data-gateway
-    volumes:
-      - ./personal-data-gateway/app:/app # reload
+    image: arkhen/demonstrator-personal-data-gateway:latest
     ports:
       - "8101:5000"
 
@@ -106,7 +105,7 @@ services:
       POSTGRES_HOST_AUTH_METHOD: trust
 
   kong-migration:
-    build: ./kong-migration
+    image: arkhen/demonstrator-kong-migration:latest
     command: "kong migrations bootstrap"
     environment:
       KONG_DATABASE: postgres
@@ -118,7 +117,7 @@ services:
     command: ["./wait-for-it.sh", "--host=database-kong", "--port=5432", "-t", "10", "--", "kong", "migrations", "bootstrap"]
 
   kong:
-    build: ./kong
+    image: arkhen/demonstrator-kong:latest
     environment:
       KONG_DATABASE: postgres
       KONG_PG_HOST: database-kong
@@ -143,7 +142,7 @@ services:
     command: ["./wait-for-stop.sh", "-h", "kong-migration", "--", "kong", "start"]
 
   kong-config:
-    build: ./kong-config
+    image: arkhen/demonstrator-kong-config:latest
     environment:
       KEYCLOAK_ENDPOINT: http://localhost/auth
     command: ["./wait-for-it.sh", "kong:8001", "-t", "120", "--", "node", "/init-kong.js"]
@@ -176,7 +175,7 @@ services:
       POSTGRES_HOST_AUTH_METHOD: trust
 
   keycloak-init:
-    build: ./keycloak-initializer
+    image: arkhen/demonstrator-keycloak-config:latest
     environment:
       KEYCLOAK_ENDPOINT: https://keycloak:8443/auth
       KEYCLOAK_CLIENT_SECRET: $KEYCLOAK_CLIENT_SECRET
