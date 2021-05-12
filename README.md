@@ -10,8 +10,6 @@ The SPECIAL demonstrator is distributed as a set of docker images with a docker-
 
 ## Quick start
 * git clone -b lightweight --single-branch https://github.com/specialprivacy/demonstrator.git
-* git submodule init .
-* git submodule update
 * docker-compose up
 * navigate to http://localhost
 
